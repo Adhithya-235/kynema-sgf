@@ -22,6 +22,7 @@ namespace kynema_sgf_tests {
 
 TEST(Configuration, Build)
 {
+    amrex::Print() <<"Hi! It's your friendly neighbourhood impostor pretending to know what he's doing.\n";
     const std::string dirty_tag =
         "-" + kynema_sgf::version::kynema_sgf_dirty_repo;
     const std::string awind_git_sha =
