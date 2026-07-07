@@ -628,5 +628,20 @@ AMREX_GPU_HOST_DEVICE AMREX_FORCE_INLINE amrex::Real q_criterion(
     return 0.25_rt * (W2 - S2);
 }
 
+AMREX_GPU_HOST_DEVICE AMREX_FORCE_INLINE amrex::Real horizontal_velocity_mag(
+    int degree,
+    const amrex::Real* coeffx,
+    const amrex::Real* coeffy,
+    const amrex::Real* /*coeffz*/,
+    amrex::Real x,
+    amrex::Real y,
+    amrex::Real z)
+{
+    const amrex::Real u = phi_eval(degree, coeffx, x, y, z);
+    const amrex::Real v = phi_eval(degree, coeffy, x, y, z);
+
+    return std::sqrt((u * u) + (v * v));
+}
+
 } // namespace kynema_sgf_tests::analytical_function
 #endif
