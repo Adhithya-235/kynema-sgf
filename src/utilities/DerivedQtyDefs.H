@@ -21,6 +21,24 @@ private:
     const Field& m_vel;
 };
 
+struct HorizontalVelocityMag : public DerivedQty::Register<HorizontalVelocityMag>
+{
+    static constexpr int ncomp = 1;
+    static std::string identifier() { return "mag_horizontal_velocity"; }
+
+    HorizontalVelocityMag(const FieldRepo& repo, const std::vector<std::string>& args);
+
+    [[nodiscard]] std::string name() const override { return identifier(); }
+
+    [[nodiscard]] int num_comp() const override { return ncomp; }
+
+    void operator()(ScratchField& fld, int scomp = 0) const override;
+
+private:
+    const Field& m_vel;
+
+};
+
 struct QCriterion : public DerivedQty::Register<QCriterion>
 {
     static constexpr int ncomp = 1;

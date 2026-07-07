@@ -10,6 +10,7 @@
 #include "src/fvm/vorticity_mag.H"
 #include "src/fvm/qcriterion.H"
 #include "src/fvm/filter.H"
+#include "src/fvm/horizontal_velocity_mag.H"
 
 /**
  *  \defgroup fvm Finite-Volume Operators
