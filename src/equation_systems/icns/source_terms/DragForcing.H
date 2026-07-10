@@ -34,6 +34,7 @@ private:
     const CFDSim& m_sim;
     const amrex::AmrCore& m_mesh;
     const Field& m_velocity;
+    Field& m_ibfm_u0;
     const Field* m_target_vel{nullptr};
     const Field* m_target_levelset{nullptr};
     std::string m_1d_rans;

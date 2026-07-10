@@ -93,6 +93,7 @@ DragForcing::DragForcing(const CFDSim& sim)
     , m_sim(sim)
     , m_mesh(sim.mesh())
     , m_velocity(sim.repo().get_field("velocity"))
+    , m_ibfm_u0(sim.repo().declare_field("u0", 1, 1, 1))
 {
     amrex::ParmParse pp("DragForcing");
     pp.query("drag_coefficient", m_drag_coefficient);
@@ -288,6 +289,9 @@ void DragForcing::operator()(
     const amrex::Real* vv = m_prof_v_d.data();
     const amrex::Real* ww = m_prof_w_d.data();
 
+    m_ibfm_u0.setVal(0.0_rt, lev, 0, 1);
+    auto u0_arrs = m_ibfm_u0(lev).arrays();
+
     amrex::ParallelFor(
         src_term, amrex::IntVect(0), AMREX_SPACEDIM,
         [=] AMREX_GPU_DEVICE(int nbx, int i, int j, int k, int n) {
@@ -375,6 +379,9 @@ void DragForcing::operator()(
                 const amrex::Real ustar = viscous_drag_calculations(
                     Dxz, Dyz, ux1r, uy1r, ux2r, uy2r, z0, dx[2], kappa,
                     non_neutral_neighbour);
+                if (n == 0) {
+                    u0_arrs[nbx](i,j,k,0) = ustar;
+                }
                 if (model_form_drag != 0) {
                     form_drag_calculations(
                         Dxz, Dyz, i, j, k, target_lvs_arrs[nbx], dx, ux1r,
@@ -446,6 +453,7 @@ void DragForcing::operator()(
                 src_arrs[nbx](i, j, k, 2) -= damping_arrs[nbx](i, j, k) * uz1;
             }
         });
+    m_ibfm_u0(lev).FillBoundary(m_mesh.Geom(lev).periodicity());    
 }
 
 } // namespace kynema_sgf::pde::icns
