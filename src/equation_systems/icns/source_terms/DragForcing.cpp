@@ -93,6 +93,7 @@ DragForcing::DragForcing(const CFDSim& sim)
     , m_sim(sim)
     , m_mesh(sim.mesh())
     , m_velocity(sim.repo().get_field("velocity"))
+    , m_ibfm_u0(sim.repo().declare_field("u0", 1, 1, 1))
 {
     amrex::ParmParse pp("DragForcing");
     pp.query("drag_coefficient", m_drag_coefficient);
@@ -302,6 +303,9 @@ void DragForcing::operator()(
     const int limit_terrain_temporal = m_limit_terrain_temporal ? 1 : 0;
     const int do_original_terrain = m_do_original_terrain ? 1 : 0;
 
+    m_ibfm_u0.setVal(0.0_rt, lev, 0, 1);
+    auto u0_arrs = m_ibfm_u0(lev).arrays();
+
     amrex::ParallelFor(
         src_term, amrex::IntVect(0), AMREX_SPACEDIM,
         // NOLINTNEXTLINE(clang-analyzer-optin.performance.Padding)
@@ -394,6 +398,9 @@ void DragForcing::operator()(
                 const amrex::Real ustar = viscous_drag_calculations(
                     Dxz, Dyz, ux1r, uy1r, ux2r, uy2r, z0, dx[2], kappa,
                     non_neutral_neighbour);
+                if (n == 0) {
+                    u0_arrs[nbx](i,j,k,0) = ustar;
+                }
                 if (model_form_drag != 0) {
                     form_drag_calculations(
                         Dxz, Dyz, i, j, k, target_lvs_arrs[nbx], dx, ux1r,
@@ -470,6 +477,7 @@ void DragForcing::operator()(
             }
         });
     amrex::Gpu::streamSynchronize();
+    m_ibfm_u0(lev).FillBoundary(m_mesh.Geom(lev).periodicity());    
 }
 
 } // namespace kynema_sgf::pde::icns
