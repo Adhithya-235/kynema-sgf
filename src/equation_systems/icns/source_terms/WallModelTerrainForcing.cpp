@@ -29,11 +29,37 @@ WallModelTerrainForcing::WallModelTerrainForcing(const CFDSim& sim)
                      "TerrainDrag physics must be enabled.");
     }
     amrex::ParmParse pp("WallModelTerrainForcing");
+    std::string method_str = "spatial_temporal";
+    pp.query("drag_coefficient_method", method_str);
+    if (method_str == "spatial_temporal") {
+        m_method = DragCoefficientMethod::SpatialTemporal;
+    } else if (method_str == "timestep") {
+        m_method = DragCoefficientMethod::Timestep;
+    } else if (method_str == "linear_quadratic") {
+        m_method = DragCoefficientMethod::LinearQuadratic;
+    } else {
+        amrex::Print() << "WARNING: WallModelTerrainForcing: unknown "
+                       << "drag_coefficient_method '" << method_str
+                       << "', defaulting to 'spatial_temporal'\n";
+        m_method = DragCoefficientMethod::SpatialTemporal;
+    }
     pp.query("cd_m", m_cd_m);
-    pp.query("cdm_factor", m_cdm_factor);
+    pp.query("cd_factor", m_cd_factor);
+    pp.query("cd_max", m_cd_max);
+    pp.query("limit_drag", m_limit_drag);
+
     amrex::Print() << "WallModelTerrainForcing initialized successfully\n"
-                   << "  cd_m = " << m_cd_m << '\n'
-                   << "  cdm_factor = " << m_cdm_factor << '\n';
+                   << "  Method: " << method_str << '\n';
+    if (m_method == DragCoefficientMethod::SpatialTemporal) {
+        amrex::Print() << "  cd_m = " << m_cd_m << '\n'
+                       << "  cd_factor = " << m_cd_factor << '\n';
+    } else if (m_method == DragCoefficientMethod::Timestep) {
+        amrex::Print() << "  cd_factor = " << m_cd_factor << '\n';
+    } else if (m_method == DragCoefficientMethod::LinearQuadratic) {
+        amrex::Print() << "  cd_m = " << m_cd_m << '\n'
+                       << "  cd_max = " << m_cd_max << '\n'
+                       << "  limit_drag = " << (m_limit_drag ? "yes" : "no") << '\n';
+    }
 }
 
 WallModelTerrainForcing::~WallModelTerrainForcing() = default;
@@ -49,9 +75,15 @@ void WallModelTerrainForcing::operator()(
     auto const& geom = m_mesh.Geom(lev);
     auto const& dx = geom.CellSizeArray();
     auto const& dt = m_time.delta_t();
+    const MOData mo = *m_mo;
+    const amrex::Real lq_cd_m = (m_limit_drag && dx[2] < 1.0_rt) ? m_cd_m : m_cd_m / dx[2];
+    const amrex::Real lq_cd_max = m_limit_drag ? m_cd_max : kynema_sgf::constants::LARGE_NUM;
+    const amrex::Real lq_scale_factor = (m_limit_drag && dx[2] < 1.0_rt) ? 1.0_rt : 1.0_rt / dx[2];
+    const DragCoefficientMethod method = m_method;
+    const amrex::Real cd_m = m_cd_m;
+    const amrex::Real cd_factor = m_cd_factor;
     m_target_velocity.setVal(0.0_rt, lev, 0, 3);
     auto target_vel_arrs = m_target_velocity(lev).arrays();
-    const MOData mo = *m_mo;
 
     amrex::ParallelFor(
         src_term, amrex::IntVect(0), AMREX_SPACEDIM,
@@ -61,9 +93,7 @@ void WallModelTerrainForcing::operator()(
                 return;
             }
 
-            amrex::Real u_target = 0.0_rt;
-            amrex::Real v_target = 0.0_rt;
-            amrex::Real w_target = 0.0_rt;
+            amrex::Real target_vel = 0.0_rt;
             if (k+1 >= 0 && blank_arrs[nbx](i, j, k+1, 0) == 0) {
                 const amrex::Real uold1 = vel_arrs[nbx](i, j, k+1, 0);
                 const amrex::Real vold1 = vel_arrs[nbx](i, j, k+1, 1);
@@ -71,30 +101,45 @@ void WallModelTerrainForcing::operator()(
                 const amrex::Real dens1 = rho_arrs[nbx](i, j, k+1);
                 const amrex::Real visc1 = 0.5_rt*(visc_arrs[nbx](i, j, k+1) + visc_arrs[nbx](i, j, k));
                 const auto tau = ShearStressMoeng(mo);
-                const amrex::Real wspd = std::sqrt(uold1*uold1 + vold1*vold1); 
+                const amrex::Real wspd = std::sqrt(uold1*uold1 + vold1*vold1);
                 const amrex::Real dudz = tau.calc_vel_x(uold1, wspd) * dens1 / (2*visc1);
                 const amrex::Real dvdz = tau.calc_vel_y(vold1, wspd) * dens1 / (2*visc1);
-                u_target = uold1 - dx[2] * dudz;
-                v_target = vold1 - dx[2] * dvdz;
-                w_target = -wold1;
-            } 
-            amrex::Real target_vel = 0.0_rt;
-            if (n == 0) {
-                target_vel = u_target;
-            } else if (n == 1) {
-                target_vel = v_target;
-            } else {
-                target_vel = w_target;
+                if (n == 0) {
+                    target_vel = uold1 - dx[2] * dudz;
+                } else if (n == 1) {
+                    target_vel = vold1 - dx[2] * dvdz;
+                } else {
+                    target_vel = -wold1;
+                }
             }
             target_vel_arrs[nbx](i, j, k, n) = target_vel;
 
-            const amrex::Real u_rel = vel_arrs[nbx](i, j, k, 0) - u_target;
-            const amrex::Real v_rel = vel_arrs[nbx](i, j, k, 1) - v_target;
-            const amrex::Real w_rel = vel_arrs[nbx](i, j, k, 2) - w_target;
-            const amrex::Real velmag_rel = std::sqrt(u_rel*u_rel + v_rel*v_rel + w_rel*w_rel);
-            const amrex::Real spatial_drag_rate = (m_cd_m/dx[2]) * velmag_rel;
-            const amrex::Real temporal_safety_rate = m_cdm_factor/dt;
-            const amrex::Real CdM_m = amrex::min<amrex::Real>(spatial_drag_rate, temporal_safety_rate);
+            const amrex::Real u_k = vel_arrs[nbx](i, j, k, 0);
+            const amrex::Real v_k = vel_arrs[nbx](i, j, k, 1);
+            const amrex::Real w_k = vel_arrs[nbx](i, j, k, 2);
+            const amrex::Real velmag = std::sqrt(u_k*u_k + v_k*v_k + w_k*w_k);
+
+            amrex::Real CdM_m = 0.0_rt;
+            switch (method) {
+                case DragCoefficientMethod::SpatialTemporal: {
+                    const amrex::Real spatial_rate  = (cd_m / dx[2]) * velmag;
+                    const amrex::Real temporal_rate = cd_factor / dt;
+                    CdM_m = amrex::min<amrex::Real>(spatial_rate, temporal_rate);
+                    break;
+                }
+                case DragCoefficientMethod::Timestep: {
+                    CdM_m = cd_factor / dt;
+                    break;
+                }
+                case DragCoefficientMethod::LinearQuadratic: {
+                    const amrex::Real CdM = amrex::min<amrex::Real>(
+                        lq_cd_m / (velmag + kynema_sgf::constants::EPS),
+                        lq_cd_max / lq_scale_factor);
+                    CdM_m = CdM * velmag;
+                    break;
+                }
+            }
+
             const amrex::Real vel_n = vel_arrs[nbx](i, j, k, n);
             src_arrs[nbx](i, j, k, n) -= CdM_m * (vel_n - target_vel);
 
@@ -102,6 +147,6 @@ void WallModelTerrainForcing::operator()(
     );
 
     m_target_velocity(lev).FillBoundary(m_mesh.Geom(lev).periodicity());
-    
+
 }
 } // namespace kynema_sgf::pde::icns

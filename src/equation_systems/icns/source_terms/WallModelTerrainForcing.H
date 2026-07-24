@@ -7,10 +7,18 @@
 #include "src/wind_energy/MOData.H"
 #include "src/wind_energy/ShearStress.H"
 #include "AMReX_REAL.H"
+#include <string>
 
 using namespace amrex::literals;
 
 namespace kynema_sgf::pde::icns {
+
+/** Drag coefficient selection method for WallModelTerrainForcing */
+enum class DragCoefficientMethod {
+    SpatialTemporal, // min((cd_m/dx)*velmag, cd_factor/dt)  [default]
+    Timestep,        // cd_factor/dt
+    LinearQuadratic  // DragForcing.cpp implementation
+};
 
 /** Wall model based terrain forcing source term 
  * 
@@ -43,8 +51,13 @@ private:
     const amrex::AmrCore& m_mesh;
     const Field& m_velocity;
     const MOData* m_mo;
-    amrex::Real m_cd_m{2.0_rt};
-    amrex::Real m_cdm_factor{0.2_rt};
+
+    DragCoefficientMethod m_method{DragCoefficientMethod::SpatialTemporal};
+    amrex::Real m_cd_m{10.0_rt};       // shared: SpatialTemporal, LinearQuadratic
+    amrex::Real m_cd_factor{0.01_rt};   // shared: SpatialTemporal, Timestep
+    amrex::Real m_cd_max{1000.0_rt};   // LinearQuadratic only
+    bool m_limit_drag{true};           // LinearQuadratic only
+
     Field& m_target_velocity;
 };
 
