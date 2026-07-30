@@ -15,9 +15,8 @@ namespace kynema_sgf::pde::icns {
 
 /** Drag coefficient selection method for WallModelTerrainForcing */
 enum class DragCoefficientMethod {
-    SpatialTemporal, // min((cd_m/dx)*velmag, cd_factor/dt)  [default]
     Timestep,        // cd_factor/dt
-    LinearQuadratic  // DragForcing.cpp implementation
+    LinearQuadratic  // DragForcing.cpp implementation  [default]
 };
 
 /** Wall model based terrain forcing source term 
@@ -52,9 +51,9 @@ private:
     const Field& m_velocity;
     const MOData* m_mo;
 
-    DragCoefficientMethod m_method{DragCoefficientMethod::SpatialTemporal};
-    amrex::Real m_cd_m{10.0_rt};       // shared: SpatialTemporal, LinearQuadratic
-    amrex::Real m_cd_factor{0.01_rt};   // shared: SpatialTemporal, Timestep
+    DragCoefficientMethod m_method{DragCoefficientMethod::LinearQuadratic};
+    amrex::Real m_cd_m{10.0_rt};       // LinearQuadratic only
+    amrex::Real m_cd_factor{1.0_rt};   // Timestep only
     amrex::Real m_cd_max{1000.0_rt};   // LinearQuadratic only
     bool m_limit_drag{true};           // LinearQuadratic only
 

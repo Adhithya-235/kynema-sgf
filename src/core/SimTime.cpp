@@ -274,6 +274,7 @@ void SimTime::set_current_cfl(
     }
 
     m_current_cfl = 0.5_rt * cfl_unit_time * m_dt[0];
+    m_conv_cfl_unit = conv_cfl;
     m_conv_cfl = conv_cfl * m_dt[0];
     m_diff_cfl = diff_cfl * m_dt[0];
     m_src_cfl = std::sqrt(src_cfl) * m_dt[0];

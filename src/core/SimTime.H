@@ -117,6 +117,9 @@ public:
     amrex::Real max_cfl() const { return m_max_cfl; }
 
     AMREX_FORCE_INLINE
+    amrex::Real conv_cfl_unit() const { return m_conv_cfl_unit; }
+
+    AMREX_FORCE_INLINE
     amrex::Real get_minimum_enforce_dt_abs_tol() const
     {
         return m_force_dt_abs_tol;
@@ -237,6 +240,7 @@ private:
     amrex::Real m_conv_cfl{0.0_rt};
     amrex::Real m_diff_cfl{0.0_rt};
     amrex::Real m_src_cfl{0.0_rt};
+    amrex::Real m_conv_cfl_unit{0.0_rt};
 
     //! delta_t calculated using CFL constraint
     amrex::Real m_dt_calc{0.0_rt};
