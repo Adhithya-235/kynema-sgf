@@ -8,6 +8,7 @@
 #include "src/wind_energy/ShearStress.H"
 #include "AMReX_REAL.H"
 #include <string>
+#include <limits>
 
 using namespace amrex::literals;
 
@@ -56,8 +57,10 @@ private:
     amrex::Real m_cd_factor{1.0_rt};   // Timestep only
     amrex::Real m_cd_max{1000.0_rt};   // LinearQuadratic only
     bool m_limit_drag{true};           // LinearQuadratic only
+    amrex::Real m_feedback_damping{0.02_rt}; // scales (target_old - u) feedback term
 
     Field& m_target_velocity;
+    mutable amrex::Real m_last_advance_time{-std::numeric_limits<amrex::Real>::max()};
 };
 
 } // namespace kynema_sgf::pde::icns
