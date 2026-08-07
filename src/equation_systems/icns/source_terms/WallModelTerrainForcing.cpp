@@ -16,6 +16,7 @@ WallModelTerrainForcing::WallModelTerrainForcing(const CFDSim& sim)
     , m_mesh(sim.mesh())
     , m_velocity(sim.repo().get_field("velocity"))
     , m_target_velocity(sim.repo().declare_field("target_velocity", 3, 1, 2))
+    , m_surface_stress(sim.repo().declare_field("surface_stress", 2, 1, 2))
     , m_mo(nullptr)
 {
     if (!m_sim.physics_manager().contains("ABL")) {
@@ -66,6 +67,7 @@ void WallModelTerrainForcing::operator()(
 {
     if (lev == 0 && m_time.current_time() > m_last_advance_time) {
         m_target_velocity.advance_states();
+        m_surface_stress.advance_states();
         m_last_advance_time = m_time.current_time();
     }
     auto const& vel_arrs = m_velocity.state(field_impl::dof_state(fstate))(lev).const_arrays();
@@ -85,7 +87,9 @@ void WallModelTerrainForcing::operator()(
     const amrex::Real cd_factor = m_cd_factor;
     const amrex::Real feedback_damping = m_feedback_damping;
     m_target_velocity(lev).setVal(0.0_rt);
+    m_surface_stress(lev).setVal(0.0_rt);
     auto target_vel_arrs = m_target_velocity(lev).arrays();
+    auto surface_stress_arrs = m_surface_stress(lev).arrays();
 
     amrex::ParallelFor(
         src_term, amrex::IntVect(0), AMREX_SPACEDIM,
@@ -112,11 +116,15 @@ void WallModelTerrainForcing::operator()(
                 const amrex::Real visc1 = 0.5_rt*(visc_arrs[nbx](i, j, k+1) + visc_arrs[nbx](i, j, k));
                 const auto tau = ShearStressMoeng(mo);
                 const amrex::Real wspd = std::sqrt(uold1*uold1 + vold1*vold1);
-                const amrex::Real dudz = tau.calc_vel_x(uold1, wspd) * dens1 / (2*visc1);
-                const amrex::Real dvdz = tau.calc_vel_y(vold1, wspd) * dens1 / (2*visc1);
+                const amrex::Real tau_x = tau.calc_vel_x(uold1, wspd);
+                const amrex::Real tau_y = tau.calc_vel_y(vold1, wspd);
+                const amrex::Real dudz = tau_x * dens1 / (2*visc1);
+                const amrex::Real dvdz = tau_y * dens1 / (2*visc1);
                 target_u = (uold1 - dx[2] * dudz) + feedback_damping * (u_target_old - u_k);
                 target_v = (vold1 - dx[2] * dvdz) + feedback_damping * (v_target_old - v_k);
                 target_w = -wold1 + feedback_damping * (w_target_old - w_k);
+                surface_stress_arrs[nbx](i, j, k, 0) = tau_x;
+                surface_stress_arrs[nbx](i, j, k, 1) = tau_y;
             }
             const amrex::Real target_vel = (n == 0) ? target_u : (n == 1) ? target_v : target_w;
             target_vel_arrs[nbx](i, j, k, n) = target_vel;
@@ -145,6 +153,7 @@ void WallModelTerrainForcing::operator()(
     );
 
     m_target_velocity(lev).FillBoundary(m_mesh.Geom(lev).periodicity());
+    m_surface_stress(lev).FillBoundary(m_mesh.Geom(lev).periodicity());
 
 }
 } // namespace kynema_sgf::pde::icns

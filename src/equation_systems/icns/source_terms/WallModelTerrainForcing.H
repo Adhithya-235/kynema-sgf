@@ -60,6 +60,7 @@ private:
     amrex::Real m_feedback_damping{0.02_rt}; // scales (target_old - u) feedback term
 
     Field& m_target_velocity;
+    Field& m_surface_stress;
     mutable amrex::Real m_last_advance_time{-std::numeric_limits<amrex::Real>::max()};
 };
 
