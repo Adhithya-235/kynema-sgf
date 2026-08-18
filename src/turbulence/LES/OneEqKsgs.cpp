@@ -61,6 +61,11 @@ OneEqKsgsM84<Transport>::OneEqKsgsM84(CFDSim& sim)
         pp.queryarr("gravity", m_gravity);
     }
 
+    {
+        amrex::ParmParse pp("OneEqKsgsM84");
+        pp.query("terrain_mu_turb", m_terrain_mu_turb);
+    }
+
     // TKE source term to be added to PDE
     turb_utils::inject_turbulence_src_terms(
         pde::TKE::pde_name(), {"KsgsM84Src"});
@@ -123,6 +128,11 @@ void OneEqKsgsM84<Transport>::update_turbulent_viscosity(
     const auto& repo = mu_turb.repo();
     const auto& geom_vec = repo.mesh().Geom();
 
+    const bool has_terrain = repo.int_field_exists("terrain_blank");
+    const auto* m_terrain_blank =
+        has_terrain ? &repo.get_int_field("terrain_blank") : nullptr;
+    const amrex::Real terrain_mu_turb = m_terrain_mu_turb;
+
     const int nlevels = repo.num_active_levels();
     for (int lev = 0; lev < nlevels; ++lev) {
         const auto& geom = geom_vec[lev];
@@ -139,6 +149,9 @@ void OneEqKsgsM84<Transport>::update_turbulent_viscosity(
         const auto& buoy_prod_arrs = (this->m_buoy_prod)(lev).arrays();
         const auto& shear_prod_arrs = (this->m_shear_prod)(lev).arrays();
         const auto& beta_arrs = (*beta)(lev).const_arrays();
+        const auto& blank_arrs = has_terrain
+                                     ? (*m_terrain_blank)(lev).const_arrays()
+                                     : amrex::MultiArray4<const int>();
 
         amrex::ParallelFor(
             mu_turb(lev), [=] AMREX_GPU_DEVICE(int nbx, int i, int j, int k) {
@@ -160,6 +173,10 @@ void OneEqKsgsM84<Transport>::update_turbulent_viscosity(
                 mu_arrs[nbx](i, j, k) = rho_arrs[nbx](i, j, k) * Ce *
                                         tlscale_arrs[nbx](i, j, k) *
                                         std::sqrt(tke_arrs[nbx](i, j, k));
+
+                if (has_terrain && blank_arrs[nbx](i, j, k, 0) != 0) {
+                    mu_arrs[nbx](i, j, k) = terrain_mu_turb;
+                }
 
                 buoy_prod_arrs[nbx](i, j, k) =
                     -mu_arrs[nbx](i, j, k) *

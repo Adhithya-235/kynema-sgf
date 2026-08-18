@@ -97,6 +97,9 @@ private:
     bool m_hybrid_rl{false};
     Field* m_sdr;
 
+    //! Turbulent viscosity forced within blanked terrain cells
+    amrex::Real m_terrain_mu_turb{0.0_rt};
+
     std::unique_ptr<ScratchField> m_gradT;
 };
 

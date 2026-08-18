@@ -242,8 +242,8 @@ void WallModelTerrainForcing::apply_forcing(
                     tau_x = tau.calc_vel_x(uold1, wspd);
                     tau_y = tau.calc_vel_y(vold1, wspd);
                 }
-                const amrex::Real dudz = tau_x * dens1 / (2*visc1);
-                const amrex::Real dvdz = tau_y * dens1 / (2*visc1);
+                const amrex::Real dudz = tau_x * dens1 / (visc1);
+                const amrex::Real dvdz = tau_y * dens1 / (visc1);
 
                 // COMPUTE TARGET VELOCITY AT TERRAIN CELL USING WALL-MODELLED GRADIENT AND FEEDBACK DAMPING
 
