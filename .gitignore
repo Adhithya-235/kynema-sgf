@@ -34,3 +34,5 @@ docs/sphinx/references/auto
 /forest.amrwind
 /forest_points.dat
 /post_processing/
+notes/*/*.md
+notes/*/*.log
