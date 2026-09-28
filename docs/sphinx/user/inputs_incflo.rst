@@ -12,7 +12,7 @@ as initial conditions and discretization options.
 
    Specify a string or a list of strings for each type of physics to initialize and simulate.
    Physics is additive and more than one type of physics may be used.
-   Current implemented physics include FreeStream, SyntheticTurbulence, ABL, Actuator, RayleighTaylor, BoussinesqBubble, TaylorGreenVortex, and ScalarAdvection (which is an example of using a passive scalar advection).
+   Current implemented physics include FreeStream, SyntheticTurbulence, ABL, Actuator, RayleighTaylor, BoussinesqBubble, TaylorGreenVortex, and ScalarAdvection (which is an example of using a passive scalar advection) among others.
    For multiphase simulations, the MultiPhase physics must be specified, and for forcing wave profiles into the domain, the OceanWaves physics must be specified as well.
    For immersed boundary forcing method, :ref:`TerrainDrag <inputs_terraindrag>` or :ref:`ChannelBuilder <inputs_channel_builder>` can be used.
    For representing forested regions :ref:`ForestDrag <inputs_forestdrag>` must be specified, which has two file-based approaches to parameterize forest drag models.
@@ -25,8 +25,9 @@ as initial conditions and discretization options.
 
    Specify a string or a list of strings for each type of field boundary to initialize and use during a simulation.
    Though more than one can be specified, typically only a single field boundary type is used at a time.
-   Currently, there are three implemented field boundary types: BoundaryPlane, ModulatedPowerLaw, and OceanWavesBoundary.
-   OceanWavesBoundary relies on OceanWaves physics, but the other field boundaries can be used independently of particular
+   Currently, there are four implemented field boundary types: BoundaryPlane, Flather, ModulatedPowerLaw, and OceanWavesBoundary.
+   OceanWavesBoundary relies on OceanWaves physics, and Flather relies on MultiPhase physics, but the other field boundaries can be
+   used independently of particular
    physics classes. Refer to the :ref:`Field Boundaries documentation <inputs_field_boundaries>` for more details on each field boundary type. 
    
 .. input_param:: incflo.density

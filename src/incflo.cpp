@@ -95,11 +95,11 @@ void incflo::init_mesh()
             amrex::Print() << "Grid summary: " << '\n';
             print_grid_summary_with_total(*this, finest_level);
 
-            amrex::Print() << "Cell aspect ratio (dy/dx  dz/dx  dz/dy): ";
+            amrex::Print() << "Cell aspect ratio (dy/dx  dx/dz  dy/dz): ";
             auto dx = m_sim.mesh().Geom(0).CellSize(0);
             auto dy = m_sim.mesh().Geom(0).CellSize(1);
             auto dz = m_sim.mesh().Geom(0).CellSize(2);
-            amrex::Print() << dy / dx << "  " << dz / dx << "  " << dz / dy
+            amrex::Print() << dy / dx << "  " << dx / dz << "  " << dy / dz
                            << "\n\n";
         }
     } else {
@@ -120,11 +120,11 @@ void incflo::init_mesh()
             amrex::Print() << "Grid summary: " << '\n';
             print_grid_summary_with_total(*this, finest_level);
 
-            amrex::Print() << "Cell aspect ratio (dy/dx  dz/dx  dz/dy): ";
+            amrex::Print() << "Cell aspect ratio (dy/dx  dx/dz  dy/dz): ";
             auto dx = m_sim.mesh().Geom(0).CellSize(0);
             auto dy = m_sim.mesh().Geom(0).CellSize(1);
             auto dz = m_sim.mesh().Geom(0).CellSize(2);
-            amrex::Print() << dy / dx << "  " << dz / dx << "  " << dz / dy
+            amrex::Print() << dy / dx << "  " << dx / dz << "  " << dy / dz
                            << "\n\n";
         }
     }
@@ -400,11 +400,17 @@ void incflo::Evolve()
                        << '\n';
     }
 
-    // Output at final time
-    if (m_time.write_last_plot_file()) {
+    if (m_time.stop_requested()) {
+        amrex::Print() << "Simulation stopped: " << m_time.stop_reason()
+                       << '\n';
+    }
+
+    // Output at final time. A requested stop leaves output behind even when
+    // no output interval was configured; see SimTime::write_final_plot_file()
+    if (m_time.write_final_plot_file()) {
         m_sim.io_manager().write_plot_file();
     }
-    if (m_time.write_last_checkpoint()) {
+    if (m_time.write_final_checkpoint()) {
         m_sim.io_manager().write_checkpoint_file();
     }
     m_sim.post_manager().final_output();

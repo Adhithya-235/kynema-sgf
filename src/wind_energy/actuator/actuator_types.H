@@ -46,6 +46,9 @@ struct ActSrcLine : ActSrcType
 
     //! Flag indicating if this is a disk type
     static constexpr bool is_disk = false;
+
+    //! Flag indicating if this is a sector type
+    static constexpr bool is_sector = false;
 };
 
 /** Acutator disk representation.
@@ -58,6 +61,31 @@ struct ActSrcDisk : ActSrcType
 
     static constexpr bool is_line = false;
     static constexpr bool is_disk = true;
+    static constexpr bool is_sector = false;
+};
+
+/** Actuator sector representation.
+ *
+ *  Sector models sweep blade-section loads through the timestep before
+ *  spreading them to the flow.
+ */
+struct ActSrcSector : ActSrcType
+{
+    static std::string identifier() { return "Sector"; }
+
+    static constexpr bool is_line = false;
+    static constexpr bool is_disk = false;
+    static constexpr bool is_sector = true;
+};
+
+/** Composite source representation used by a drone containing sector rotors. */
+struct ActSrcDrone : ActSrcType
+{
+    static std::string identifier() { return ""; }
+
+    static constexpr bool is_line = false;
+    static constexpr bool is_disk = false;
+    static constexpr bool is_sector = false;
 };
 
 using RealList = amrex::Vector<amrex::Real>;
