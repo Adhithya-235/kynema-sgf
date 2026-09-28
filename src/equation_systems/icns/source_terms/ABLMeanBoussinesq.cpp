@@ -74,10 +74,15 @@ ABLMeanBoussinesq::ABLMeanBoussinesq(const CFDSim& sim)
         pp_boussinesq_buoyancy.get("tprofile_filename", tprofile_filename);
     }
 
-    if ((read_temp_prof) && (tprofile_filename.empty())) {
+    if ((read_temp_prof) && (!tprofile_filename.empty())) {
+        amrex::Print() << "ABLMeanBoussinesq: reading mean temperature profile "
+                           "from file: "
+                        << tprofile_filename << '\n';
         m_const_profile = true;
         read_temperature_profile(tprofile_filename);
     } else {
+        amrex::Print() << "ABLMeanBoussinesq: computing mean temperature "
+                           "profile from live ABL statistics\n";
         mean_temperature_init(abl.abl_statistics().theta_profile());
     }
 }

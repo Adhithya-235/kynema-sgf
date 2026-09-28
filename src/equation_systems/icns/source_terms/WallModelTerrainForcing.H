@@ -116,6 +116,9 @@ private:
     amrex::Real m_kappa_local{0.41_rt}; // LocalMoeng only, defaulted from mo.kappa
     amrex::Real m_z0_local{0.1_rt};     // LocalMoeng only, defaulted from mo.z0
 
+    bool m_clamp_xhi_backflow{true};          // clamp negative target_u near an xhi mass_inflow_outflow BC
+    amrex::Real m_xhi_backflow_buffer{250.0_rt}; // distance [m] from xhi over which the clamp applies
+
     Field& m_target_velocity;
     Field& m_surface_stress;
     mutable amrex::Real m_last_advance_time{-std::numeric_limits<amrex::Real>::max()};

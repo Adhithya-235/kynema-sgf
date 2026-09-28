@@ -87,6 +87,11 @@ WallModelTerrainForcing::WallModelTerrainForcing(const CFDSim& sim)
     pp.query("kappa", m_kappa_local);
     pp.query("z0", m_z0_local);
 
+    // READ XHI BACKFLOW CLAMP PARAMETERS
+
+    pp.query("clamp_xhi_backflow", m_clamp_xhi_backflow);
+    pp.query("xhi_backflow_buffer", m_xhi_backflow_buffer);
+
     // INITIALIZATION LOG
 
     amrex::Print() << "WallModelTerrainForcing initialized successfully\n"
@@ -103,7 +108,11 @@ WallModelTerrainForcing::WallModelTerrainForcing(const CFDSim& sim)
         amrex::Print() << "  kappa = " << m_kappa_local << '\n'
                        << "  z0 = " << m_z0_local << '\n';
     }
-    amrex::Print() << "  feedback_damping = " << m_feedback_damping << '\n';
+    amrex::Print() << "  feedback_damping = " << m_feedback_damping << '\n'
+                   << "  clamp_xhi_backflow = " << (m_clamp_xhi_backflow ? "yes" : "no") << '\n';
+    if (m_clamp_xhi_backflow) {
+        amrex::Print() << "  xhi_backflow_buffer = " << m_xhi_backflow_buffer << '\n';
+    }
 }
 
 // WALLMODELTERRAINFORCING DESTRUCTOR
@@ -169,6 +178,15 @@ void WallModelTerrainForcing::apply_forcing(
     auto const& rho_arrs = m_sim.repo().get_field("density")(lev).const_arrays();
     auto const& visc_arrs = m_sim.repo().get_field("velocity_mueff")(lev).const_arrays();
     auto const& prob_lo = m_mesh.Geom(lev).ProbLoArray();
+    auto const& prob_hi = m_mesh.Geom(lev).ProbHiArray();
+
+    // CLAMP NEGATIVE TARGET_U NEAR AN XHI MASS_INFLOW_OUTFLOW BOUNDARY TO SUPPRESS BACKFLOW
+
+    const bool xhi_mio =
+        m_clamp_xhi_backflow &&
+        (m_velocity.bc_type()[amrex::Orientation(0, amrex::Orientation::high)] ==
+         BC::mass_inflow_outflow);
+    const amrex::Real xhi_mio_buffer = m_xhi_backflow_buffer;
 
     // DRAG COEFFICIENT PARAMETERS
 
@@ -250,6 +268,15 @@ void WallModelTerrainForcing::apply_forcing(
                 target_u = (uold1 - dx[2] * dudz) + feedback_damping * (u_target_old - u_k);
                 target_v = (vold1 - dx[2] * dvdz) + feedback_damping * (v_target_old - v_k);
                 target_w = -wold1 + feedback_damping * (w_target_old - w_k);
+
+                // NEAR AN XHI MASS_INFLOW_OUTFLOW BOUNDARY, DISALLOW A NEGATIVE (BACKFLOW) TARGET_U
+
+                if (xhi_mio) {
+                    const amrex::Real x = prob_lo[0] + (i + 0.5_rt) * dx[0];
+                    if ((prob_hi[0] - x) <= xhi_mio_buffer) {
+                        target_u = amrex::max(target_u, 0.0_rt);
+                    }
+                }
 
                 // STORE SURFACE STRESS FOR POST-PROCESSING
 
