@@ -1,0 +1,2585 @@
+[==========] Running 301 tests from 77 test suites.
+[----------] Global test environment set-up.
+[----------] 4 tests from Configuration
+[ RUN      ] Configuration.Build
+Kynema-SGF SHA = 87502500485402512274153030ed9a2ea4e4d3c6-CLEAN
+AMReX    SHA = 26.06-23-g6de3ba7ac2ba
+[       OK ] Configuration.Build (0 ms)
+[ RUN      ] Configuration.MPI
+MPI configuration: 1 ranks
+MPI VERSION    : CRAY MPICH version 8.1.28.15 (ANL base 3.4a2)
+MPI BUILD INFO : Wed Nov 15 21:30 2023 (git hash 1cde46f)
+
+[       OK ] Configuration.MPI (0 ms)
+[ RUN      ] Configuration.GPU
+Kynema-SGF not built with GPU support
+/projects/total/adsi2168/software/forks/kynema-sgf/unit_tests/test_config.cpp:87: Skipped
+
+
+[  SKIPPED ] Configuration.GPU (0 ms)
+[ RUN      ] Configuration.TPLs
+  Enabled third-party libraries: 
+    NetCDF    4.7.4
+    OpenFAST  4.1
+
+[       OK ] Configuration.TPLs (0 ms)
+[----------] 4 tests from Configuration (0 ms total)
+
+[----------] 13 tests from SimTimeTest
+[ RUN      ] SimTimeTest.init
+[       OK ] SimTimeTest.init (1 ms)
+[ RUN      ] SimTimeTest.time_loop
+0.4
+0.8
+1.2
+1.6
+2
+[       OK ] SimTimeTest.time_loop (0 ms)
+[ RUN      ] SimTimeTest.fixed_dt_loop
+[       OK ] SimTimeTest.fixed_dt_loop (0 ms)
+[ RUN      ] SimTimeTest.fixed_dt_delay
+[       OK ] SimTimeTest.fixed_dt_delay (0 ms)
+[ RUN      ] SimTimeTest.plt_chk_timeinterval_loop
+[       OK ] SimTimeTest.plt_chk_timeinterval_loop (0 ms)
+[ RUN      ] SimTimeTest.plt_chk_timeinterval_loop_perturb
+[       OK ] SimTimeTest.plt_chk_timeinterval_loop_perturb (0 ms)
+[ RUN      ] SimTimeTest.plt_chk_timeinterval_delay
+[       OK ] SimTimeTest.plt_chk_timeinterval_delay (0 ms)
+[ RUN      ] SimTimeTest.enforce_dt_out
+[       OK ] SimTimeTest.enforce_dt_out (0 ms)
+[ RUN      ] SimTimeTest.enforce_timeinterval
+[       OK ] SimTimeTest.enforce_timeinterval (0 ms)
+[ RUN      ] SimTimeTest.enforce_timeinterval_bigtimetol
+[       OK ] SimTimeTest.enforce_timeinterval_bigtimetol (0 ms)
+[ RUN      ] SimTimeTest.enforce_timeinterval_bigdttol
+[       OK ] SimTimeTest.enforce_timeinterval_bigdttol (0 ms)
+[ RUN      ] SimTimeTest.enforce_timeinterval_delay
+[       OK ] SimTimeTest.enforce_timeinterval_delay (0 ms)
+[ RUN      ] SimTimeTest.enforce_chkpt_timeinterval
+[       OK ] SimTimeTest.enforce_chkpt_timeinterval (0 ms)
+[----------] 13 tests from SimTimeTest (4 ms total)
+
+[----------] 13 tests from FieldRepoTest
+[ RUN      ] FieldRepoTest.field_pre_declare
+[       OK ] FieldRepoTest.field_pre_declare (48 ms)
+[ RUN      ] FieldRepoTest.field_declare_checks
+[       OK ] FieldRepoTest.field_declare_checks (46 ms)
+[ RUN      ] FieldRepoTest.field_post_declare
+[       OK ] FieldRepoTest.field_post_declare (0 ms)
+[ RUN      ] FieldRepoTest.field_get
+[       OK ] FieldRepoTest.field_get (0 ms)
+[ RUN      ] FieldRepoTest.field_multiple_states
+[       OK ] FieldRepoTest.field_multiple_states (0 ms)
+[ RUN      ] FieldRepoTest.field_location
+[       OK ] FieldRepoTest.field_location (0 ms)
+[ RUN      ] FieldRepoTest.field_advance_states
+[       OK ] FieldRepoTest.field_advance_states (0 ms)
+[ RUN      ] FieldRepoTest.field_create_state
+[       OK ] FieldRepoTest.field_create_state (0 ms)
+[ RUN      ] FieldRepoTest.scratch_fields
+[       OK ] FieldRepoTest.scratch_fields (0 ms)
+[ RUN      ] FieldRepoTest.int_scratch_fields
+[       OK ] FieldRepoTest.int_scratch_fields (0 ms)
+[ RUN      ] FieldRepoTest.int_fields
+[       OK ] FieldRepoTest.int_fields (0 ms)
+[ RUN      ] FieldRepoTest.default_fillpatch_op
+Initializing boundary conditions for vel
+[       OK ] FieldRepoTest.default_fillpatch_op (0 ms)
+[ RUN      ] FieldRepoTest.field_subviews
+[       OK ] FieldRepoTest.field_subviews (0 ms)
+[----------] 13 tests from FieldRepoTest (99 ms total)
+
+[----------] 1 test from FieldOpsTest
+[ RUN      ] FieldOpsTest.compute_max_magnitude
+[       OK ] FieldOpsTest.compute_max_magnitude (0 ms)
+[----------] 1 test from FieldOpsTest (0 ms total)
+
+[----------] 4 tests from FieldFillPatchTest
+[ RUN      ] FieldFillPatchTest.dirichlet_fp
+[       OK ] FieldFillPatchTest.dirichlet_fp (0 ms)
+[ RUN      ] FieldFillPatchTest.dirichlet_inflow
+[       OK ] FieldFillPatchTest.dirichlet_inflow (0 ms)
+[ RUN      ] FieldFillPatchTest.dirichlet_sibling_fp
+[       OK ] FieldFillPatchTest.dirichlet_sibling_fp (0 ms)
+[ RUN      ] FieldFillPatchTest.dirichlet_sibling_inflow
+[       OK ] FieldFillPatchTest.dirichlet_sibling_inflow (0 ms)
+[----------] 4 tests from FieldFillPatchTest (1 ms total)
+
+[----------] 4 tests from PhysicsTest
+[ RUN      ] PhysicsTest.physics_example
+[       OK ] PhysicsTest.physics_example (0 ms)
+[ RUN      ] PhysicsTest.physics_interface
+Creating Physics instance: PhysicsEx
+[       OK ] PhysicsTest.physics_interface (0 ms)
+[ RUN      ] PhysicsTest.physics_init_inputs
+Creating Physics instance: PhysicsEx
+[       OK ] PhysicsTest.physics_init_inputs (0 ms)
+[ RUN      ] PhysicsTest.physics_test_duplicates
+Creating Physics instance: PhysicsEx
+[       OK ] PhysicsTest.physics_test_duplicates (0 ms)
+[----------] 4 tests from PhysicsTest (1 ms total)
+
+[----------] 2 tests from AuxiliaryFillTest
+[ RUN      ] AuxiliaryFillTest.velocity_cc
+[       OK ] AuxiliaryFillTest.velocity_cc (0 ms)
+[ RUN      ] AuxiliaryFillTest.velocity_face
+[       OK ] AuxiliaryFillTest.velocity_face (0 ms)
+[----------] 2 tests from AuxiliaryFillTest (0 ms total)
+
+[----------] 6 tests from VectorSpace
+[ RUN      ] VectorSpace.vector_create
+[       OK ] VectorSpace.vector_create (0 ms)
+[ RUN      ] VectorSpace.tensor_create
+[       OK ] VectorSpace.tensor_create (0 ms)
+[ RUN      ] VectorSpace.vector_rotations
+[       OK ] VectorSpace.vector_rotations (0 ms)
+[ RUN      ] VectorSpace.device_capture
+[       OK ] VectorSpace.device_capture (0 ms)
+[ RUN      ] VectorSpace.device_lists
+[       OK ] VectorSpace.device_lists (0 ms)
+[ RUN      ] VectorSpace.vector_ops
+[       OK ] VectorSpace.vector_ops (0 ms)
+[----------] 6 tests from VectorSpace (0 ms total)
+
+[----------] 18 tests from ABLMeshTest
+[ RUN      ] ABLMeshTest.abl_local_wall_model
+Initializing boundary conditions for velocity_mueff
+Initializing boundary conditions for velocity
+Initializing boundary conditions for density
+Initializing boundary conditions for p
+Initializing boundary conditions for velocity_src_term
+Initializing boundary conditions for gp
+Creating PDESystem instance: ICNS-Godunov
+Creating TurbulenceModel instance: Laminar-ConstTransport
+ABLWallFunction: log_law_height not specified for ABL physics. Assuming log_law_height = first cell height
+ABLWallFunction: Neither surface_temp_flux nor surface_temp_rate specified for ABL physics. Assuming Neutral Stratification
+Initializing boundary conditions for temperature_mueff
+Initializing boundary conditions for temperature
+Initializing boundary conditions for temperature_src_term
+Creating PDESystem instance: Temperature-Godunov
+Creating ABLStatsBase instance: precursor
+Creating Physics instance: ABL
+Shear Stress model: local
+Heat Flux model: local
+[       OK ] ABLMeshTest.abl_local_wall_model (693 ms)
+[ RUN      ] ABLMeshTest.abl_donelan_wall_model
+Initializing boundary conditions for velocity_mueff
+Initializing boundary conditions for velocity
+Initializing boundary conditions for density
+Initializing boundary conditions for p
+Initializing boundary conditions for velocity_src_term
+Initializing boundary conditions for gp
+Creating PDESystem instance: ICNS-Godunov
+Creating TurbulenceModel instance: Laminar-ConstTransport
+ABLWallFunction: log_law_height not specified for ABL physics. Assuming log_law_height = first cell height
+ABLWallFunction: Neither surface_temp_flux nor surface_temp_rate specified for ABL physics. Assuming Neutral Stratification
+Initializing boundary conditions for temperature_mueff
+Initializing boundary conditions for temperature
+Initializing boundary conditions for temperature_src_term
+Creating PDESystem instance: Temperature-Godunov
+Creating ABLStatsBase instance: precursor
+Creating Physics instance: ABL
+Shear Stress model: donelan
+Heat Flux model: donelan
+[       OK ] ABLMeshTest.abl_donelan_wall_model (10 ms)
+[ RUN      ] ABLMeshTest.abl_initialization
+[       OK ] ABLMeshTest.abl_initialization (2 ms)
+[ RUN      ] ABLMeshTest.abl_init_netcdf
+[       OK ] ABLMeshTest.abl_init_netcdf (6 ms)
+[ RUN      ] ABLMeshTest.abl_init_netcdf_multilevel
+Initializing boundary conditions for velocity
+[       OK ] ABLMeshTest.abl_init_netcdf_multilevel (40 ms)
+[ RUN      ] ABLMeshTest.abl_netcdf_cleanup
+[       OK ] ABLMeshTest.abl_netcdf_cleanup (1 ms)
+[ RUN      ] ABLMeshTest.abl_forcing
+Initializing boundary conditions for velocity_mueff
+Initializing boundary conditions for velocity
+Initializing boundary conditions for density
+Initializing boundary conditions for p
+Initializing boundary conditions for velocity_src_term
+Initializing boundary conditions for gp
+Creating PDESystem instance: ICNS-Godunov
+Initializing boundary conditions for temperature_mueff
+Initializing boundary conditions for temperature
+Initializing boundary conditions for temperature_src_term
+Creating PDESystem instance: Temperature-Godunov
+ABLWallFunction: log_law_height not specified for ABL physics. Assuming log_law_height = first cell height
+ABLWallFunction: Neither surface_temp_flux nor surface_temp_rate specified for ABL physics. Assuming Neutral Stratification
+WARNING: Multiple requests to register PDE: Temperature
+Creating ABLStatsBase instance: precursor
+Creating Physics instance: ABL
+[       OK ] ABLMeshTest.abl_forcing (2 ms)
+[ RUN      ] ABLMeshTest.body_force
+Initializing boundary conditions for velocity_mueff
+Initializing boundary conditions for velocity
+Initializing boundary conditions for density
+Initializing boundary conditions for p
+Initializing boundary conditions for velocity_src_term
+Initializing boundary conditions for gp
+Creating PDESystem instance: ICNS-Godunov
+ABLWallFunction: log_law_height not specified for ABL physics. Assuming log_law_height = first cell height
+ABLWallFunction: Neither surface_temp_flux nor surface_temp_rate specified for ABL physics. Assuming Neutral Stratification
+Initializing boundary conditions for temperature_mueff
+Initializing boundary conditions for temperature
+Initializing boundary conditions for temperature_src_term
+Creating PDESystem instance: Temperature-Godunov
+Creating ABLStatsBase instance: precursor
+Creating Physics instance: ABL
+[       OK ] ABLMeshTest.body_force (2 ms)
+[ RUN      ] ABLMeshTest.geostrophic_forcing
+Initializing boundary conditions for velocity_mueff
+Initializing boundary conditions for velocity
+Initializing boundary conditions for density
+Initializing boundary conditions for p
+Initializing boundary conditions for velocity_src_term
+Initializing boundary conditions for gp
+Creating PDESystem instance: ICNS-Godunov
+ABLWallFunction: log_law_height not specified for ABL physics. Assuming log_law_height = first cell height
+ABLWallFunction: Neither surface_temp_flux nor surface_temp_rate specified for ABL physics. Assuming Neutral Stratification
+Initializing boundary conditions for temperature_mueff
+Initializing boundary conditions for temperature
+Initializing boundary conditions for temperature_src_term
+Creating PDESystem instance: Temperature-Godunov
+Creating ABLStatsBase instance: precursor
+Creating Physics instance: ABL
+Geostrophic forcing: Coriolis factor = 0.0001179889124
+[       OK ] ABLMeshTest.geostrophic_forcing (2 ms)
+[ RUN      ] ABLMeshTest.rayleigh_damping
+Initializing boundary conditions for velocity_mueff
+Initializing boundary conditions for velocity
+Initializing boundary conditions for density
+Initializing boundary conditions for p
+Initializing boundary conditions for velocity_src_term
+Initializing boundary conditions for gp
+Creating PDESystem instance: ICNS-Godunov
+ABLWallFunction: log_law_height not specified for ABL physics. Assuming log_law_height = first cell height
+ABLWallFunction: Neither surface_temp_flux nor surface_temp_rate specified for ABL physics. Assuming Neutral Stratification
+Initializing boundary conditions for temperature_mueff
+Initializing boundary conditions for temperature
+Initializing boundary conditions for temperature_src_term
+Creating PDESystem instance: Temperature-Godunov
+Creating ABLStatsBase instance: precursor
+Creating Physics instance: ABL
+[       OK ] ABLMeshTest.rayleigh_damping (2 ms)
+[ RUN      ] ABLMeshTest.hurricane_forcing
+Initializing boundary conditions for velocity_mueff
+Initializing boundary conditions for velocity
+Initializing boundary conditions for density
+Initializing boundary conditions for p
+Initializing boundary conditions for velocity_src_term
+Initializing boundary conditions for gp
+Creating PDESystem instance: ICNS-Godunov
+ABLWallFunction: log_law_height not specified for ABL physics. Assuming log_law_height = first cell height
+ABLWallFunction: Neither surface_temp_flux nor surface_temp_rate specified for ABL physics. Assuming Neutral Stratification
+Initializing boundary conditions for temperature_mueff
+Initializing boundary conditions for temperature
+Initializing boundary conditions for temperature_src_term
+Creating PDESystem instance: Temperature-Godunov
+Creating ABLStatsBase instance: precursor
+Creating Physics instance: ABL
+Geostrophic forcing: Coriolis factor = 0.0001454441043
+[       OK ] ABLMeshTest.hurricane_forcing (2 ms)
+[ RUN      ] ABLMeshTest.coriolis_const_vel
+Initializing boundary conditions for velocity_mueff
+[       OK ] ABLMeshTest.coriolis_const_vel (2 ms)
+[ RUN      ] ABLMeshTest.coriolis_height_variation
+Initializing boundary conditions for velocity_mueff
+[       OK ] ABLMeshTest.coriolis_height_variation (2 ms)
+[ RUN      ] ABLMeshTest.boussinesq
+Initializing boundary conditions for velocity_mueff
+Initializing boundary conditions for velocity
+Initializing boundary conditions for density
+Initializing boundary conditions for p
+Initializing boundary conditions for velocity_src_term
+Initializing boundary conditions for gp
+Creating PDESystem instance: ICNS-Godunov
+Initializing boundary conditions for temperature_mueff
+Initializing boundary conditions for temperature
+Initializing boundary conditions for temperature_src_term
+Creating PDESystem instance: Temperature-Godunov
+Creating TransportModel instance: ConstTransport
+ABLWallFunction: log_law_height not specified for ABL physics. Assuming log_law_height = first cell height
+ABLWallFunction: Neither surface_temp_flux nor surface_temp_rate specified for ABL physics. Assuming Neutral Stratification
+WARNING: Multiple requests to register PDE: Temperature
+Creating ABLStatsBase instance: precursor
+Creating Physics instance: ABL
+[       OK ] ABLMeshTest.boussinesq (2 ms)
+[ RUN      ] ABLMeshTest.boussinesq_nph
+Initializing boundary conditions for velocity_mueff
+Initializing boundary conditions for velocity
+Initializing boundary conditions for density
+Initializing boundary conditions for p
+Initializing boundary conditions for velocity_src_term
+Initializing boundary conditions for gp
+Creating PDESystem instance: ICNS-Godunov
+Initializing boundary conditions for temperature_mueff
+Initializing boundary conditions for temperature
+Initializing boundary conditions for temperature_src_term
+Creating PDESystem instance: Temperature-Godunov
+Creating TransportModel instance: ConstTransport
+ABLWallFunction: log_law_height not specified for ABL physics. Assuming log_law_height = first cell height
+ABLWallFunction: Neither surface_temp_flux nor surface_temp_rate specified for ABL physics. Assuming Neutral Stratification
+WARNING: Multiple requests to register PDE: Temperature
+Creating ABLStatsBase instance: precursor
+Creating Physics instance: ABL
+[       OK ] ABLMeshTest.boussinesq_nph (2 ms)
+[ RUN      ] ABLMeshTest.densitybuoyancy
+Initializing boundary conditions for velocity_mueff
+Initializing boundary conditions for velocity
+Initializing boundary conditions for density
+Initializing boundary conditions for p
+Initializing boundary conditions for velocity_src_term
+Initializing boundary conditions for gp
+Creating PDESystem instance: ICNS-Godunov
+Initializing boundary conditions for density_mueff
+Initializing boundary conditions for density
+Initializing boundary conditions for density_src_term
+Creating PDESystem instance: Density-Godunov
+Initializing boundary conditions for temperature_mueff
+Initializing boundary conditions for temperature
+Initializing boundary conditions for temperature_src_term
+Creating PDESystem instance: Temperature-Godunov
+ABLWallFunction: log_law_height not specified for ABL physics. Assuming log_law_height = first cell height
+ABLWallFunction: Neither surface_temp_flux nor surface_temp_rate specified for ABL physics. Assuming Neutral Stratification
+WARNING: Multiple requests to register PDE: Temperature
+Creating ABLStatsBase instance: precursor
+Creating Physics instance: ABL
+[       OK ] ABLMeshTest.densitybuoyancy (2 ms)
+[ RUN      ] ABLMeshTest.stats_tke_diffusion
+Initializing boundary conditions for velocity_mueff
+Initializing boundary conditions for velocity
+Initializing boundary conditions for density
+Initializing boundary conditions for p
+Initializing boundary conditions for velocity_src_term
+Initializing boundary conditions for gp
+Creating PDESystem instance: ICNS-Godunov
+using default CellConsLinear interpolation for TKE fillpatch
+Initializing boundary conditions for tke_mueff
+Initializing boundary conditions for tke
+Initializing boundary conditions for tke_src_term
+Creating PDESystem instance: TKE-Godunov
+ABLWallFunction: log_law_height not specified for ABL physics. Assuming log_law_height = first cell height
+ABLWallFunction: Neither surface_temp_flux nor surface_temp_rate specified for ABL physics. Assuming Neutral Stratification
+[       OK ] ABLMeshTest.stats_tke_diffusion (2 ms)
+[ RUN      ] ABLMeshTest.stats_energy_budget
+Initializing boundary conditions for velocity_mueff
+Initializing boundary conditions for velocity
+Initializing boundary conditions for density
+Initializing boundary conditions for p
+Initializing boundary conditions for velocity_src_term
+Initializing boundary conditions for gp
+Creating PDESystem instance: ICNS-Godunov
+ABLWallFunction: log_law_height not specified for ABL physics. Assuming log_law_height = first cell height
+ABLWallFunction: Neither surface_temp_flux nor surface_temp_rate specified for ABL physics. Assuming Neutral Stratification
+Initializing boundary conditions for temperature_mueff
+Initializing boundary conditions for temperature
+Initializing boundary conditions for temperature_src_term
+Creating PDESystem instance: Temperature-Godunov
+Creating ABLStatsBase instance: precursor
+Creating Physics instance: ABL
+Initializing boundary conditions for mu_turb
+using default CellConsLinear interpolation for TKE fillpatch
+Initializing boundary conditions for tke_mueff
+Initializing boundary conditions for tke
+Initializing boundary conditions for tke_src_term
+Creating PDESystem instance: TKE-Godunov
+Creating TurbulenceModel instance: OneEqKsgsM84-ConstTransport
+WARNING: Multiple requests to register PDE: TKE
+Creating TKESource instance: KsgsM84Src
+ABLWallFunction: log_law_height not specified for ABL physics. Assuming log_law_height = first cell height
+ABLWallFunction: Neither surface_temp_flux nor surface_temp_rate specified for ABL physics. Assuming Neutral Stratification
+  MAC_projection                 8            1.72812501       1.628555624e-11
+  tke_solve                      3         0.00432981468       4.112266083e-13
+[       OK ] ABLMeshTest.stats_energy_budget (13 ms)
+[----------] 18 tests from ABLMeshTest (793 ms total)
+
+[----------] 3 tests from ABLSrcTimeTableTest
+[ RUN      ] ABLSrcTimeTableTest.abl
+Initializing boundary conditions for velocity_mueff
+Initializing boundary conditions for velocity
+Initializing boundary conditions for density
+Initializing boundary conditions for p
+Initializing boundary conditions for velocity_src_term
+Initializing boundary conditions for gp
+Creating PDESystem instance: ICNS-Godunov
+ABLWallFunction: log_law_height not specified for ABL physics. Assuming log_law_height = first cell height
+ABLWallFunction: Neither surface_temp_flux nor surface_temp_rate specified for ABL physics. Assuming Neutral Stratification
+Initializing boundary conditions for temperature_mueff
+Initializing boundary conditions for temperature
+Initializing boundary conditions for temperature_src_term
+Creating PDESystem instance: Temperature-Godunov
+Creating ABLStatsBase instance: precursor
+Creating Physics instance: ABL
+WARNING: fixed_dt does not satisfy CFL condition.
+Max. CFL: 0.5 => dt: 0; dt_inp: 0.1
+WARNING: fixed_dt does not satisfy CFL condition.
+Max. CFL: 0.5 => dt: 0; dt_inp: 0.1
+[       OK ] ABLSrcTimeTableTest.abl (4 ms)
+[ RUN      ] ABLSrcTimeTableTest.bodyforce
+Initializing boundary conditions for velocity_mueff
+Initializing boundary conditions for velocity
+Initializing boundary conditions for density
+Initializing boundary conditions for p
+Initializing boundary conditions for velocity_src_term
+Initializing boundary conditions for gp
+Creating PDESystem instance: ICNS-Godunov
+ABLWallFunction: log_law_height not specified for ABL physics. Assuming log_law_height = first cell height
+ABLWallFunction: Neither surface_temp_flux nor surface_temp_rate specified for ABL physics. Assuming Neutral Stratification
+Initializing boundary conditions for temperature_mueff
+Initializing boundary conditions for temperature
+Initializing boundary conditions for temperature_src_term
+Creating PDESystem instance: Temperature-Godunov
+Creating ABLStatsBase instance: precursor
+Creating Physics instance: ABL
+WARNING: fixed_dt does not satisfy CFL condition.
+Max. CFL: 0.5 => dt: 0; dt_inp: 0.1
+WARNING: fixed_dt does not satisfy CFL condition.
+Max. CFL: 0.5 => dt: 0; dt_inp: 0.1
+WARNING: fixed_dt does not satisfy CFL condition.
+Max. CFL: 0.5 => dt: 0; dt_inp: 0.1
+WARNING: fixed_dt does not satisfy CFL condition.
+Max. CFL: 0.5 => dt: 0; dt_inp: 0.1
+[       OK ] ABLSrcTimeTableTest.bodyforce (2 ms)
+[ RUN      ] ABLSrcTimeTableTest.geostrophic
+Initializing boundary conditions for velocity_mueff
+Initializing boundary conditions for velocity
+Initializing boundary conditions for density
+Initializing boundary conditions for p
+Initializing boundary conditions for velocity_src_term
+Initializing boundary conditions for gp
+Creating PDESystem instance: ICNS-Godunov
+ABLWallFunction: log_law_height not specified for ABL physics. Assuming log_law_height = first cell height
+ABLWallFunction: Neither surface_temp_flux nor surface_temp_rate specified for ABL physics. Assuming Neutral Stratification
+Initializing boundary conditions for temperature_mueff
+Initializing boundary conditions for temperature
+Initializing boundary conditions for temperature_src_term
+Creating PDESystem instance: Temperature-Godunov
+Creating ABLStatsBase instance: precursor
+Creating Physics instance: ABL
+Geostrophic forcing: Coriolis factor = 0.0001458423163
+WARNING: fixed_dt does not satisfy CFL condition.
+Max. CFL: 0.5 => dt: 0; dt_inp: 0.1
+WARNING: fixed_dt does not satisfy CFL condition.
+Max. CFL: 0.5 => dt: 0; dt_inp: 0.1
+[       OK ] ABLSrcTimeTableTest.geostrophic (2 ms)
+[----------] 3 tests from ABLSrcTimeTableTest (9 ms total)
+
+[----------] 1 test from TerrainTest
+[ RUN      ] TerrainTest.terrain
+Initializing boundary conditions for velocity_mueff
+Initializing boundary conditions for velocity
+Initializing boundary conditions for density
+Initializing boundary conditions for p
+Initializing boundary conditions for velocity_src_term
+Initializing boundary conditions for gp
+Creating PDESystem instance: ICNS-Godunov
+Initializing boundary conditions for terrainz0
+Initializing boundary conditions for terrain_height
+Initializing boundary conditions for terrain_damping
+[       OK ] TerrainTest.terrain (15 ms)
+[----------] 1 test from TerrainTest (15 ms total)
+
+[----------] 1 test from ForestTest
+[ RUN      ] ForestTest.forest
+Initializing boundary conditions for velocity_mueff
+Initializing boundary conditions for velocity
+Initializing boundary conditions for density
+Initializing boundary conditions for p
+Initializing boundary conditions for velocity_src_term
+Initializing boundary conditions for gp
+Creating PDESystem instance: ICNS-Godunov
+Initializing boundary conditions for forest_id
+Initializing boundary conditions for forest_drag
+[       OK ] ForestTest.forest (5 ms)
+[----------] 1 test from ForestTest (5 ms total)
+
+[----------] 1 test from PointCloudForestTest
+[ RUN      ] PointCloudForestTest.point_cloud_selection_and_interpolation
+Initializing boundary conditions for velocity_mueff
+Initializing boundary conditions for velocity
+Initializing boundary conditions for density
+Initializing boundary conditions for p
+Initializing boundary conditions for velocity_src_term
+Initializing boundary conditions for gp
+Creating PDESystem instance: ICNS-Godunov
+Initializing boundary conditions for forest_id
+Initializing boundary conditions for forest_drag
+[       OK ] PointCloudForestTest.point_cloud_selection_and_interpolation (5 ms)
+[----------] 1 test from PointCloudForestTest (5 ms total)
+
+[----------] 1 test from ActuatorTest
+[ RUN      ] ActuatorTest.act_container
+[       OK ] ActuatorTest.act_container (1 ms)
+[----------] 1 test from ActuatorTest (1 ms total)
+
+[----------] 3 tests from ActFlatPlateTest
+[ RUN      ] ActFlatPlateTest.act_model_init
+[       OK ] ActFlatPlateTest.act_model_init (1 ms)
+[ RUN      ] ActFlatPlateTest.actuator_init
+Creating ActuatorModel instance: TestFlatPlateLine
+Creating ActuatorModel instance: TestFlatPlateLine
+[       OK ] ActFlatPlateTest.actuator_init (4 ms)
+[ RUN      ] ActFlatPlateTest.flat_plate_init
+Creating ActuatorModel instance: FlatPlateLine
+Creating ActuatorModel instance: FlatPlateLine
+[       OK ] ActFlatPlateTest.flat_plate_init (4 ms)
+[----------] 3 tests from ActFlatPlateTest (10 ms total)
+
+[----------] 2 tests from ActFixedWingTest
+[ RUN      ] ActFixedWingTest.linear_motion
+Creating ActuatorModel instance: TestFixedWingLine
+[       OK ] ActFixedWingTest.linear_motion (19 ms)
+[ RUN      ] ActFixedWingTest.pitch_table_2D
+Creating ActuatorModel instance: TestFixedWingLine
+Wing Ops: Current wing pitch (at time 0 s) is 0 degrees.
+Wing Ops: Current wing pitch (at time 0 s) is 0 degrees.
+Wing Ops: Current wing pitch (at time 0 s) is 0 degrees.
+[       OK ] ActFixedWingTest.pitch_table_2D (5 ms)
+[----------] 2 tests from ActFixedWingTest (25 ms total)
+
+[----------] 3 tests from Airfoil
+[ RUN      ] Airfoil.read_txt_file
+[       OK ] Airfoil.read_txt_file (0 ms)
+[ RUN      ] Airfoil.read_openfast_file
+[       OK ] Airfoil.read_openfast_file (0 ms)
+[ RUN      ] Airfoil.airfoil_lookup
+[       OK ] Airfoil.airfoil_lookup (0 ms)
+[----------] 3 tests from Airfoil (0 ms total)
+
+[----------] 5 tests from CylindricalTransformation
+[ RUN      ] CylindricalTransformation.distances_on_z_aligned_circle
+[       OK ] CylindricalTransformation.distances_on_z_aligned_circle (0 ms)
+[ RUN      ] CylindricalTransformation.returns_correct_radius_when_origin_is_a_point
+[       OK ] CylindricalTransformation.returns_correct_radius_when_origin_is_a_point (0 ms)
+[ RUN      ] CylindricalTransformation.distances_on_shifted_circle
+[       OK ] CylindricalTransformation.distances_on_shifted_circle (0 ms)
+[ RUN      ] CylindricalTransformation.distances_on_rotated_circle
+[       OK ] CylindricalTransformation.distances_on_rotated_circle (0 ms)
+[ RUN      ] CylindricalTransformation.distances_on_rotated_shifted_circle
+[       OK ] CylindricalTransformation.distances_on_rotated_shifted_circle (0 ms)
+[----------] 5 tests from CylindricalTransformation (0 ms total)
+
+[----------] 8 tests from UniformCtTest
+[ RUN      ] UniformCtTest.compute_vecs_from_yaw
+[       OK ] UniformCtTest.compute_vecs_from_yaw (0 ms)
+[ RUN      ] UniformCtTest.compute_vecs_from_tilt
+[       OK ] UniformCtTest.compute_vecs_from_tilt (0 ms)
+[ RUN      ] UniformCtTest.compute_vecs_with_different_north
+[       OK ] UniformCtTest.compute_vecs_with_different_north (0 ms)
+[ RUN      ] UniformCtTest.compute_vecs_from_yaw_and_tilt_with_different_north
+[       OK ] UniformCtTest.compute_vecs_from_yaw_and_tilt_with_different_north (0 ms)
+[ RUN      ] UniformCtTest.required_parameters_dont_throw
+[       OK ] UniformCtTest.required_parameters_dont_throw (0 ms)
+[ RUN      ] UniformCtTest.single_vel_pos_matches_normal_and_mag_of_specifying_vector
+[       OK ] UniformCtTest.single_vel_pos_matches_normal_and_mag_of_specifying_vector (0 ms)
+[ RUN      ] UniformCtTest.yawed_normal_is_opposite_expected_wind_dir
+[       OK ] UniformCtTest.yawed_normal_is_opposite_expected_wind_dir (0 ms)
+[ RUN      ] UniformCtTest.sample_yawed_normal_is_opposite_expected_wind_dir
+[       OK ] UniformCtTest.sample_yawed_normal_is_opposite_expected_wind_dir (0 ms)
+[----------] 8 tests from UniformCtTest (1 ms total)
+
+[----------] 2 tests from TestFLLCData
+[ RUN      ] TestFLLCData.data_initializes_with_cviews
+[       OK ] TestFLLCData.data_initializes_with_cviews (0 ms)
+[ RUN      ] TestFLLCData.data_initializes_with_cviews_nonuniform
+[       OK ] TestFLLCData.data_initializes_with_cviews_nonuniform (0 ms)
+[----------] 2 tests from TestFLLCData (0 ms total)
+
+[----------] 2 tests from ActJoukowskyTest
+[ RUN      ] ActJoukowskyTest.parsing_operations
+Creating ActuatorModel instance: TestJoukowskyDisk
+[       OK ] ActJoukowskyTest.parsing_operations (1 ms)
+[ RUN      ] ActJoukowskyTest.execution
+Creating ActuatorModel instance: TestJoukowskyDisk
+[       OK ] ActJoukowskyTest.execution (6 ms)
+[----------] 2 tests from ActJoukowskyTest (7 ms total)
+
+[----------] 2 tests from FastIfaceTest
+[ RUN      ] FastIfaceTest.fast_init
+/projects/total/adsi2168/software/forks/kynema-sgf/unit_tests/wind_energy/actuator/test_fast_iface.cpp:96: Skipped
+
+
+[  SKIPPED ] FastIfaceTest.fast_init (2 ms)
+[ RUN      ] FastIfaceTest.fast_replay
+/projects/total/adsi2168/software/forks/kynema-sgf/unit_tests/wind_energy/actuator/test_fast_iface.cpp:143: Skipped
+
+
+[  SKIPPED ] FastIfaceTest.fast_replay (0 ms)
+[----------] 2 tests from FastIfaceTest (3 ms total)
+
+[----------] 2 tests from ActTurbineFastTest/0, where TypeParam = kynema_sgf::actuator::ActSrcLine
+[ RUN      ] ActTurbineFastTest/0.test_ops
+Initializing turbine:T1
+TurbineFast: no density conflict detected, but no density arguments found to check against.
+Creating ExtSolver instance: OpenFAST
+/projects/total/adsi2168/software/forks/kynema-sgf/unit_tests/wind_energy/actuator/test_turbine_fast.cpp:129: Skipped
+
+
+[  SKIPPED ] ActTurbineFastTest/0.test_ops (1 ms)
+[ RUN      ] ActTurbineFastTest/0.fast_turbine
+Creating ActuatorModel instance: TurbineFastLine
+Initializing turbine:T1
+TurbineFast: no density conflict detected, but no density arguments found to check against.
+/projects/total/adsi2168/software/forks/kynema-sgf/unit_tests/wind_energy/actuator/test_turbine_fast.cpp:150: Skipped
+
+
+[  SKIPPED ] ActTurbineFastTest/0.fast_turbine (1 ms)
+[----------] 2 tests from ActTurbineFastTest/0 (2 ms total)
+
+[----------] 2 tests from ActTurbineFastTest/1, where TypeParam = kynema_sgf::actuator::ActSrcDisk
+[ RUN      ] ActTurbineFastTest/1.test_ops
+Initializing turbine:T1
+TurbineFast: no density conflict detected, but no density arguments found to check against.
+Creating ExtSolver instance: OpenFAST
+/projects/total/adsi2168/software/forks/kynema-sgf/unit_tests/wind_energy/actuator/test_turbine_fast.cpp:129: Skipped
+
+
+[  SKIPPED ] ActTurbineFastTest/1.test_ops (1 ms)
+[ RUN      ] ActTurbineFastTest/1.fast_turbine
+Creating ActuatorModel instance: TurbineFastDisk
+Initializing turbine:T1
+TurbineFast: no density conflict detected, but no density arguments found to check against.
+/projects/total/adsi2168/software/forks/kynema-sgf/unit_tests/wind_energy/actuator/test_turbine_fast.cpp:150: Skipped
+
+
+[  SKIPPED ] ActTurbineFastTest/1.fast_turbine (1 ms)
+[----------] 2 tests from ActTurbineFastTest/1 (2 ms total)
+
+[----------] 3 tests from ABLOffshoreMeshTest
+[ RUN      ] ABLOffshoreMeshTest.abl_forcing
+Initializing boundary conditions for velocity_mueff
+Initializing boundary conditions for velocity
+Initializing boundary conditions for density
+Initializing boundary conditions for p
+Initializing boundary conditions for velocity_src_term
+Initializing boundary conditions for gp
+Creating PDESystem instance: ICNS-Godunov
+Initializing boundary conditions for temperature_mueff
+Initializing boundary conditions for temperature
+Initializing boundary conditions for temperature_src_term
+Creating PDESystem instance: Temperature-Godunov
+Initializing boundary conditions for vof_mueff
+Initializing boundary conditions for levelset
+Initializing boundary conditions for interface_curvature
+Initializing boundary conditions for vof
+Initializing boundary conditions for density
+Initializing boundary conditions for vof_src_term
+Creating PDESystem instance: VOF-Godunov
+Initializing boundary conditions for levelset
+WARNING: single-phase density has been specified but will not be used! (MultiPhase physics)
+Creating Physics instance: MultiPhase
+ABLWallFunction: log_law_height not specified for ABL physics. Assuming log_law_height = first cell height
+ABLWallFunction: Neither surface_temp_flux nor surface_temp_rate specified for ABL physics. Assuming Neutral Stratification
+WARNING: Multiple requests to register PDE: Temperature
+Creating ABLStatsBase instance: precursor
+Creating Physics instance: ABL
+[       OK ] ABLOffshoreMeshTest.abl_forcing (5 ms)
+[ RUN      ] ABLOffshoreMeshTest.geostrophic_forcing
+Initializing boundary conditions for velocity_mueff
+Initializing boundary conditions for velocity
+Initializing boundary conditions for density
+Initializing boundary conditions for p
+Initializing boundary conditions for velocity_src_term
+Initializing boundary conditions for gp
+Creating PDESystem instance: ICNS-Godunov
+Initializing boundary conditions for vof_mueff
+Initializing boundary conditions for levelset
+Initializing boundary conditions for interface_curvature
+Initializing boundary conditions for vof
+Initializing boundary conditions for density
+Initializing boundary conditions for vof_src_term
+Creating PDESystem instance: VOF-Godunov
+Initializing boundary conditions for levelset
+WARNING: single-phase density has been specified but will not be used! (MultiPhase physics)
+Creating Physics instance: MultiPhase
+ABLWallFunction: log_law_height not specified for ABL physics. Assuming log_law_height = first cell height
+ABLWallFunction: Neither surface_temp_flux nor surface_temp_rate specified for ABL physics. Assuming Neutral Stratification
+Initializing boundary conditions for temperature_mueff
+Initializing boundary conditions for temperature
+Initializing boundary conditions for temperature_src_term
+Creating PDESystem instance: Temperature-Godunov
+Creating ABLStatsBase instance: precursor
+Creating Physics instance: ABL
+Geostrophic forcing: Coriolis factor = 0.0001179889124
+[       OK ] ABLOffshoreMeshTest.geostrophic_forcing (5 ms)
+[ RUN      ] ABLOffshoreMeshTest.boussinesq
+Initializing boundary conditions for velocity_mueff
+Initializing boundary conditions for velocity
+Initializing boundary conditions for density
+Initializing boundary conditions for p
+Initializing boundary conditions for velocity_src_term
+Initializing boundary conditions for gp
+Creating PDESystem instance: ICNS-Godunov
+Initializing boundary conditions for temperature_mueff
+Initializing boundary conditions for temperature
+Initializing boundary conditions for temperature_src_term
+Creating PDESystem instance: Temperature-Godunov
+Creating TransportModel instance: ConstTransport
+Initializing boundary conditions for vof_mueff
+Initializing boundary conditions for levelset
+Initializing boundary conditions for interface_curvature
+Initializing boundary conditions for vof
+Initializing boundary conditions for density
+Initializing boundary conditions for vof_src_term
+Creating PDESystem instance: VOF-Godunov
+Initializing boundary conditions for levelset
+WARNING: single-phase density has been specified but will not be used! (MultiPhase physics)
+Creating Physics instance: MultiPhase
+ABLWallFunction: log_law_height not specified for ABL physics. Assuming log_law_height = first cell height
+ABLWallFunction: Neither surface_temp_flux nor surface_temp_rate specified for ABL physics. Assuming Neutral Stratification
+WARNING: Multiple requests to register PDE: Temperature
+Creating ABLStatsBase instance: precursor
+Creating Physics instance: ABL
+[       OK ] ABLOffshoreMeshTest.boussinesq (2 ms)
+[----------] 3 tests from ABLOffshoreMeshTest (13 ms total)
+
+[----------] 3 tests from NestRefineTest
+[ RUN      ] NestRefineTest.box_refine
+[       OK ] NestRefineTest.box_refine (1 ms)
+[ RUN      ] NestRefineTest.level_warning
+[       OK ] NestRefineTest.level_warning (0 ms)
+[ RUN      ] NestRefineTest.bbox_limits
+[       OK ] NestRefineTest.bbox_limits (0 ms)
+[----------] 3 tests from NestRefineTest (2 ms total)
+
+[----------] 5 tests from PlaneAveragingTest
+[ RUN      ] PlaneAveragingTest.test_constant
+[       OK ] PlaneAveragingTest.test_constant (0 ms)
+[ RUN      ] PlaneAveragingTest.test_linear
+[       OK ] PlaneAveragingTest.test_linear (0 ms)
+[ RUN      ] PlaneAveragingTest.test_xdir
+[       OK ] PlaneAveragingTest.test_xdir (0 ms)
+[ RUN      ] PlaneAveragingTest.test_ydir
+[       OK ] PlaneAveragingTest.test_ydir (0 ms)
+[ RUN      ] PlaneAveragingTest.test_zdir
+[       OK ] PlaneAveragingTest.test_zdir (0 ms)
+[----------] 5 tests from PlaneAveragingTest (2 ms total)
+
+[----------] 5 tests from FieldPlaneAveragingTest
+[ RUN      ] FieldPlaneAveragingTest.test_constant
+[       OK ] FieldPlaneAveragingTest.test_constant (0 ms)
+[ RUN      ] FieldPlaneAveragingTest.test_linear
+[       OK ] FieldPlaneAveragingTest.test_linear (0 ms)
+[ RUN      ] FieldPlaneAveragingTest.test_xdir
+[       OK ] FieldPlaneAveragingTest.test_xdir (0 ms)
+[ RUN      ] FieldPlaneAveragingTest.test_ydir
+[       OK ] FieldPlaneAveragingTest.test_ydir (0 ms)
+[ RUN      ] FieldPlaneAveragingTest.test_zdir
+[       OK ] FieldPlaneAveragingTest.test_zdir (0 ms)
+[----------] 5 tests from FieldPlaneAveragingTest (1 ms total)
+
+[----------] 2 tests from FieldPlaneAveragingFineTest
+[ RUN      ] FieldPlaneAveragingFineTest.test_linear_fine_only
+[       OK ] FieldPlaneAveragingFineTest.test_linear_fine_only (1 ms)
+[ RUN      ] FieldPlaneAveragingFineTest.test_linear
+[       OK ] FieldPlaneAveragingFineTest.test_linear (0 ms)
+[----------] 2 tests from FieldPlaneAveragingFineTest (2 ms total)
+
+[----------] 5 tests from SecondMomentAveragingTest
+[ RUN      ] SecondMomentAveragingTest.test_constant
+[       OK ] SecondMomentAveragingTest.test_constant (0 ms)
+[ RUN      ] SecondMomentAveragingTest.test_linear
+[       OK ] SecondMomentAveragingTest.test_linear (0 ms)
+[ RUN      ] SecondMomentAveragingTest.test_xdir
+[       OK ] SecondMomentAveragingTest.test_xdir (0 ms)
+[ RUN      ] SecondMomentAveragingTest.test_ydir
+[       OK ] SecondMomentAveragingTest.test_ydir (0 ms)
+[ RUN      ] SecondMomentAveragingTest.test_zdir
+[       OK ] SecondMomentAveragingTest.test_zdir (0 ms)
+[----------] 5 tests from SecondMomentAveragingTest (2 ms total)
+
+[----------] 1 test from SecondMomentAveragingMaxLevelTest
+[ RUN      ] SecondMomentAveragingMaxLevelTest.test_max_level
+[       OK ] SecondMomentAveragingMaxLevelTest.test_max_level (0 ms)
+[----------] 1 test from SecondMomentAveragingMaxLevelTest (0 ms total)
+
+[----------] 5 tests from ThirdMomentAveragingTest
+[ RUN      ] ThirdMomentAveragingTest.test_constant
+[       OK ] ThirdMomentAveragingTest.test_constant (0 ms)
+[ RUN      ] ThirdMomentAveragingTest.test_linear
+[       OK ] ThirdMomentAveragingTest.test_linear (0 ms)
+[ RUN      ] ThirdMomentAveragingTest.test_xdir
+[       OK ] ThirdMomentAveragingTest.test_xdir (0 ms)
+[ RUN      ] ThirdMomentAveragingTest.test_ydir
+[       OK ] ThirdMomentAveragingTest.test_ydir (0 ms)
+[ RUN      ] ThirdMomentAveragingTest.test_zdir
+[       OK ] ThirdMomentAveragingTest.test_zdir (0 ms)
+[----------] 5 tests from ThirdMomentAveragingTest (2 ms total)
+
+[----------] 1 test from ThirdMomentAveragingMaxLevelTest
+[ RUN      ] ThirdMomentAveragingMaxLevelTest.test_max_level
+[       OK ] ThirdMomentAveragingMaxLevelTest.test_max_level (1 ms)
+[----------] 1 test from ThirdMomentAveragingMaxLevelTest (1 ms total)
+
+[----------] 10 tests from SamplingTest
+[ RUN      ] SamplingTest.scontainer
+[       OK ] SamplingTest.scontainer (0 ms)
+[ RUN      ] SamplingTest.sampling
+Creating DerivedQty instance: mag_vorticity
+Creating SamplerBase instance: LineSampler
+[       OK ] SamplingTest.sampling (1 ms)
+[ RUN      ] SamplingTest.sampling_timing
+Creating DerivedQty instance: mag_vorticity
+Creating SamplerBase instance: LineSampler
+[       OK ] SamplingTest.sampling_timing (2 ms)
+[ RUN      ] SamplingTest.probe_sampler
+[       OK ] SamplingTest.probe_sampler (2 ms)
+[ RUN      ] SamplingTest.plane_sampler
+[       OK ] SamplingTest.plane_sampler (1 ms)
+[ RUN      ] SamplingTest.volume_sampler
+WARNING: VolumeSampler: Out of domain corner was truncated to match domain
+[       OK ] SamplingTest.volume_sampler (0 ms)
+[ RUN      ] SamplingTest.spinner_sampler
+WARNING: LineSampler: Out of domain line was truncated to match domain
+[       OK ] SamplingTest.spinner_sampler (1 ms)
+[ RUN      ] SamplingTest.radar_sampler
+[       OK ] SamplingTest.radar_sampler (8 ms)
+[ RUN      ] SamplingTest.sampling_utils
+[       OK ] SamplingTest.sampling_utils (0 ms)
+[ RUN      ] SamplingTest.quadrature
+[       OK ] SamplingTest.quadrature (0 ms)
+[----------] 10 tests from SamplingTest (19 ms total)
+
+[----------] 10 tests from LinearInterpolation
+[ RUN      ] LinearInterpolation.check_bounds
+[       OK ] LinearInterpolation.check_bounds (0 ms)
+[ RUN      ] LinearInterpolation.bisection_search
+[       OK ] LinearInterpolation.bisection_search (0 ms)
+[ RUN      ] LinearInterpolation.nearest_search
+[       OK ] LinearInterpolation.nearest_search (0 ms)
+[ RUN      ] LinearInterpolation.find_index
+[       OK ] LinearInterpolation.find_index (0 ms)
+[ RUN      ] LinearInterpolation.lin_interp_single
+[       OK ] LinearInterpolation.lin_interp_single (0 ms)
+[ RUN      ] LinearInterpolation.lin_interp_single_multicomponent
+[       OK ] LinearInterpolation.lin_interp_single_multicomponent (0 ms)
+[ RUN      ] LinearInterpolation.bilin_interp_single
+[       OK ] LinearInterpolation.bilin_interp_single (0 ms)
+[ RUN      ] LinearInterpolation.lin_interp
+[       OK ] LinearInterpolation.lin_interp (0 ms)
+[ RUN      ] LinearInterpolation.lin_monotonic
+[       OK ] LinearInterpolation.lin_monotonic (0 ms)
+[ RUN      ] LinearInterpolation.lin_interp_angle
+[       OK ] LinearInterpolation.lin_interp_angle (0 ms)
+[----------] 10 tests from LinearInterpolation (0 ms total)
+
+[----------] 1 test from Integrals
+[ RUN      ] Integrals.trapezoid_integration_xsquared
+[       OK ] Integrals.trapezoid_integration_xsquared (0 ms)
+[----------] 1 test from Integrals (0 ms total)
+
+[----------] 10 tests from FreeSurfaceTest
+[ RUN      ] FreeSurfaceTest.point
+[       OK ] FreeSurfaceTest.point (2 ms)
+[ RUN      ] FreeSurfaceTest.plane
+WARNING: FreeSurfaceSampler: Out of domain plane was truncated to match domain
+[       OK ] FreeSurfaceTest.plane (3 ms)
+[ RUN      ] FreeSurfaceTest.multivalued
+WARNING: FreeSurfaceSampler: Out of domain plane was truncated to match domain
+[       OK ] FreeSurfaceTest.multivalued (4 ms)
+[ RUN      ] FreeSurfaceTest.sloped
+[       OK ] FreeSurfaceTest.sloped (3 ms)
+[ RUN      ] FreeSurfaceTest.multisampler
+[       OK ] FreeSurfaceTest.multisampler (3 ms)
+[ RUN      ] FreeSurfaceTest.regrid
+Creating RefinementCriteria instance: FieldRefinement
+WARNING: FreeSurfaceSampler: Out of domain plane was truncated to match domain
+[       OK ] FreeSurfaceTest.regrid (30 ms)
+[ RUN      ] FreeSurfaceTest.point_diffuse
+Creating OversetManager instance: TIOGA
+[       OK ] FreeSurfaceTest.point_diffuse (3 ms)
+[ RUN      ] FreeSurfaceTest.point_outliers
+[       OK ] FreeSurfaceTest.point_outliers (3 ms)
+[ RUN      ] FreeSurfaceTest.point_outliers_off
+[       OK ] FreeSurfaceTest.point_outliers_off (1 ms)
+[ RUN      ] FreeSurfaceTest.point_diffuse_in_single_phase
+Creating OversetManager instance: TIOGA
+[       OK ] FreeSurfaceTest.point_diffuse_in_single_phase (2 ms)
+[----------] 10 tests from FreeSurfaceTest (58 ms total)
+
+[----------] 1 test from WaveEnergyTest
+[ RUN      ] WaveEnergyTest.checkoutput
+Initializing boundary conditions for velocity_mueff
+Initializing boundary conditions for velocity
+Initializing boundary conditions for density
+Initializing boundary conditions for p
+Initializing boundary conditions for velocity_src_term
+Initializing boundary conditions for gp
+Creating PDESystem instance: ICNS-Godunov
+Initializing boundary conditions for vof_mueff
+Initializing boundary conditions for levelset
+Initializing boundary conditions for interface_curvature
+Initializing boundary conditions for vof
+Initializing boundary conditions for density
+Initializing boundary conditions for vof_src_term
+Creating PDESystem instance: VOF-Godunov
+Initializing boundary conditions for levelset
+Creating Physics instance: MultiPhase
+[       OK ] WaveEnergyTest.checkoutput (0 ms)
+[----------] 1 test from WaveEnergyTest (0 ms total)
+
+[----------] 5 tests from DiagnosticsTest
+[ RUN      ] DiagnosticsTest.Max_Vel
+
+L-inf norm vels: cell-centered
+..............................................................................
+Max u:         0.9565972222 |  Location (x,y,z): 0.2083333333, 4.791666667,       1.75
+Min u:         -21.96006944 |  Location (x,y,z): 4.791666667, 4.791666667,       1.75
+Max v:               2.0625 |  Location (x,y,z): 4.791666667, 4.791666667,       1.75
+Min v:              -0.9375 |  Location (x,y,z): 4.791666667, 4.791666667,       0.25
+Max w:          4.891884947 |  Location (x,y,z): 4.791666667, 0.2083333333,       1.75
+Min w:         -4.999311725 |  Location (x,y,z): 4.791666667,      3.125,       1.75
+..............................................................................
+
+[       OK ] DiagnosticsTest.Max_Vel (0 ms)
+[ RUN      ] DiagnosticsTest.Max_MACvel
+
+L-inf norm MAC vels: face-centered
+..............................................................................
+Max u:                    1 |  Location (x,y,z):          0, 4.791666667,       1.75
+Min u:                  -24 |  Location (x,y,z):         -5, 4.791666667,       1.75
+Max v:               2.0625 |  Location (x,y,z): 4.791666667, 4.583333333,       1.75
+Min v:              -0.9375 |  Location (x,y,z): 4.791666667, 4.583333333,       0.25
+Max w:          2.999587035 |  Location (x,y,z): 4.791666667,      3.125,        1.5
+Min w:         -2.935130968 |  Location (x,y,z): 4.791666667, 0.2083333333,        1.5
+..............................................................................
+
+[       OK ] DiagnosticsTest.Max_MACvel (0 ms)
+[ RUN      ] DiagnosticsTest.Max_Vel_MultiLevel
+
+L-inf norm vels: cell-centered
+..............................................................................
+Max u:         0.9891493056 |  Location (x,y,z): 0.1041666667, 4.895833333,      1.875
+Min u:         -22.96918403 |  Location (x,y,z): 4.895833333, 4.895833333,      1.875
+Max v:             2.515625 |  Location (x,y,z): 4.895833333, 4.895833333,      1.875
+Min v:            -0.984375 |  Location (x,y,z): 4.895833333, 4.895833333,      0.125
+Max w:          4.972897784 |  Location (x,y,z): 4.895833333, 0.1041666667,      1.875
+Min w:         -4.980839231 |  Location (x,y,z): 4.895833333, 3.229166667,      1.875
+..............................................................................
+
+[       OK ] DiagnosticsTest.Max_Vel_MultiLevel (2 ms)
+[ RUN      ] DiagnosticsTest.Max_MACvel_MultiLevel
+
+L-inf norm MAC vels: face-centered
+..............................................................................
+Max u:                    1 |  Location (x,y,z):          0, 4.895833333,      1.875
+Min u:                  -24 |  Location (x,y,z):         -5, 4.895833333,      1.875
+Max v:             2.515625 |  Location (x,y,z): 4.895833333, 4.791666667,      1.875
+Min v:            -0.984375 |  Location (x,y,z): 4.895833333, 4.791666667,      0.125
+Max w:          2.988503539 |  Location (x,y,z): 4.895833333, 3.229166667,       1.75
+Min w:          -2.98373867 |  Location (x,y,z): 4.895833333, 0.1041666667,       1.75
+..............................................................................
+
+[       OK ] DiagnosticsTest.Max_MACvel_MultiLevel (2 ms)
+[ RUN      ] DiagnosticsTest.Field_Extrema
+[       OK ] DiagnosticsTest.Field_Extrema (0 ms)
+[----------] 5 tests from DiagnosticsTest (7 ms total)
+
+[----------] 1 test from MultiLevelVectorTest
+[ RUN      ] MultiLevelVectorTest.test_multilevelvector
+[       OK ] MultiLevelVectorTest.test_multilevelvector (0 ms)
+[----------] 1 test from MultiLevelVectorTest (0 ms total)
+
+[----------] 7 tests from FieldNormsTest
+[ RUN      ] FieldNormsTest.levelmask_on
+Creating RefinementCriteria instance: FieldRefinement
+Initializing I/O manager
+[       OK ] FieldNormsTest.levelmask_on (16 ms)
+[ RUN      ] FieldNormsTest.levelmask_on_with_box
+Creating RefinementCriteria instance: FieldRefinement
+Initializing I/O manager
+[       OK ] FieldNormsTest.levelmask_on_with_box (4 ms)
+[ RUN      ] FieldNormsTest.levelmask_off
+Creating RefinementCriteria instance: FieldRefinement
+Initializing I/O manager
+[       OK ] FieldNormsTest.levelmask_off (14 ms)
+[ RUN      ] FieldNormsTest.levelmask_on_int_refinement
+Creating RefinementCriteria instance: FieldRefinement
+Initializing I/O manager
+[       OK ] FieldNormsTest.levelmask_on_int_refinement (15 ms)
+[ RUN      ] FieldNormsTest.levelmask_not_cc
+Creating RefinementCriteria instance: FieldRefinement
+Initializing I/O manager
+[       OK ] FieldNormsTest.levelmask_not_cc (19 ms)
+[ RUN      ] FieldNormsTest.norm_types
+Initializing I/O manager
+[       OK ] FieldNormsTest.norm_types (3 ms)
+[ RUN      ] FieldNormsTest.norm_vector_magnitude
+Initializing I/O manager
+[       OK ] FieldNormsTest.norm_vector_magnitude (2 ms)
+[----------] 7 tests from FieldNormsTest (75 ms total)
+
+[----------] 6 tests from TensorOps
+[ RUN      ] TensorOps.vec_mag
+[       OK ] TensorOps.vec_mag (0 ms)
+[ RUN      ] TensorOps.vec_normalize
+[       OK ] TensorOps.vec_normalize (0 ms)
+[ RUN      ] TensorOps.dot_prod
+[       OK ] TensorOps.dot_prod (0 ms)
+[ RUN      ] TensorOps.cross_prod
+[       OK ] TensorOps.cross_prod (0 ms)
+[ RUN      ] TensorOps.transform_vec
+[       OK ] TensorOps.transform_vec (0 ms)
+[ RUN      ] TensorOps.inv_transform_vec
+[       OK ] TensorOps.inv_transform_vec (0 ms)
+[----------] 6 tests from TensorOps (0 ms total)
+
+[----------] 7 tests from PostProcTimeTest
+[ RUN      ] PostProcTimeTest.time_interval
+Creating PostProcessBase instance: FieldNorms
+[       OK ] PostProcTimeTest.time_interval (7 ms)
+[ RUN      ] PostProcTimeTest.time_interval_perturb
+Creating PostProcessBase instance: FieldNorms
+[       OK ] PostProcTimeTest.time_interval_perturb (1 ms)
+[ RUN      ] PostProcTimeTest.enforce_time_interval
+Creating PostProcessBase instance: FieldNorms
+[       OK ] PostProcTimeTest.enforce_time_interval (1 ms)
+[ RUN      ] PostProcTimeTest.output_end
+Creating PostProcessBase instance: FieldNorms
+[       OK ] PostProcTimeTest.output_end (1 ms)
+[ RUN      ] PostProcTimeTest.time_output_end
+Creating PostProcessBase instance: FieldNorms
+[       OK ] PostProcTimeTest.time_output_end (1 ms)
+[ RUN      ] PostProcTimeTest.no_output_end
+Creating PostProcessBase instance: FieldNorms
+[       OK ] PostProcTimeTest.no_output_end (1 ms)
+[ RUN      ] PostProcTimeTest.conflict_fails
+Creating PostProcessBase instance: FieldNorms
+[       OK ] PostProcTimeTest.conflict_fails (1 ms)
+[----------] 7 tests from PostProcTimeTest (16 ms total)
+
+[----------] 4 tests from TimeAveragingTest
+[ RUN      ] TimeAveragingTest.every_step
+Creating PostProcessBase instance: TimeAveraging
+TimeAveraging: Initializing tavg
+    - initializing average labeled means, type ReAveraging
+Initializing boundary conditions for temperature_mean_tavg
+Creating FieldTimeAverage instance: ReAveraging
+WARNING: fixed_dt does not satisfy CFL condition.
+Max. CFL: 0.5 => dt: 0; dt_inp: 0.1
+WARNING: fixed_dt does not satisfy CFL condition.
+Max. CFL: 0.5 => dt: 0; dt_inp: 0.1
+WARNING: fixed_dt does not satisfy CFL condition.
+Max. CFL: 0.5 => dt: 0; dt_inp: 0.1
+WARNING: fixed_dt does not satisfy CFL condition.
+Max. CFL: 0.5 => dt: 0; dt_inp: 0.1
+WARNING: fixed_dt does not satisfy CFL condition.
+Max. CFL: 0.5 => dt: 0; dt_inp: 0.1
+WARNING: fixed_dt does not satisfy CFL condition.
+Max. CFL: 0.5 => dt: 0; dt_inp: 0.1
+WARNING: fixed_dt does not satisfy CFL condition.
+Max. CFL: 0.5 => dt: 0; dt_inp: 0.1
+WARNING: fixed_dt does not satisfy CFL condition.
+Max. CFL: 0.5 => dt: 0; dt_inp: 0.1
+WARNING: fixed_dt does not satisfy CFL condition.
+Max. CFL: 0.5 => dt: 0; dt_inp: 0.1
+WARNING: fixed_dt does not satisfy CFL condition.
+Max. CFL: 0.5 => dt: 0; dt_inp: 0.1
+[       OK ] TimeAveragingTest.every_step (0 ms)
+[ RUN      ] TimeAveragingTest.phase_linear
+Creating PostProcessBase instance: TimeAveraging
+TimeAveraging: Initializing tavg
+    - initializing average labeled means, type ReAveraging
+Initializing boundary conditions for temperature_mean_tavg
+Creating FieldTimeAverage instance: ReAveraging
+WARNING: fixed_dt does not satisfy CFL condition.
+Max. CFL: 0.5 => dt: 0; dt_inp: 0.1
+WARNING: fixed_dt does not satisfy CFL condition.
+Max. CFL: 0.5 => dt: 0; dt_inp: 0.1
+WARNING: fixed_dt does not satisfy CFL condition.
+Max. CFL: 0.5 => dt: 0; dt_inp: 0.1
+WARNING: fixed_dt does not satisfy CFL condition.
+Max. CFL: 0.5 => dt: 0; dt_inp: 0.1
+WARNING: fixed_dt does not satisfy CFL condition.
+Max. CFL: 0.5 => dt: 0; dt_inp: 0.1
+WARNING: fixed_dt does not satisfy CFL condition.
+Max. CFL: 0.5 => dt: 0; dt_inp: 0.1
+WARNING: fixed_dt does not satisfy CFL condition.
+Max. CFL: 0.5 => dt: 0; dt_inp: 0.1
+WARNING: fixed_dt does not satisfy CFL condition.
+Max. CFL: 0.5 => dt: 0; dt_inp: 0.1
+WARNING: fixed_dt does not satisfy CFL condition.
+Max. CFL: 0.5 => dt: 0; dt_inp: 0.1
+WARNING: fixed_dt does not satisfy CFL condition.
+Max. CFL: 0.5 => dt: 0; dt_inp: 0.1
+[       OK ] TimeAveragingTest.phase_linear (0 ms)
+[ RUN      ] TimeAveragingTest.phase_stairstep_offset
+Creating PostProcessBase instance: TimeAveraging
+TimeAveraging: Initializing tavg
+    - initializing average labeled means, type ReAveraging
+Initializing boundary conditions for temperature_mean_tavg
+Creating FieldTimeAverage instance: ReAveraging
+WARNING: fixed_dt does not satisfy CFL condition.
+Max. CFL: 0.5 => dt: 0; dt_inp: 0.1
+WARNING: fixed_dt does not satisfy CFL condition.
+Max. CFL: 0.5 => dt: 0; dt_inp: 0.1
+WARNING: fixed_dt does not satisfy CFL condition.
+Max. CFL: 0.5 => dt: 0; dt_inp: 0.1
+WARNING: fixed_dt does not satisfy CFL condition.
+Max. CFL: 0.5 => dt: 0; dt_inp: 0.1
+WARNING: fixed_dt does not satisfy CFL condition.
+Max. CFL: 0.5 => dt: 0; dt_inp: 0.1
+WARNING: fixed_dt does not satisfy CFL condition.
+Max. CFL: 0.5 => dt: 0; dt_inp: 0.1
+WARNING: fixed_dt does not satisfy CFL condition.
+Max. CFL: 0.5 => dt: 0; dt_inp: 0.1
+WARNING: fixed_dt does not satisfy CFL condition.
+Max. CFL: 0.5 => dt: 0; dt_inp: 0.1
+WARNING: fixed_dt does not satisfy CFL condition.
+Max. CFL: 0.5 => dt: 0; dt_inp: 0.1
+WARNING: fixed_dt does not satisfy CFL condition.
+Max. CFL: 0.5 => dt: 0; dt_inp: 0.1
+[       OK ] TimeAveragingTest.phase_stairstep_offset (0 ms)
+[ RUN      ] TimeAveragingTest.mismatch_time_interval
+Creating PostProcessBase instance: TimeAveraging
+TimeAveraging: Initializing tavg
+    - initializing average labeled means, type ReAveraging
+Initializing boundary conditions for temperature_mean_tavg
+Creating FieldTimeAverage instance: ReAveraging
+WARNING: fixed_dt does not satisfy CFL condition.
+Max. CFL: 0.5 => dt: 0; dt_inp: 0.1
+WARNING: fixed_dt does not satisfy CFL condition.
+Max. CFL: 0.5 => dt: 0; dt_inp: 0.1
+WARNING: fixed_dt does not satisfy CFL condition.
+Max. CFL: 0.5 => dt: 0; dt_inp: 0.1
+WARNING: fixed_dt does not satisfy CFL condition.
+Max. CFL: 0.5 => dt: 0; dt_inp: 0.1
+WARNING: fixed_dt does not satisfy CFL condition.
+Max. CFL: 0.5 => dt: 0; dt_inp: 0.1
+WARNING: fixed_dt does not satisfy CFL condition.
+Max. CFL: 0.5 => dt: 0; dt_inp: 0.1
+WARNING: fixed_dt does not satisfy CFL condition.
+Max. CFL: 0.5 => dt: 0; dt_inp: 0.1
+WARNING: fixed_dt does not satisfy CFL condition.
+Max. CFL: 0.5 => dt: 0; dt_inp: 0.1
+WARNING: fixed_dt does not satisfy CFL condition.
+Max. CFL: 0.5 => dt: 0; dt_inp: 0.1
+WARNING: fixed_dt does not satisfy CFL condition.
+Max. CFL: 0.5 => dt: 0; dt_inp: 0.1
+[       OK ] TimeAveragingTest.mismatch_time_interval (0 ms)
+[----------] 4 tests from TimeAveragingTest (2 ms total)
+
+[----------] 1 test from SubvolumeTest
+[ RUN      ] SubvolumeTest.rectangular_subvolume_output
+Creating SubvolumeBase instance: Rectangular
+RectangularSubvolume chunk1: Using source level 0 with output stride (1, 1, 1). Source cell resolution is (4, 4, 4); output cell resolution is (4, 4, 4)
+RectangularSubvolume chunk1: Source sampling extent is ((0,0,0) (31,31,63) (0,0,0))
+Creating SubvolumeBase instance: Rectangular
+RectangularSubvolume chunk2: Using source level 0 with output stride (2, 4, 3). Source cell resolution is (4, 4, 4); output cell resolution is (8, 16, 12)
+RectangularSubvolume chunk2: Source sampling extent is ((0,0,0) (6,12,9) (0,0,0))
+Writing subvolume into post_processing/subvolume_chunk100000
+Writing subvolume into post_processing/subvolume_chunk200000
+[       OK ] SubvolumeTest.rectangular_subvolume_output (19 ms)
+[----------] 1 test from SubvolumeTest (19 ms total)
+
+[----------] 3 tests from NetCDFUtils
+[ RUN      ] NetCDFUtils.ncfile
+[       OK ] NetCDFUtils.ncfile (0 ms)
+[ RUN      ] NetCDFUtils.ncgroups
+[       OK ] NetCDFUtils.ncgroups (0 ms)
+[ RUN      ] NetCDFUtils.var_io
+[       OK ] NetCDFUtils.var_io (0 ms)
+[----------] 3 tests from NetCDFUtils (1 ms total)
+
+[----------] 2 tests from PDETest
+[ RUN      ] PDETest.test_pde_create_godunov
+Initializing boundary conditions for velocity_mueff
+Initializing boundary conditions for velocity
+Initializing boundary conditions for density
+Initializing boundary conditions for p
+Initializing boundary conditions for velocity_src_term
+Initializing boundary conditions for gp
+Creating PDESystem instance: ICNS-Godunov
+Initializing boundary conditions for temperature_mueff
+Initializing boundary conditions for temperature
+Initializing boundary conditions for temperature_src_term
+Creating PDESystem instance: Temperature-Godunov
+[       OK ] PDETest.test_pde_create_godunov (0 ms)
+[ RUN      ] PDETest.test_pde_create_mol
+Initializing boundary conditions for velocity_mueff
+Initializing boundary conditions for velocity
+Initializing boundary conditions for density
+Initializing boundary conditions for p
+Initializing boundary conditions for velocity_src_term
+Initializing boundary conditions for gp
+Creating PDESystem instance: ICNS-MOL
+Initializing boundary conditions for temperature_mueff
+Initializing boundary conditions for temperature
+Initializing boundary conditions for temperature_src_term
+Creating PDESystem instance: Temperature-MOL
+[       OK ] PDETest.test_pde_create_mol (0 ms)
+[----------] 2 tests from PDETest (1 ms total)
+
+[----------] 1 test from ICNSConstDensTest
+[ RUN      ] ICNSConstDensTest.nonunity
+[       OK ] ICNSConstDensTest.nonunity (0 ms)
+[----------] 1 test from ICNSConstDensTest (0 ms total)
+
+[----------] 4 tests from GravityForcingTest
+[ RUN      ] GravityForcingTest.full_term_u
+Initializing boundary conditions for velocity_mueff
+Initializing boundary conditions for velocity
+Initializing boundary conditions for density
+Initializing boundary conditions for p
+Initializing boundary conditions for velocity_src_term
+Initializing boundary conditions for gp
+Creating PDESystem instance: ICNS-Godunov
+Creating TransportModel instance: ConstTransport
+Creating TurbulenceModel instance: Laminar-ConstTransport
+Initializing I/O manager
+Creating mesh... done
+Grid summary: 
+  Level 0   8 grids  64 cells  100 % of domain
+            smallest grid: 2 x 2 x 2  biggest grid: 2 x 2 x 2
+  Total     8 grids  64 cells
+
+Cell aspect ratio (dy/dx  dz/dx  dz/dy): 1  0.125  0.125
+
+Creating MomentumSource instance: GravityForcing
+[       OK ] GravityForcingTest.full_term_u (1 ms)
+[ RUN      ] GravityForcingTest.full_term_rhou
+Initializing boundary conditions for velocity_mueff
+Initializing boundary conditions for velocity
+Initializing boundary conditions for density
+Initializing boundary conditions for p
+Initializing boundary conditions for velocity_src_term
+Initializing boundary conditions for gp
+Creating PDESystem instance: ICNS-Godunov
+Creating TransportModel instance: ConstTransport
+Creating TurbulenceModel instance: Laminar-ConstTransport
+Initializing I/O manager
+Creating mesh... done
+Grid summary: 
+  Level 0   8 grids  64 cells  100 % of domain
+            smallest grid: 2 x 2 x 2  biggest grid: 2 x 2 x 2
+  Total     8 grids  64 cells
+
+Cell aspect ratio (dy/dx  dz/dx  dz/dy): 1  0.125  0.125
+
+Creating MomentumSource instance: GravityForcing
+[       OK ] GravityForcingTest.full_term_rhou (1 ms)
+[ RUN      ] GravityForcingTest.perturb_const
+Initializing boundary conditions for velocity_mueff
+Initializing boundary conditions for velocity
+Initializing boundary conditions for density
+Initializing boundary conditions for p
+Initializing boundary conditions for velocity_src_term
+Initializing boundary conditions for gp
+Creating PDESystem instance: ICNS-Godunov
+Creating TransportModel instance: ConstTransport
+Creating TurbulenceModel instance: Laminar-ConstTransport
+Initializing I/O manager
+Creating mesh... done
+Grid summary: 
+  Level 0   8 grids  64 cells  100 % of domain
+            smallest grid: 2 x 2 x 2  biggest grid: 2 x 2 x 2
+  Total     8 grids  64 cells
+
+Cell aspect ratio (dy/dx  dz/dx  dz/dy): 1  0.125  0.125
+
+Creating MomentumSource instance: GravityForcing
+[       OK ] GravityForcingTest.perturb_const (1 ms)
+[ RUN      ] GravityForcingTest.perturb_field
+Initializing boundary conditions for velocity_mueff
+Initializing boundary conditions for velocity
+Initializing boundary conditions for density
+Initializing boundary conditions for p
+Initializing boundary conditions for velocity_src_term
+Initializing boundary conditions for gp
+Creating PDESystem instance: ICNS-Godunov
+Creating TransportModel instance: ConstTransport
+Creating TurbulenceModel instance: Laminar-ConstTransport
+Initializing I/O manager
+Creating mesh... done
+Grid summary: 
+  Level 0   8 grids  64 cells  100 % of domain
+            smallest grid: 2 x 2 x 2  biggest grid: 2 x 2 x 2
+  Total     8 grids  64 cells
+
+Cell aspect ratio (dy/dx  dz/dx  dz/dy): 1  0.125  0.125
+
+Creating MomentumSource instance: GravityForcing
+[       OK ] GravityForcingTest.perturb_field (1 ms)
+[----------] 4 tests from GravityForcingTest (7 ms total)
+
+[----------] 2 tests from ICNSInitTest
+[ RUN      ] ICNSInitTest.2level
+Initializing boundary conditions for velocity_mueff
+Initializing boundary conditions for velocity
+Initializing boundary conditions for density
+Initializing boundary conditions for p
+Initializing boundary conditions for velocity_src_term
+Initializing boundary conditions for gp
+Creating PDESystem instance: ICNS-Godunov
+[       OK ] ICNSInitTest.2level (41 ms)
+[ RUN      ] ICNSInitTest.generic_2level
+Initializing boundary conditions for generic
+[       OK ] ICNSInitTest.generic_2level (0 ms)
+[----------] 2 tests from ICNSInitTest (42 ms total)
+
+[----------] 2 tests from ExplicitDiffusionRK2Test
+[ RUN      ] ExplicitDiffusionRK2Test.old_approach
+Initializing boundary conditions for velocity_mueff
+Initializing boundary conditions for velocity
+Initializing boundary conditions for density
+Initializing boundary conditions for p
+Initializing boundary conditions for velocity_src_term
+Initializing boundary conditions for gp
+Creating PDESystem instance: ICNS-Godunov
+Creating TurbulenceModel instance: Laminar-ConstTransport
+using default CellConsLinear interpolation for TKE fillpatch
+Initializing boundary conditions for tke_mueff
+Initializing boundary conditions for tke
+Initializing boundary conditions for tke_src_term
+Creating PDESystem instance: TKE-Godunov
+[       OK ] ExplicitDiffusionRK2Test.old_approach (1 ms)
+[ RUN      ] ExplicitDiffusionRK2Test.correct_approach
+Initializing boundary conditions for velocity_mueff
+Initializing boundary conditions for velocity
+Initializing boundary conditions for density
+Initializing boundary conditions for p
+Initializing boundary conditions for velocity_src_term
+Initializing boundary conditions for gp
+Creating PDESystem instance: ICNS-Godunov
+Creating TurbulenceModel instance: Laminar-ConstTransport
+using default CellConsLinear interpolation for TKE fillpatch
+Initializing boundary conditions for tke_mueff
+Initializing boundary conditions for tke
+Initializing boundary conditions for tke_src_term
+Creating PDESystem instance: TKE-Godunov
+[       OK ] ExplicitDiffusionRK2Test.correct_approach (1 ms)
+[----------] 2 tests from ExplicitDiffusionRK2Test (2 ms total)
+
+[----------] 1 test from TurbTest
+[ RUN      ] TurbTest.test_turb_create
+TurbulenceModel 20
+ - KLAxell-TwoPhaseTransport
+ - KOmegaSSTIDDES-TwoPhaseTransport
+ - KLAxell-ConstTransport
+ - KOmegaSSTIDDES-ConstTransport
+ - KOmegaSST-ConstTransport
+ - Smagorinsky-ConstTransport
+ - AMDNoTherm-TwoPhaseTransport
+ - OneEqKsgsM84-ConstTransport
+ - Laminar-TwoPhaseTransport
+ - Kosovic-ConstTransport
+ - OneEqKsgsM84-TwoPhaseTransport
+ - KOmegaSST-TwoPhaseTransport
+ - Kosovic-TwoPhaseTransport
+ - OneEqKsgsS94-TwoPhaseTransport
+ - Smagorinsky-TwoPhaseTransport
+ - AMD-ConstTransport
+ - OneEqKsgsS94-ConstTransport
+ - Laminar-ConstTransport
+ - AMDNoTherm-ConstTransport
+ - AMD-TwoPhaseTransport
+[       OK ] TurbTest.test_turb_create (0 ms)
+[----------] 1 test from TurbTest (0 ms total)
+
+[----------] 5 tests from TurbLESTest
+[ RUN      ] TurbLESTest.test_smag_setup_calc
+Initializing boundary conditions for velocity_mueff
+Initializing boundary conditions for velocity
+Initializing boundary conditions for density
+Initializing boundary conditions for p
+Initializing boundary conditions for velocity_src_term
+Initializing boundary conditions for gp
+Creating PDESystem instance: ICNS-Godunov
+Initializing boundary conditions for mu_turb
+Creating TurbulenceModel instance: Smagorinsky-ConstTransport
+[       OK ] TurbLESTest.test_smag_setup_calc (1 ms)
+[ RUN      ] TurbLESTest.test_1eqKsgs_setup_calc
+Initializing boundary conditions for velocity_mueff
+Initializing boundary conditions for velocity
+Initializing boundary conditions for density
+Initializing boundary conditions for p
+Initializing boundary conditions for velocity_src_term
+Initializing boundary conditions for gp
+Creating PDESystem instance: ICNS-Godunov
+Creating TransportModel instance: ConstTransport
+ABLWallFunction: log_law_height not specified for ABL physics. Assuming log_law_height = first cell height
+ABLWallFunction: Surface temperature rate mode is selected.
+ABLWallFunction: Initial surface temperature not found for ABL. Assuming to be equal to the reference temperature
+ABLWallFunction: Surface temperature heating/cooling start time (surface_temp_rate_tstart) not found for ABL. Assuming zero.0
+Initializing boundary conditions for temperature_mueff
+Initializing boundary conditions for temperature
+Initializing boundary conditions for temperature_src_term
+Creating PDESystem instance: Temperature-Godunov
+Creating ABLStatsBase instance: precursor
+Creating Physics instance: ABL
+Initializing boundary conditions for mu_turb
+using default CellConsLinear interpolation for TKE fillpatch
+Initializing boundary conditions for tke_mueff
+Initializing boundary conditions for tke
+Initializing boundary conditions for tke_src_term
+Creating PDESystem instance: TKE-Godunov
+Creating TurbulenceModel instance: OneEqKsgsM84-ConstTransport
+[       OK ] TurbLESTest.test_1eqKsgs_setup_calc (1 ms)
+[ RUN      ] TurbLESTest.test_AMD_setup_calc
+Initializing boundary conditions for velocity_mueff
+Initializing boundary conditions for velocity
+Initializing boundary conditions for density
+Initializing boundary conditions for p
+Initializing boundary conditions for velocity_src_term
+Initializing boundary conditions for gp
+Creating PDESystem instance: ICNS-Godunov
+ABLWallFunction: log_law_height not specified for ABL physics. Assuming log_law_height = first cell height
+ABLWallFunction: Neither surface_temp_flux nor surface_temp_rate specified for ABL physics. Assuming Neutral Stratification
+Initializing boundary conditions for temperature_mueff
+Initializing boundary conditions for temperature
+Initializing boundary conditions for temperature_src_term
+Creating PDESystem instance: Temperature-Godunov
+Creating ABLStatsBase instance: precursor
+Creating Physics instance: ABL
+Initializing boundary conditions for mu_turb
+Creating TurbulenceModel instance: AMD-ConstTransport
+[       OK ] TurbLESTest.test_AMD_setup_calc (1 ms)
+[ RUN      ] TurbLESTest.test_AMDNoTherm_setup_calc
+Initializing boundary conditions for velocity_mueff
+Initializing boundary conditions for velocity
+Initializing boundary conditions for density
+Initializing boundary conditions for p
+Initializing boundary conditions for velocity_src_term
+Initializing boundary conditions for gp
+Creating PDESystem instance: ICNS-Godunov
+Initializing boundary conditions for mu_turb
+Creating TurbulenceModel instance: AMDNoTherm-ConstTransport
+[       OK ] TurbLESTest.test_AMDNoTherm_setup_calc (1 ms)
+[ RUN      ] TurbLESTest.test_kosovic_setup_calc
+Initializing boundary conditions for velocity_mueff
+Initializing boundary conditions for velocity
+Initializing boundary conditions for density
+Initializing boundary conditions for p
+Initializing boundary conditions for velocity_src_term
+Initializing boundary conditions for gp
+Creating PDESystem instance: ICNS-Godunov
+ABLWallFunction: log_law_height not specified for ABL physics. Assuming log_law_height = first cell height
+ABLWallFunction: Neither surface_temp_flux nor surface_temp_rate specified for ABL physics. Assuming Neutral Stratification
+Initializing boundary conditions for temperature_mueff
+Initializing boundary conditions for temperature
+Initializing boundary conditions for temperature_src_term
+Creating PDESystem instance: Temperature-Godunov
+Creating ABLStatsBase instance: precursor
+Creating Physics instance: ABL
+Initializing boundary conditions for mu_turb
+Creating TurbulenceModel instance: Kosovic-ConstTransport
+[       OK ] TurbLESTest.test_kosovic_setup_calc (1 ms)
+[----------] 5 tests from TurbLESTest (7 ms total)
+
+[----------] 1 test from TurbRANSTest
+[ RUN      ] TurbRANSTest.test_1eqKrans_setup_calc
+Initializing boundary conditions for velocity_mueff
+Initializing boundary conditions for velocity
+Initializing boundary conditions for density
+Initializing boundary conditions for p
+Initializing boundary conditions for velocity_src_term
+Initializing boundary conditions for gp
+Creating PDESystem instance: ICNS-Godunov
+ABLWallFunction: log_law_height not specified for ABL physics. Assuming log_law_height = first cell height
+ABLWallFunction: Surface temperature flux mode is selected.
+Initializing boundary conditions for temperature_mueff
+Initializing boundary conditions for temperature
+Initializing boundary conditions for temperature_src_term
+Creating PDESystem instance: Temperature-Godunov
+Creating ABLStatsBase instance: precursor
+Creating Physics instance: ABL
+Initializing boundary conditions for mu_turb
+using default CellConsLinear interpolation for TKE fillpatch
+Initializing boundary conditions for tke_mueff
+Initializing boundary conditions for tke
+Initializing boundary conditions for tke_src_term
+Creating PDESystem instance: TKE-Godunov
+Creating TurbulenceModel instance: KLAxell-ConstTransport
+[       OK ] TurbRANSTest.test_1eqKrans_setup_calc (2 ms)
+[----------] 1 test from TurbRANSTest (2 ms total)
+
+[----------] 6 tests from TurbLESTestBC
+[ RUN      ] TurbLESTestBC.test_1eqKsgs_noslip
+Initializing boundary conditions for velocity_mueff
+Initializing boundary conditions for velocity
+Initializing boundary conditions for density
+Initializing boundary conditions for p
+Initializing boundary conditions for velocity_src_term
+Initializing boundary conditions for gp
+Creating PDESystem instance: ICNS-Godunov
+ABLWallFunction: log_law_height not specified for ABL physics. Assuming log_law_height = first cell height
+ABLWallFunction: Neither surface_temp_flux nor surface_temp_rate specified for ABL physics. Assuming Neutral Stratification
+Initializing boundary conditions for temperature_mueff
+Initializing boundary conditions for temperature
+Initializing boundary conditions for temperature_src_term
+Creating PDESystem instance: Temperature-Godunov
+Creating ABLStatsBase instance: precursor
+Creating Physics instance: ABL
+Initializing boundary conditions for mu_turb
+using default CellConsLinear interpolation for TKE fillpatch
+Initializing boundary conditions for tke_mueff
+Initializing boundary conditions for tke
+Initializing boundary conditions for tke_src_term
+Creating PDESystem instance: TKE-Godunov
+Creating TurbulenceModel instance: OneEqKsgsM84-ConstTransport
+Shear Stress model: moeng
+Heat Flux model: moeng
+[       OK ] TurbLESTestBC.test_1eqKsgs_noslip (8 ms)
+[ RUN      ] TurbLESTestBC.test_1eqKsgs_slip
+Initializing boundary conditions for velocity_mueff
+Initializing boundary conditions for velocity
+Initializing boundary conditions for density
+Initializing boundary conditions for p
+Initializing boundary conditions for velocity_src_term
+Initializing boundary conditions for gp
+Creating PDESystem instance: ICNS-Godunov
+ABLWallFunction: log_law_height not specified for ABL physics. Assuming log_law_height = first cell height
+ABLWallFunction: Neither surface_temp_flux nor surface_temp_rate specified for ABL physics. Assuming Neutral Stratification
+Initializing boundary conditions for temperature_mueff
+Initializing boundary conditions for temperature
+Initializing boundary conditions for temperature_src_term
+Creating PDESystem instance: Temperature-Godunov
+Creating ABLStatsBase instance: precursor
+Creating Physics instance: ABL
+Initializing boundary conditions for mu_turb
+using default CellConsLinear interpolation for TKE fillpatch
+Initializing boundary conditions for tke_mueff
+Initializing boundary conditions for tke
+Initializing boundary conditions for tke_src_term
+Creating PDESystem instance: TKE-Godunov
+Creating TurbulenceModel instance: OneEqKsgsM84-ConstTransport
+Shear Stress model: moeng
+Heat Flux model: moeng
+[       OK ] TurbLESTestBC.test_1eqKsgs_slip (8 ms)
+[ RUN      ] TurbLESTestBC.test_1eqKsgs_wallmodel
+Initializing boundary conditions for velocity_mueff
+Initializing boundary conditions for velocity
+Initializing boundary conditions for density
+Initializing boundary conditions for p
+Initializing boundary conditions for velocity_src_term
+Initializing boundary conditions for gp
+Creating PDESystem instance: ICNS-Godunov
+ABLWallFunction: log_law_height not specified for ABL physics. Assuming log_law_height = first cell height
+ABLWallFunction: Neither surface_temp_flux nor surface_temp_rate specified for ABL physics. Assuming Neutral Stratification
+Initializing boundary conditions for temperature_mueff
+Initializing boundary conditions for temperature
+Initializing boundary conditions for temperature_src_term
+Creating PDESystem instance: Temperature-Godunov
+Creating ABLStatsBase instance: precursor
+Creating Physics instance: ABL
+Initializing boundary conditions for mu_turb
+using default CellConsLinear interpolation for TKE fillpatch
+Initializing boundary conditions for tke_mueff
+Initializing boundary conditions for tke
+Initializing boundary conditions for tke_src_term
+Creating PDESystem instance: TKE-Godunov
+Creating TurbulenceModel instance: OneEqKsgsM84-ConstTransport
+Shear Stress model: local
+Heat Flux model: local
+[       OK ] TurbLESTestBC.test_1eqKsgs_wallmodel (8 ms)
+[ RUN      ] TurbLESTestBC.test_1eqKsgs_wallmodel_failnofillpatch
+Initializing boundary conditions for velocity_mueff
+Initializing boundary conditions for velocity
+Initializing boundary conditions for density
+Initializing boundary conditions for p
+Initializing boundary conditions for velocity_src_term
+Initializing boundary conditions for gp
+Creating PDESystem instance: ICNS-Godunov
+ABLWallFunction: log_law_height not specified for ABL physics. Assuming log_law_height = first cell height
+ABLWallFunction: Neither surface_temp_flux nor surface_temp_rate specified for ABL physics. Assuming Neutral Stratification
+Initializing boundary conditions for temperature_mueff
+Initializing boundary conditions for temperature
+Initializing boundary conditions for temperature_src_term
+Creating PDESystem instance: Temperature-Godunov
+Creating ABLStatsBase instance: precursor
+Creating Physics instance: ABL
+Initializing boundary conditions for mu_turb
+using default CellConsLinear interpolation for TKE fillpatch
+Initializing boundary conditions for tke_mueff
+Initializing boundary conditions for tke
+Initializing boundary conditions for tke_src_term
+Creating PDESystem instance: TKE-Godunov
+Creating TurbulenceModel instance: OneEqKsgsM84-ConstTransport
+Shear Stress model: local
+Heat Flux model: local
+[       OK ] TurbLESTestBC.test_1eqKsgs_wallmodel_failnofillpatch (8 ms)
+[ RUN      ] TurbLESTestBC.test_1eqKsgs_zerogradient
+Initializing boundary conditions for velocity_mueff
+Initializing boundary conditions for velocity
+Initializing boundary conditions for density
+Initializing boundary conditions for p
+Initializing boundary conditions for velocity_src_term
+Initializing boundary conditions for gp
+Creating PDESystem instance: ICNS-Godunov
+ABLWallFunction: log_law_height not specified for ABL physics. Assuming log_law_height = first cell height
+ABLWallFunction: Neither surface_temp_flux nor surface_temp_rate specified for ABL physics. Assuming Neutral Stratification
+Initializing boundary conditions for temperature_mueff
+Initializing boundary conditions for temperature
+Initializing boundary conditions for temperature_src_term
+Creating PDESystem instance: Temperature-Godunov
+Creating ABLStatsBase instance: precursor
+Creating Physics instance: ABL
+Initializing boundary conditions for mu_turb
+using default CellConsLinear interpolation for TKE fillpatch
+Initializing boundary conditions for tke_mueff
+Initializing boundary conditions for tke
+Initializing boundary conditions for tke_src_term
+Creating PDESystem instance: TKE-Godunov
+Creating TurbulenceModel instance: OneEqKsgsM84-ConstTransport
+Shear Stress model: moeng
+Heat Flux model: moeng
+[       OK ] TurbLESTestBC.test_1eqKsgs_zerogradient (7 ms)
+[ RUN      ] TurbLESTestBC.test_1eqKsgs_symmetricwall
+Initializing boundary conditions for velocity_mueff
+Initializing boundary conditions for velocity
+Initializing boundary conditions for density
+Initializing boundary conditions for p
+Initializing boundary conditions for velocity_src_term
+Initializing boundary conditions for gp
+Creating PDESystem instance: ICNS-Godunov
+ABLWallFunction: log_law_height not specified for ABL physics. Assuming log_law_height = first cell height
+ABLWallFunction: Neither surface_temp_flux nor surface_temp_rate specified for ABL physics. Assuming Neutral Stratification
+Initializing boundary conditions for temperature_mueff
+Initializing boundary conditions for temperature
+Initializing boundary conditions for temperature_src_term
+Creating PDESystem instance: Temperature-Godunov
+Creating ABLStatsBase instance: precursor
+Creating Physics instance: ABL
+Initializing boundary conditions for mu_turb
+using default CellConsLinear interpolation for TKE fillpatch
+Initializing boundary conditions for tke_mueff
+Initializing boundary conditions for tke
+Initializing boundary conditions for tke_src_term
+Creating PDESystem instance: TKE-Godunov
+Creating TurbulenceModel instance: OneEqKsgsM84-ConstTransport
+Shear Stress model: moeng
+Heat Flux model: moeng
+[       OK ] TurbLESTestBC.test_1eqKsgs_symmetricwall (7 ms)
+[----------] 6 tests from TurbLESTestBC (49 ms total)
+
+[----------] 1 test from FvmOpTestFiltering
+[ RUN      ] FvmOpTestFiltering.filter
+[       OK ] FvmOpTestFiltering.filter (0 ms)
+[----------] 1 test from FvmOpTestFiltering (0 ms total)
+
+[----------] 1 test from FvmOpTestCurvature
+[ RUN      ] FvmOpTestCurvature.curvature
+[       OK ] FvmOpTestCurvature.curvature (0 ms)
+[----------] 1 test from FvmOpTestCurvature (0 ms total)
+
+[----------] 3 tests from FvmOperatorsTest
+[ RUN      ] FvmOperatorsTest.gradient
+[       OK ] FvmOperatorsTest.gradient (0 ms)
+[ RUN      ] FvmOperatorsTest.laplacian
+[       OK ] FvmOperatorsTest.laplacian (0 ms)
+[ RUN      ] FvmOperatorsTest.divergence
+[       OK ] FvmOperatorsTest.divergence (0 ms)
+[----------] 3 tests from FvmOperatorsTest (2 ms total)
+
+[----------] 5 tests from FvmOpTest
+[ RUN      ] FvmOpTest.nonlinearsum
+[       OK ] FvmOpTest.nonlinearsum (1 ms)
+[ RUN      ] FvmOpTest.strainrate
+[       OK ] FvmOpTest.strainrate (1 ms)
+[ RUN      ] FvmOpTest.vorticity
+[       OK ] FvmOpTest.vorticity (0 ms)
+[ RUN      ] FvmOpTest.vorticity_mag
+[       OK ] FvmOpTest.vorticity_mag (1 ms)
+[ RUN      ] FvmOpTest.q_criterion
+[       OK ] FvmOpTest.q_criterion (0 ms)
+[----------] 5 tests from FvmOpTest (5 ms total)
+
+[----------] 5 tests from ChannelBuilderTest
+[ RUN      ] ChannelBuilderTest.trapezoid_inside_outside
+[       OK ] ChannelBuilderTest.trapezoid_inside_outside (0 ms)
+[ RUN      ] ChannelBuilderTest.ellipse_inside_outside
+[       OK ] ChannelBuilderTest.ellipse_inside_outside (0 ms)
+[ RUN      ] ChannelBuilderTest.is_point_within_planes
+[       OK ] ChannelBuilderTest.is_point_within_planes (0 ms)
+[ RUN      ] ChannelBuilderTest.interpolate_to_get_local_dimensions
+[       OK ] ChannelBuilderTest.interpolate_to_get_local_dimensions (0 ms)
+[ RUN      ] ChannelBuilderTest.transform_to_local_coordinates
+[       OK ] ChannelBuilderTest.transform_to_local_coordinates (0 ms)
+[----------] 5 tests from ChannelBuilderTest (0 ms total)
+
+[----------] 4 tests from VOFOpTest
+[ RUN      ] VOFOpTest.volume_intercept
+[       OK ] VOFOpTest.volume_intercept (0 ms)
+[ RUN      ] VOFOpTest.interface_normal
+[       OK ] VOFOpTest.interface_normal (0 ms)
+[ RUN      ] VOFOpTest.interface_plane
+[       OK ] VOFOpTest.interface_plane (0 ms)
+[ RUN      ] VOFOpTest.interface_normal_neumann
+[       OK ] VOFOpTest.interface_normal_neumann (0 ms)
+[----------] 4 tests from VOFOpTest (1 ms total)
+
+[----------] 6 tests from VOFConsTest
+[ RUN      ] VOFConsTest.X
+Initializing boundary conditions for velocity_mueff
+Initializing boundary conditions for velocity
+Initializing boundary conditions for density
+Initializing boundary conditions for p
+Initializing boundary conditions for velocity_src_term
+Initializing boundary conditions for gp
+Creating PDESystem instance: ICNS-Godunov
+Initializing boundary conditions for vof_mueff
+Initializing boundary conditions for levelset
+Initializing boundary conditions for interface_curvature
+Initializing boundary conditions for vof
+Initializing boundary conditions for density
+Initializing boundary conditions for vof_src_term
+Creating PDESystem instance: VOF-Godunov
+Initializing boundary conditions for levelset
+Creating Physics instance: MultiPhase
+[       OK ] VOFConsTest.X (1 ms)
+[ RUN      ] VOFConsTest.Y
+Initializing boundary conditions for velocity_mueff
+Initializing boundary conditions for velocity
+Initializing boundary conditions for density
+Initializing boundary conditions for p
+Initializing boundary conditions for velocity_src_term
+Initializing boundary conditions for gp
+Creating PDESystem instance: ICNS-Godunov
+Initializing boundary conditions for vof_mueff
+Initializing boundary conditions for levelset
+Initializing boundary conditions for interface_curvature
+Initializing boundary conditions for vof
+Initializing boundary conditions for density
+Initializing boundary conditions for vof_src_term
+Creating PDESystem instance: VOF-Godunov
+Initializing boundary conditions for levelset
+Creating Physics instance: MultiPhase
+[       OK ] VOFConsTest.Y (1 ms)
+[ RUN      ] VOFConsTest.Z
+Initializing boundary conditions for velocity_mueff
+Initializing boundary conditions for velocity
+Initializing boundary conditions for density
+Initializing boundary conditions for p
+Initializing boundary conditions for velocity_src_term
+Initializing boundary conditions for gp
+Creating PDESystem instance: ICNS-Godunov
+Initializing boundary conditions for vof_mueff
+Initializing boundary conditions for levelset
+Initializing boundary conditions for interface_curvature
+Initializing boundary conditions for vof
+Initializing boundary conditions for density
+Initializing boundary conditions for vof_src_term
+Creating PDESystem instance: VOF-Godunov
+Initializing boundary conditions for levelset
+Creating Physics instance: MultiPhase
+[       OK ] VOFConsTest.Z (1 ms)
+[ RUN      ] VOFConsTest.CFL045
+Initializing boundary conditions for velocity_mueff
+Initializing boundary conditions for velocity
+Initializing boundary conditions for density
+Initializing boundary conditions for p
+Initializing boundary conditions for velocity_src_term
+Initializing boundary conditions for gp
+Creating PDESystem instance: ICNS-Godunov
+Initializing boundary conditions for vof_mueff
+Initializing boundary conditions for levelset
+Initializing boundary conditions for interface_curvature
+Initializing boundary conditions for vof
+Initializing boundary conditions for density
+Initializing boundary conditions for vof_src_term
+Creating PDESystem instance: VOF-Godunov
+Initializing boundary conditions for levelset
+Creating Physics instance: MultiPhase
+[       OK ] VOFConsTest.CFL045 (1 ms)
+[ RUN      ] VOFConsTest.CFL01
+Initializing boundary conditions for velocity_mueff
+Initializing boundary conditions for velocity
+Initializing boundary conditions for density
+Initializing boundary conditions for p
+Initializing boundary conditions for velocity_src_term
+Initializing boundary conditions for gp
+Creating PDESystem instance: ICNS-Godunov
+Initializing boundary conditions for vof_mueff
+Initializing boundary conditions for levelset
+Initializing boundary conditions for interface_curvature
+Initializing boundary conditions for vof
+Initializing boundary conditions for density
+Initializing boundary conditions for vof_src_term
+Creating PDESystem instance: VOF-Godunov
+Initializing boundary conditions for levelset
+Creating Physics instance: MultiPhase
+[       OK ] VOFConsTest.CFL01 (2 ms)
+[ RUN      ] VOFConsTest.2level
+Initializing boundary conditions for velocity_mueff
+Initializing boundary conditions for velocity
+Initializing boundary conditions for density
+Initializing boundary conditions for p
+Initializing boundary conditions for velocity_src_term
+Initializing boundary conditions for gp
+Creating PDESystem instance: ICNS-Godunov
+Initializing boundary conditions for vof_mueff
+Initializing boundary conditions for levelset
+Initializing boundary conditions for interface_curvature
+Initializing boundary conditions for vof
+Initializing boundary conditions for density
+Initializing boundary conditions for vof_src_term
+Creating PDESystem instance: VOF-Godunov
+Initializing boundary conditions for levelset
+Creating Physics instance: MultiPhase
+[       OK ] VOFConsTest.2level (11 ms)
+[----------] 6 tests from VOFConsTest (17 ms total)
+
+[----------] 3 tests from VOFToolTest
+[ RUN      ] VOFToolTest.interface_band
+[       OK ] VOFToolTest.interface_band (0 ms)
+[ RUN      ] VOFToolTest.levelset_to_vof
+[       OK ] VOFToolTest.levelset_to_vof (0 ms)
+[ RUN      ] VOFToolTest.replace_masked_vof
+[       OK ] VOFToolTest.replace_masked_vof (0 ms)
+[----------] 3 tests from VOFToolTest (1 ms total)
+
+[----------] 3 tests from MassMomFluxOpTest
+[ RUN      ] MassMomFluxOpTest.fluxfaceX
+Initializing boundary conditions for velocity_mueff
+Initializing boundary conditions for velocity
+Initializing boundary conditions for density
+Initializing boundary conditions for p
+Initializing boundary conditions for velocity_src_term
+Initializing boundary conditions for gp
+Creating PDESystem instance: ICNS-Godunov
+Initializing boundary conditions for vof_mueff
+Initializing boundary conditions for levelset
+Initializing boundary conditions for interface_curvature
+Initializing boundary conditions for vof
+Initializing boundary conditions for density
+Initializing boundary conditions for vof_src_term
+Creating PDESystem instance: VOF-Godunov
+Initializing boundary conditions for levelset
+Creating Physics instance: MultiPhase
+  MAC_projection                 0                     0                     0
+[       OK ] MassMomFluxOpTest.fluxfaceX (1 ms)
+[ RUN      ] MassMomFluxOpTest.fluxfaceY
+Initializing boundary conditions for velocity_mueff
+Initializing boundary conditions for velocity
+Initializing boundary conditions for density
+Initializing boundary conditions for p
+Initializing boundary conditions for velocity_src_term
+Initializing boundary conditions for gp
+Creating PDESystem instance: ICNS-Godunov
+Initializing boundary conditions for vof_mueff
+Initializing boundary conditions for levelset
+Initializing boundary conditions for interface_curvature
+Initializing boundary conditions for vof
+Initializing boundary conditions for density
+Initializing boundary conditions for vof_src_term
+Creating PDESystem instance: VOF-Godunov
+Initializing boundary conditions for levelset
+Creating Physics instance: MultiPhase
+  MAC_projection                 0                     0                     0
+[       OK ] MassMomFluxOpTest.fluxfaceY (1 ms)
+[ RUN      ] MassMomFluxOpTest.fluxfaceZ
+Initializing boundary conditions for velocity_mueff
+Initializing boundary conditions for velocity
+Initializing boundary conditions for density
+Initializing boundary conditions for p
+Initializing boundary conditions for velocity_src_term
+Initializing boundary conditions for gp
+Creating PDESystem instance: ICNS-Godunov
+Initializing boundary conditions for vof_mueff
+Initializing boundary conditions for levelset
+Initializing boundary conditions for interface_curvature
+Initializing boundary conditions for vof
+Initializing boundary conditions for density
+Initializing boundary conditions for vof_src_term
+Creating PDESystem instance: VOF-Godunov
+Initializing boundary conditions for levelset
+Creating Physics instance: MultiPhase
+  MAC_projection                 0                     0                     0
+[       OK ] MassMomFluxOpTest.fluxfaceZ (1 ms)
+[----------] 3 tests from MassMomFluxOpTest (4 ms total)
+
+[----------] 4 tests from VOFBCTest
+[ RUN      ] VOFBCTest.dirichletX
+Initializing boundary conditions for velocity_mueff
+Initializing boundary conditions for velocity
+Initializing boundary conditions for density
+Initializing boundary conditions for p
+Initializing boundary conditions for velocity_src_term
+Initializing boundary conditions for gp
+Creating PDESystem instance: ICNS-Godunov
+Initializing boundary conditions for vof_mueff
+Initializing boundary conditions for levelset
+Initializing boundary conditions for interface_curvature
+Initializing boundary conditions for vof
+Initializing boundary conditions for density
+Initializing boundary conditions for vof_src_term
+Creating PDESystem instance: VOF-Godunov
+Initializing boundary conditions for levelset
+Creating Physics instance: MultiPhase
+[       OK ] VOFBCTest.dirichletX (1 ms)
+[ RUN      ] VOFBCTest.slipwallY
+Initializing boundary conditions for velocity_mueff
+Initializing boundary conditions for velocity
+Initializing boundary conditions for density
+Initializing boundary conditions for p
+Initializing boundary conditions for velocity_src_term
+Initializing boundary conditions for gp
+Creating PDESystem instance: ICNS-Godunov
+Initializing boundary conditions for vof_mueff
+Initializing boundary conditions for levelset
+Initializing boundary conditions for interface_curvature
+Initializing boundary conditions for vof
+Initializing boundary conditions for density
+Initializing boundary conditions for vof_src_term
+Creating PDESystem instance: VOF-Godunov
+Initializing boundary conditions for levelset
+Creating Physics instance: MultiPhase
+[       OK ] VOFBCTest.slipwallY (1 ms)
+[ RUN      ] VOFBCTest.noslipwallZ
+Initializing boundary conditions for velocity_mueff
+Initializing boundary conditions for velocity
+Initializing boundary conditions for density
+Initializing boundary conditions for p
+Initializing boundary conditions for velocity_src_term
+Initializing boundary conditions for gp
+Creating PDESystem instance: ICNS-Godunov
+Initializing boundary conditions for vof_mueff
+Initializing boundary conditions for levelset
+Initializing boundary conditions for interface_curvature
+Initializing boundary conditions for vof
+Initializing boundary conditions for density
+Initializing boundary conditions for vof_src_term
+Creating PDESystem instance: VOF-Godunov
+Initializing boundary conditions for levelset
+Creating Physics instance: MultiPhase
+[       OK ] VOFBCTest.noslipwallZ (1 ms)
+[ RUN      ] VOFBCTest.pressureX
+Initializing boundary conditions for velocity_mueff
+Initializing boundary conditions for velocity
+Initializing boundary conditions for density
+Initializing boundary conditions for p
+Initializing boundary conditions for velocity_src_term
+Initializing boundary conditions for gp
+Creating PDESystem instance: ICNS-Godunov
+Initializing boundary conditions for vof_mueff
+Initializing boundary conditions for levelset
+Initializing boundary conditions for interface_curvature
+Initializing boundary conditions for vof
+Initializing boundary conditions for density
+Initializing boundary conditions for vof_src_term
+Creating PDESystem instance: VOF-Godunov
+Initializing boundary conditions for levelset
+Creating Physics instance: MultiPhase
+[       OK ] VOFBCTest.pressureX (1 ms)
+[----------] 4 tests from VOFBCTest (5 ms total)
+
+[----------] 3 tests from MFluxSchemeTest
+[ RUN      ] MFluxSchemeTest.upwind
+[       OK ] MFluxSchemeTest.upwind (0 ms)
+[ RUN      ] MFluxSchemeTest.minmod
+[       OK ] MFluxSchemeTest.minmod (0 ms)
+[ RUN      ] MFluxSchemeTest.minmodbdy
+Initializing boundary conditions for scalar
+[       OK ] MFluxSchemeTest.minmodbdy (0 ms)
+[----------] 3 tests from MFluxSchemeTest (1 ms total)
+
+[----------] 2 tests from MultiPhaseHydroStatic
+[ RUN      ] MultiPhaseHydroStatic.reference_density
+[       OK ] MultiPhaseHydroStatic.reference_density (0 ms)
+[ RUN      ] MultiPhaseHydroStatic.reference_pressure
+[       OK ] MultiPhaseHydroStatic.reference_pressure (0 ms)
+[----------] 2 tests from MultiPhaseHydroStatic (1 ms total)
+
+[----------] 1 test from VOFOversetOps
+[ RUN      ] VOFOversetOps.projection_masks
+[       OK ] VOFOversetOps.projection_masks (1 ms)
+[----------] 1 test from VOFOversetOps (1 ms total)
+
+[----------] 7 tests from WaveUtilsTest
+[ RUN      ] WaveUtilsTest.free_surface_to_vof
+[       OK ] WaveUtilsTest.free_surface_to_vof (0 ms)
+[ RUN      ] WaveUtilsTest.gamma_generate
+[       OK ] WaveUtilsTest.gamma_generate (0 ms)
+[ RUN      ] WaveUtilsTest.gamma_absorb
+[       OK ] WaveUtilsTest.gamma_absorb (0 ms)
+[ RUN      ] WaveUtilsTest.ramp
+[       OK ] WaveUtilsTest.ramp (0 ms)
+[ RUN      ] WaveUtilsTest.combine_linear
+[       OK ] WaveUtilsTest.combine_linear (0 ms)
+[ RUN      ] WaveUtilsTest.harmonize_profiles
+[       OK ] WaveUtilsTest.harmonize_profiles (0 ms)
+[ RUN      ] WaveUtilsTest.gamma_xy
+[       OK ] WaveUtilsTest.gamma_xy (0 ms)
+[----------] 7 tests from WaveUtilsTest (0 ms total)
+
+[----------] 4 tests from OceanWavesOpTest
+[ RUN      ] OceanWavesOpTest.relaxation_zone
+[       OK ] OceanWavesOpTest.relaxation_zone (1 ms)
+[ RUN      ] OceanWavesOpTest.gas_phase
+Initializing boundary conditions for velocity_mueff
+Initializing boundary conditions for velocity
+Initializing boundary conditions for density
+Initializing boundary conditions for p
+Initializing boundary conditions for velocity_src_term
+Initializing boundary conditions for gp
+Creating PDESystem instance: ICNS-Godunov
+Initializing boundary conditions for vof_mueff
+Initializing boundary conditions for levelset
+Initializing boundary conditions for interface_curvature
+Initializing boundary conditions for vof
+Initializing boundary conditions for density
+Initializing boundary conditions for vof_src_term
+Creating PDESystem instance: VOF-Godunov
+Initializing boundary conditions for levelset
+Creating Physics instance: MultiPhase
+Initializing boundary conditions for ow_levelset
+Initializing boundary conditions for ow_vof
+Initializing boundary conditions for ow_velocity
+Creating Physics instance: OceanWaves
+Creating FieldBoundary instance: OceanWavesBoundary
+Creating OceanWaveModel instance: LinearWaves
+[       OK ] OceanWavesOpTest.gas_phase (16 ms)
+[ RUN      ] OceanWavesOpTest.boundary_fill
+Initializing boundary conditions for velocity_mueff
+Initializing boundary conditions for velocity
+Initializing boundary conditions for density
+Initializing boundary conditions for p
+Initializing boundary conditions for velocity_src_term
+Initializing boundary conditions for gp
+Creating PDESystem instance: ICNS-Godunov
+Initializing boundary conditions for vof_mueff
+Initializing boundary conditions for levelset
+Initializing boundary conditions for interface_curvature
+Initializing boundary conditions for vof
+Initializing boundary conditions for density
+Initializing boundary conditions for vof_src_term
+Creating PDESystem instance: VOF-Godunov
+Initializing boundary conditions for levelset
+Creating Physics instance: MultiPhase
+Initializing boundary conditions for ow_levelset
+Initializing boundary conditions for ow_vof
+Initializing boundary conditions for ow_velocity
+Creating Physics instance: OceanWaves
+Creating FieldBoundary instance: OceanWavesBoundary
+Creating OceanWaveModel instance: LinearWaves
+[       OK ] OceanWavesOpTest.boundary_fill (15 ms)
+[ RUN      ] OceanWavesOpTest.set_inflow_sibling
+Initializing boundary conditions for velocity_mueff
+Initializing boundary conditions for velocity
+Initializing boundary conditions for density
+Initializing boundary conditions for p
+Initializing boundary conditions for velocity_src_term
+Initializing boundary conditions for gp
+Creating PDESystem instance: ICNS-Godunov
+Initializing boundary conditions for vof_mueff
+Initializing boundary conditions for levelset
+Initializing boundary conditions for interface_curvature
+Initializing boundary conditions for vof
+Initializing boundary conditions for density
+Initializing boundary conditions for vof_src_term
+Creating PDESystem instance: VOF-Godunov
+Initializing boundary conditions for levelset
+Creating Physics instance: MultiPhase
+Initializing boundary conditions for ow_levelset
+Initializing boundary conditions for ow_vof
+Initializing boundary conditions for ow_velocity
+Creating Physics instance: OceanWaves
+Creating FieldBoundary instance: OceanWavesBoundary
+Creating OceanWaveModel instance: LinearWaves
+[       OK ] OceanWavesOpTest.set_inflow_sibling (15 ms)
+[----------] 4 tests from OceanWavesOpTest (48 ms total)
+
+[----------] 4 tests from WaveTheoriesTest
+[ RUN      ] WaveTheoriesTest.StokesWaves
+[       OK ] WaveTheoriesTest.StokesWaves (0 ms)
+[ RUN      ] WaveTheoriesTest.StokesWavesFreeSurfaceProfile
+[       OK ] WaveTheoriesTest.StokesWavesFreeSurfaceProfile (0 ms)
+[ RUN      ] WaveTheoriesTest.StokesWavesVelocityComponents
+[       OK ] WaveTheoriesTest.StokesWavesVelocityComponents (0 ms)
+[ RUN      ] WaveTheoriesTest.StokesWaveLength
+[       OK ] WaveTheoriesTest.StokesWaveLength (0 ms)
+[----------] 4 tests from WaveTheoriesTest (0 ms total)
+
+[----------] 3 tests from ProjPerturb
+[ RUN      ] ProjPerturb.dynamic_only
+Initializing boundary conditions for velocity_mueff
+Initializing boundary conditions for velocity
+Initializing boundary conditions for density
+Initializing boundary conditions for p
+Initializing boundary conditions for velocity_src_term
+Initializing boundary conditions for gp
+Creating PDESystem instance: ICNS-Godunov
+Creating TransportModel instance: ConstTransport
+Creating TurbulenceModel instance: Laminar-ConstTransport
+Initializing I/O manager
+Creating mesh... done
+Grid summary: 
+  Level 0   8 grids  64 cells  100 % of domain
+            smallest grid: 2 x 2 x 2  biggest grid: 2 x 2 x 2
+  Total     8 grids  64 cells
+
+Cell aspect ratio (dy/dx  dz/dx  dz/dy): 1  0.125  0.125
+
+  Nodal_projection               0                     0                     0
+[       OK ] ProjPerturb.dynamic_only (24 ms)
+[ RUN      ] ProjPerturb.full_pressure
+Initializing boundary conditions for velocity_mueff
+Initializing boundary conditions for velocity
+Initializing boundary conditions for density
+Initializing boundary conditions for p
+Initializing boundary conditions for velocity_src_term
+Initializing boundary conditions for gp
+Creating PDESystem instance: ICNS-Godunov
+Creating TransportModel instance: ConstTransport
+Creating TurbulenceModel instance: Laminar-ConstTransport
+Initializing I/O manager
+Creating mesh... done
+Grid summary: 
+  Level 0   8 grids  64 cells  100 % of domain
+            smallest grid: 2 x 2 x 2  biggest grid: 2 x 2 x 2
+  Total     8 grids  64 cells
+
+Cell aspect ratio (dy/dx  dz/dx  dz/dy): 1  0.125  0.125
+
+  Nodal_projection               1                313.92       2.649699127e-09
+[       OK ] ProjPerturb.full_pressure (2 ms)
+[ RUN      ] ProjPerturb.full_p_perturb
+Initializing boundary conditions for velocity_mueff
+Initializing boundary conditions for velocity
+Initializing boundary conditions for density
+Initializing boundary conditions for p
+Initializing boundary conditions for velocity_src_term
+Initializing boundary conditions for gp
+Creating PDESystem instance: ICNS-Godunov
+Creating TransportModel instance: ConstTransport
+Creating TurbulenceModel instance: Laminar-ConstTransport
+Initializing I/O manager
+Creating mesh... done
+Grid summary: 
+  Level 0   8 grids  64 cells  100 % of domain
+            smallest grid: 2 x 2 x 2  biggest grid: 2 x 2 x 2
+  Total     8 grids  64 cells
+
+Cell aspect ratio (dy/dx  dz/dx  dz/dy): 1  0.125  0.125
+
+  Nodal_projection               0                     0                     0
+[       OK ] ProjPerturb.full_p_perturb (1 ms)
+[----------] 3 tests from ProjPerturb (28 ms total)
+
+[----------] 1 test from LogLawTest
+[ RUN      ] LogLawTest.test_log_law
+[       OK ] LogLawTest.test_log_law (0 ms)
+[----------] 1 test from LogLawTest (0 ms total)
+
+[----------] 1 test from MOSDTest
+[ RUN      ] MOSDTest.test_mosd
+[       OK ] MOSDTest.test_mosd (0 ms)
+[----------] 1 test from MOSDTest (0 ms total)
+
+[----------] 1 test from EOSModelTest
+[ RUN      ] EOSModelTest.test_eos
+[       OK ] EOSModelTest.test_eos (0 ms)
+[----------] 1 test from EOSModelTest (0 ms total)
+
+[----------] 8 tests from ManyAreas/TestAreaComputer
+[ RUN      ] ManyAreas/TestAreaComputer.area_matches/R1nR3nT1
+[       OK ] ManyAreas/TestAreaComputer.area_matches/R1nR3nT1 (0 ms)
+[ RUN      ] ManyAreas/TestAreaComputer.area_matches/R1nR3nT2
+[       OK ] ManyAreas/TestAreaComputer.area_matches/R1nR3nT2 (0 ms)
+[ RUN      ] ManyAreas/TestAreaComputer.area_matches/R127nR10nT3
+[       OK ] ManyAreas/TestAreaComputer.area_matches/R127nR10nT3 (0 ms)
+[ RUN      ] ManyAreas/TestAreaComputer.area_matches/R30nR5nT30
+[       OK ] ManyAreas/TestAreaComputer.area_matches/R30nR5nT30 (0 ms)
+[ RUN      ] ManyAreas/TestAreaComputer.weight_sums_to_one/R1nR3nT1
+[       OK ] ManyAreas/TestAreaComputer.weight_sums_to_one/R1nR3nT1 (0 ms)
+[ RUN      ] ManyAreas/TestAreaComputer.weight_sums_to_one/R1nR3nT2
+[       OK ] ManyAreas/TestAreaComputer.weight_sums_to_one/R1nR3nT2 (0 ms)
+[ RUN      ] ManyAreas/TestAreaComputer.weight_sums_to_one/R127nR10nT3
+[       OK ] ManyAreas/TestAreaComputer.weight_sums_to_one/R127nR10nT3 (0 ms)
+[ RUN      ] ManyAreas/TestAreaComputer.weight_sums_to_one/R30nR5nT30
+[       OK ] ManyAreas/TestAreaComputer.weight_sums_to_one/R30nR5nT30 (0 ms)
+[----------] 8 tests from ManyAreas/TestAreaComputer (0 ms total)
+
+[----------] 8 tests from ChangeCenters/TestComputeDiskPoints
+[ RUN      ] ChangeCenters/TestComputeDiskPoints.disk_translation_x_aligned/0
+[       OK ] ChangeCenters/TestComputeDiskPoints.disk_translation_x_aligned/0 (0 ms)
+[ RUN      ] ChangeCenters/TestComputeDiskPoints.disk_translation_x_aligned/1
+[       OK ] ChangeCenters/TestComputeDiskPoints.disk_translation_x_aligned/1 (0 ms)
+[ RUN      ] ChangeCenters/TestComputeDiskPoints.disk_translation_x_aligned/2
+[       OK ] ChangeCenters/TestComputeDiskPoints.disk_translation_x_aligned/2 (0 ms)
+[ RUN      ] ChangeCenters/TestComputeDiskPoints.disk_translation_x_aligned/3
+[       OK ] ChangeCenters/TestComputeDiskPoints.disk_translation_x_aligned/3 (0 ms)
+[ RUN      ] ChangeCenters/TestComputeDiskPoints.disk_translation_x_aligned/4
+[       OK ] ChangeCenters/TestComputeDiskPoints.disk_translation_x_aligned/4 (0 ms)
+[ RUN      ] ChangeCenters/TestComputeDiskPoints.disk_translation_x_aligned/5
+[       OK ] ChangeCenters/TestComputeDiskPoints.disk_translation_x_aligned/5 (0 ms)
+[ RUN      ] ChangeCenters/TestComputeDiskPoints.disk_translation_x_aligned/6
+[       OK ] ChangeCenters/TestComputeDiskPoints.disk_translation_x_aligned/6 (0 ms)
+[ RUN      ] ChangeCenters/TestComputeDiskPoints.disk_translation_x_aligned/7
+[       OK ] ChangeCenters/TestComputeDiskPoints.disk_translation_x_aligned/7 (0 ms)
+[----------] 8 tests from ChangeCenters/TestComputeDiskPoints (0 ms total)
+
+[----------] Global test environment tear-down
+
+
+TinyProfiler total time across processes [min...avg...max]: 1.463 ... 1.463 ... 1.463
+
+--------------------------------------------------------------------------------------------------------------------
+Name                                                                 NCalls  Excl. Min  Excl. Avg  Excl. Max   Max %
+--------------------------------------------------------------------------------------------------------------------
+kynema-sgf::ABLStats::prepare_netcdf_file                                 8     0.6174     0.6174     0.6174  42.19%
+MLCellLinOp::defineBC()                                                  52    0.05807    0.05807    0.05807   3.97%
+kynema-sgf::FieldRepo::declare_field                                   1411    0.05149    0.05149    0.05149   3.52%
+FabArray::setVal()                                                     2904    0.04173    0.04173    0.04173   2.85%
+AmrMesh::MakeNewGrids()                                                  51    0.03939    0.03939    0.03939   2.69%
+PhysBCFunct::()                                                         117    0.03332    0.03332    0.03332   2.28%
+kynema-sgf::FieldNorms::output_actions                                   34    0.03271    0.03271    0.03271   2.24%
+kynema-sgf::FreeSurfaceSampler::initialize                               11    0.02327    0.02327    0.02327   1.59%
+MLTensorOp::apply()                                                      11    0.01955    0.01955    0.01955   1.34%
+kynema-sgf::ActSrcOp<TestFixedWingLine>                                  48    0.01692    0.01692    0.01692   1.16%
+MLLinOp::defineGrids()                                                   55    0.01613    0.01613    0.01613   1.10%
+MLABecLaplacian::define()                                                48    0.01529    0.01529    0.01529   1.04%
+kynema-sgf::FreeSurfaceSampler::update_sampling_locations                15    0.01474    0.01474    0.01474   1.01%
+MLCellLinOp::defineAuxData()                                             52     0.0136     0.0136     0.0136   0.93%
+kynema-sgf::ICNS-Godunov::initialize                                     21    0.01342    0.01342    0.01342   0.92%
+MLNodeLaplacian::prepareForSolve()                                        3    0.01225    0.01225    0.01225   0.84%
+kynema-sgf::FieldRepo::make_new_level_from_scratch                      213     0.0119     0.0119     0.0119   0.81%
+CellConservativeLinear::interp()                                        691    0.01133    0.01133    0.01133   0.77%
+MLNodeLaplacian::Fapply()                                                35   0.008757   0.008757   0.008757   0.60%
+kynema-sgf::FieldNorms::write_ascii                                      18   0.006698   0.006698   0.006698   0.46%
+MLCellLinOp::setLevelBC()                                                19   0.006264   0.006264   0.006264   0.43%
+FabArrayBase::CPC::define()                                             612   0.005421   0.005421   0.005421   0.37%
+kynema-sgf::ActSrcOp<TestJoukowskyDisk>                                   8   0.004731   0.004731   0.004731   0.32%
+kynema-sgf::PlaneAveraging::compute_averages                             75   0.004667   0.004667   0.004667   0.32%
+FillBoundary_nowait()                                                   857   0.004638   0.004638   0.004638   0.32%
+kynema-sgf::FieldNorms::prepare_ascii_file                                8   0.004415   0.004415   0.004415   0.30%
+kynema-sgf::multiphase::sweep_fluxes                                    558   0.004102   0.004102   0.004102   0.28%
+kynema-sgf::ocean_waves::OceanWaves::initialize_fields                    3   0.003145   0.003145   0.003145   0.21%
+kynema-sgf::ocean_waves::OceanWaves::update_target_vof                    3   0.003135   0.003135   0.003135   0.21%
+kynema-sgf::ocean_waves::OceanWaves::post_init_actions                    3   0.003014   0.003014   0.003014   0.21%
+kynema-sgf::ActSrcOp<TestFlatPlateLine>                                  16   0.002795   0.002795   0.002795   0.19%
+VisMF::Write(FabArray)                                                    2   0.002625   0.002625   0.002625   0.18%
+kynema-sgf::ActSrcOp<FlatPlateLine>                                      16   0.002547   0.002547   0.002547   0.17%
+FabArrayBase::FB::FB()                                                  110   0.002221   0.002221   0.002221   0.15%
+BndryData::define()                                                      56   0.002108   0.002108   0.002108   0.14%
+amrex::Copy()                                                           566   0.001951   0.001951   0.001951   0.13%
+kynema-sgf::ICNS-Godunov::pre_advection_actions                           4   0.001837   0.001837   0.001837   0.13%
+kynema-sgf::diagnostics::PrintMaxMACVelLocations                          2   0.001616   0.001616   0.001616   0.11%
+UtilCreateCleanDirectory()                                                4   0.001524   0.001524   0.001524   0.10%
+kynema-sgf::diagnostics::PrintMaxVelLocations                             2   0.001499   0.001499   0.001499   0.10%
+kynema-sgf::RefineCriteriaManager::tag_cells                             28   0.001397   0.001397   0.001397   0.10%
+MLTensorOp::define()                                                     42   0.001378   0.001378   0.001378   0.09%
+FabArray::ParallelCopy_nowait()                                         261   0.001221   0.001221   0.001221   0.08%
+kynema-sgf::TerrainDrag::initialize_fields                                1    0.00115    0.00115    0.00115   0.08%
+kynema-sgf::TKE-Godunov::compute_advection_term                           1   0.001145   0.001145   0.001145   0.08%
+kynema-sgf::incflo::ApplyProjection                                       3   0.001106   0.001106   0.001106   0.08%
+kynema-sgf::ICNS::advection_mac_project                                   4   0.001092   0.001092   0.001092   0.07%
+MLCellLinOp::applyBC()                                                  242   0.001069   0.001069   0.001069   0.07%
+kynema-sgf::VelPlaneAveraging::compute_hvelmag_averages                  23   0.001052   0.001052   0.001052   0.07%
+WriteMultiLevelPlotfile()                                                 2    0.00104    0.00104    0.00104   0.07%
+MultiFab::min()                                                         169  0.0009733  0.0009733  0.0009733   0.07%
+MultiFab::max()                                                         214  0.0009681  0.0009681  0.0009681   0.07%
+MLMG::prepareForSolve()                                                   8  0.0009376  0.0009376  0.0009376   0.06%
+kynema-sgf::diffusion::average_velocity_eta_to_faces                     15  0.0008828  0.0008828  0.0008828   0.06%
+kynema-sgf::multiphase::split_advection_step                            246  0.0008558  0.0008558  0.0008558   0.06%
+MLPoisson::Fsmooth()                                                    128  0.0008544  0.0008544  0.0008544   0.06%
+kynema-sgf::FreeSurfaceSampler::post_regrid_actions                       1  0.0008481  0.0008481  0.0008481   0.06%
+FillPatchTwoLevels                                                       57  0.0007106  0.0007106  0.0007106   0.05%
+kynema-sgf::OneEqKsgsM84-ConstTransport::update_turbulent_viscosity       8  0.0006982  0.0006982  0.0006982   0.05%
+FabArray::setVal(val, thecmd, scomp, ncomp)                             793  0.0006961  0.0006961  0.0006961   0.05%
+MLNodeLinOp::applyBC()                                                   35   0.000676   0.000676   0.000676   0.05%
+kynema-sgf::ICNS-Godunov::compute_diffusion_term                         11  0.0006495  0.0006495  0.0006495   0.04%
+kynema-sgf::fvm::gradient                                                16  0.0006315  0.0006315  0.0006315   0.04%
+kynema-sgf::ForestDrag::read_point_cloud_forests                          1  0.0006191  0.0006191  0.0006191   0.04%
+kynema-sgf::ThirdMomentAveraging::compute_average                         9  0.0005998  0.0005998  0.0005998   0.04%
+MLMG::apply()                                                            14  0.0005569  0.0005569  0.0005569   0.04%
+kynema-sgf::FieldRepo::create_scratch_field                             293  0.0005417  0.0005417  0.0005417   0.04%
+kynema-sgf::actuator::Actuator::post_init_actions                         5  0.0005377  0.0005377  0.0005377   0.04%
+kynema-sgf::FieldRepo::create_state                                     190  0.0005192  0.0005192  0.0005192   0.04%
+FabArrayBase::getCPC()                                                 1042  0.0004979  0.0004979  0.0004979   0.03%
+InterpFromCoarseLevel                                                     2  0.0004843  0.0004843  0.0004843   0.03%
+kynema-sgf::FieldRepo::get_field                                       2639  0.0004808  0.0004808  0.0004808   0.03%
+kynema-sgf::actuator::Actuator::pre_init_actions                          8  0.0004674  0.0004674  0.0004674   0.03%
+MLABecLaplacian::Fsmooth()                                               48  0.0004568  0.0004568  0.0004568   0.03%
+MLABecLaplacian::Fapply()                                                26  0.0004491  0.0004491  0.0004491   0.03%
+kynema-sgf::fvm::strainrate                                              12  0.0004065  0.0004065  0.0004065   0.03%
+kynema-sgf::fvm::vorticity_mag                                            3  0.0003862  0.0003862  0.0003862   0.03%
+kynema-sgf::ocean_waves::OceanWaves::update_velocities                    3  0.0003476  0.0003476  0.0003476   0.02%
+MLCGSolver::bicgstab                                                     12  0.0003247  0.0003247  0.0003247   0.02%
+kynema-sgf::Field::fillpatch                                            500  0.0002861  0.0002861  0.0002861   0.02%
+TagBoxArray::mapPRD                                                      52  0.0002777  0.0002777  0.0002777   0.02%
+FabArray::FillBoundary()                                                863  0.0002766  0.0002766  0.0002766   0.02%
+MLMG::computeMLResidual()                                                 8   0.000257   0.000257   0.000257   0.02%
+DistributionMapping::SFCProcessorMapDoIt()                              223  0.0002363  0.0002363  0.0002363   0.02%
+kynema-sgf::ForestDrag::initialize_fields                                 2  0.0002284  0.0002284  0.0002284   0.02%
+kynema-sgf::multiphase::split_compute_fluxes                            558   0.000221   0.000221   0.000221   0.02%
+AmrMesh::MakeDistributionMap()                                          219  0.0002067  0.0002067  0.0002067   0.01%
+kynema-sgf::Subvolume::output_actions                                     1  0.0002058  0.0002058  0.0002058   0.01%
+kynema-sgf::FieldRepo::make_level_from_coarse                             6  0.0002015  0.0002015  0.0002015   0.01%
+FillPatchSingleLevel                                                    631  0.0001843  0.0001843  0.0001843   0.01%
+FabArrayBase::getFB()                                                   860  0.0001742  0.0001742  0.0001742   0.01%
+kynema-sgf::incflo::init_mesh                                             7  0.0001488  0.0001488  0.0001488   0.01%
+kynema-sgf::FieldNorms::initialize                                       22   0.000146   0.000146   0.000146   0.01%
+FillPatchInterp(Fab)                                                     59  0.0001231  0.0001231  0.0001231   0.01%
+ParticleContainer::Redistribute_impl()                                   18  0.0001161  0.0001161  0.0001161   0.01%
+FabArray::ParallelCopy()                                                261  0.0001066  0.0001066  0.0001066   0.01%
+kynema-sgf::Field::setVal 1                                             273  9.619e-05  9.619e-05  9.619e-05   0.01%
+kynema-sgf::incflo::init_kynema_sgf_modules                               4  9.414e-05  9.414e-05  9.414e-05   0.01%
+kynema-sgf::VOF-Godunov::compute_advection_term                          82  9.102e-05  9.102e-05  9.102e-05   0.01%
+MultiFab::Copy()                                                        344  6.624e-05  6.624e-05  6.624e-05   0.00%
+kynema-sgf::setup_operator                                               15  5.902e-05  5.902e-05  5.902e-05   0.00%
+kynema-sgf::FPlaneAveraging::operator                                    75  4.395e-05  4.395e-05  4.395e-05   0.00%
+MLLinOp::define()                                                        55  4.283e-05  4.283e-05  4.283e-05   0.00%
+kynema-sgf::ABLStats::initialize                                          8  3.939e-05  3.939e-05  3.939e-05   0.00%
+MLMG::solve()                                                             8  3.629e-05  3.629e-05  3.629e-05   0.00%
+NodalProjector::project                                                   3  3.453e-05  3.453e-05  3.453e-05   0.00%
+kynema-sgf::SamplingContainer::interpolate_derived_fields                 2   3.43e-05   3.43e-05   3.43e-05   0.00%
+MLCellLinOp::smooth()                                                    55   3.12e-05   3.12e-05   3.12e-05   0.00%
+kynema-sgf::TKE-Godunov::initialize                                       3  2.887e-05  2.887e-05  2.887e-05   0.00%
+MLMG::actualBottomSolve()                                                12  2.771e-05  2.771e-05  2.771e-05   0.00%
+kynema-sgf::Field::fillpatch_from_coarse                                  2  2.445e-05  2.445e-05  2.445e-05   0.00%
+MLCellLinOp::apply()                                                     62  2.342e-05  2.342e-05  2.342e-05   0.00%
+kynema-sgf::Field::advance_states                                        69  2.325e-05  2.325e-05  2.325e-05   0.00%
+kynema-sgf::VelPlaneAveraging::operator                                  23   2.22e-05   2.22e-05   2.22e-05   0.00%
+kynema-sgf::OceanWavesBoundary::post_init_actions                         3  2.122e-05  2.122e-05  2.122e-05   0.00%
+kynema-sgf::TKE-Godunov::linsys_solve                                     1  2.077e-05  2.077e-05  2.077e-05   0.00%
+kynema-sgf::actuator::Actuator::compute_source_term                       9  1.979e-05  1.979e-05  1.979e-05   0.00%
+kynema-sgf::ABLStats::calc_averages                                       8  1.592e-05  1.592e-05  1.592e-05   0.00%
+MLCellLinOp::solutionResidual()                                          30  1.369e-05  1.369e-05  1.369e-05   0.00%
+MLMG::oneIter()                                                          12  1.202e-05  1.202e-05  1.202e-05   0.00%
+kynema-sgf::IntField::setVal 1                                           25  1.188e-05  1.188e-05  1.188e-05   0.00%
+MLMG::mgVcycle()                                                         12   9.54e-06   9.54e-06   9.54e-06   0.00%
+MLMG::mgVcycle_down::0                                                   11  7.515e-06  7.515e-06  7.515e-06   0.00%
+kynema-sgf::actuator::Actuator::pre_advance_work                          4  7.485e-06  7.485e-06  7.485e-06   0.00%
+kynema-sgf::incflo::MakeNewLevelFromScratch()                             7   4.99e-06   4.99e-06   4.99e-06   0.00%
+MLMG::mgVcycle_down::1                                                   11  4.887e-06  4.887e-06  4.887e-06   0.00%
+MLMG::mgVcycle_up::1                                                     11  3.951e-06  3.951e-06  3.951e-06   0.00%
+MLMG::mgVcycle_bottom                                                    12  3.948e-06  3.948e-06  3.948e-06   0.00%
+MLMG::mgVcycle_up::0                                                     11  3.451e-06  3.451e-06  3.451e-06   0.00%
+MLPoisson::define()                                                       4  3.198e-06  3.198e-06  3.198e-06   0.00%
+kynema-sgf::Sampling::sampling_workflow                                   2  2.606e-06  2.606e-06  2.606e-06   0.00%
+kynema-sgf::Sampling::output_actions                                      2  2.097e-06  2.097e-06  2.097e-06   0.00%
+Other                                                                  9898   0.009285   0.009285   0.009285   0.63%
+--------------------------------------------------------------------------------------------------------------------
+
+--------------------------------------------------------------------------------------------------------------------
+Name                                                                 NCalls  Incl. Min  Incl. Avg  Incl. Max   Max %
+--------------------------------------------------------------------------------------------------------------------
+kynema-sgf::ABLStats::initialize                                          8     0.6174     0.6174     0.6174  42.19%
+kynema-sgf::ABLStats::prepare_netcdf_file                                 8     0.6174     0.6174     0.6174  42.19%
+kynema-sgf::ICNS-Godunov::initialize                                     21      0.123      0.123      0.123   8.40%
+MLTensorOp::define()                                                     42     0.1096     0.1096     0.1096   7.49%
+MLABecLaplacian::define()                                                48     0.1093     0.1093     0.1093   7.47%
+kynema-sgf::FieldRepo::declare_field                                   1411    0.06697    0.06697    0.06697   4.58%
+MLCellLinOp::defineBC()                                                  52     0.0622     0.0622     0.0622   4.25%
+kynema-sgf::FieldNorms::output_actions                                   34    0.04452    0.04452    0.04452   3.04%
+AmrMesh::MakeNewGrids()                                                  51    0.04342    0.04342    0.04342   2.97%
+kynema-sgf::Field::fillpatch                                            500     0.0434     0.0434     0.0434   2.97%
+FabArray::setVal()                                                     2904    0.04173    0.04173    0.04173   2.85%
+FillPatchSingleLevel                                                    631    0.03995    0.03995    0.03995   2.73%
+PhysBCFunct::()                                                         117    0.03332    0.03332    0.03332   2.28%
+kynema-sgf::ICNS-Godunov::compute_diffusion_term                         11     0.0299     0.0299     0.0299   2.04%
+kynema-sgf::FreeSurfaceSampler::initialize                               11    0.02833    0.02833    0.02833   1.94%
+MLMG::solve()                                                             8    0.02826    0.02826    0.02826   1.93%
+kynema-sgf::actuator::Actuator::compute_source_term                       9    0.02749    0.02749    0.02749   1.88%
+kynema-sgf::incflo::ApplyProjection                                       3    0.02576    0.02576    0.02576   1.76%
+NodalProjector::project                                                   3    0.02398    0.02398    0.02398   1.64%
+MLMG::apply()                                                            14     0.0215     0.0215     0.0215   1.47%
+MLCellLinOp::solutionResidual()                                          30    0.02061    0.02061    0.02061   1.41%
+MLTensorOp::apply()                                                      11     0.0202     0.0202     0.0202   1.38%
+kynema-sgf::ocean_waves::OceanWaves::post_init_actions                    3    0.01984    0.01984    0.01984   1.36%
+kynema-sgf::actuator::Actuator::post_init_actions                         5     0.0182     0.0182     0.0182   1.24%
+kynema-sgf::ActSrcOp<TestFixedWingLine>                                  48    0.01692    0.01692    0.01692   1.16%
+MLLinOp::define()                                                        55    0.01627    0.01627    0.01627   1.11%
+MLLinOp::defineGrids()                                                   55    0.01623    0.01623    0.01623   1.11%
+MLCellLinOp::defineAuxData()                                             52    0.01597    0.01597    0.01597   1.09%
+kynema-sgf::FreeSurfaceSampler::update_sampling_locations                15    0.01475    0.01475    0.01475   1.01%
+MLMG::prepareForSolve()                                                   8    0.01372    0.01372    0.01372   0.94%
+kynema-sgf::ocean_waves::OceanWaves::update_velocities                    3    0.01369    0.01369    0.01369   0.94%
+kynema-sgf::OceanWavesBoundary::post_init_actions                         3    0.01326    0.01326    0.01326   0.91%
+MLNodeLaplacian::prepareForSolve()                                        3    0.01255    0.01255    0.01255   0.86%
+kynema-sgf::FieldRepo::make_new_level_from_scratch                      213    0.01216    0.01216    0.01216   0.83%
+FillPatchInterp(Fab)                                                     59    0.01145    0.01145    0.01145   0.78%
+CellConservativeLinear::interp()                                        691    0.01133    0.01133    0.01133   0.77%
+kynema-sgf::actuator::Actuator::pre_advance_work                          4     0.0113     0.0113     0.0113   0.77%
+kynema-sgf::VOF-Godunov::compute_advection_term                          82    0.01096    0.01096    0.01096   0.75%
+kynema-sgf::multiphase::split_advection_step                            246    0.01059    0.01059    0.01059   0.72%
+kynema-sgf::FieldRepo::make_level_from_coarse                             6    0.01031    0.01031    0.01031   0.70%
+kynema-sgf::Field::fillpatch_from_coarse                                  2    0.01029    0.01029    0.01029   0.70%
+InterpFromCoarseLevel                                                     2    0.01027    0.01027    0.01027   0.70%
+MLMG::computeMLResidual()                                                 8   0.009132   0.009132   0.009132   0.62%
+MLNodeLaplacian::Fapply()                                                35   0.008757   0.008757   0.008757   0.60%
+kynema-sgf::setup_operator                                               15   0.007889   0.007889   0.007889   0.54%
+FabArray::FillBoundary()                                                863   0.007412   0.007412   0.007412   0.51%
+FillBoundary_nowait()                                                   857   0.007022   0.007022   0.007022   0.48%
+kynema-sgf::FieldNorms::write_ascii                                      18   0.006698   0.006698   0.006698   0.46%
+kynema-sgf::ICNS-Godunov::pre_advection_actions                           4   0.006655   0.006655   0.006655   0.45%
+MLCellLinOp::setLevelBC()                                                19   0.006272   0.006272   0.006272   0.43%
+FillPatchTwoLevels                                                       57   0.006141   0.006141   0.006141   0.42%
+FabArrayBase::getCPC()                                                 1042   0.005919   0.005919   0.005919   0.40%
+kynema-sgf::Subvolume::output_actions                                     1   0.005709   0.005709   0.005709   0.39%
+FabArrayBase::CPC::define()                                             612   0.005421   0.005421   0.005421   0.37%
+kynema-sgf::Field::setVal 1                                             273   0.005322   0.005322   0.005322   0.36%
+WriteMultiLevelPlotfile()                                                 2   0.005189   0.005189   0.005189   0.35%
+kynema-sgf::FPlaneAveraging::operator                                    75   0.005179   0.005179   0.005179   0.35%
+MLMG::oneIter()                                                          12   0.005106   0.005106   0.005106   0.35%
+MLMG::mgVcycle()                                                         12   0.005047   0.005047   0.005047   0.34%
+kynema-sgf::ABLStats::calc_averages                                       8   0.004849   0.004849   0.004849   0.33%
+kynema-sgf::PlaneAveraging::compute_averages                             75   0.004769   0.004769   0.004769   0.33%
+kynema-sgf::ActSrcOp<TestJoukowskyDisk>                                   8   0.004731   0.004731   0.004731   0.32%
+kynema-sgf::ICNS::advection_mac_project                                   4   0.004663   0.004663   0.004663   0.32%
+kynema-sgf::FieldNorms::initialize                                       22   0.004561   0.004561   0.004561   0.31%
+kynema-sgf::FieldNorms::prepare_ascii_file                                8   0.004415   0.004415   0.004415   0.30%
+kynema-sgf::multiphase::split_compute_fluxes                            558   0.004323   0.004323   0.004323   0.30%
+kynema-sgf::incflo::init_kynema_sgf_modules                               4   0.004262   0.004262   0.004262   0.29%
+BndryData::define()                                                      56   0.004121   0.004121   0.004121   0.28%
+kynema-sgf::multiphase::sweep_fluxes                                    558   0.004102   0.004102   0.004102   0.28%
+FabArray::ParallelCopy()                                                261   0.003726   0.003726   0.003726   0.25%
+FabArray::ParallelCopy_nowait()                                         261   0.003569   0.003569   0.003569   0.24%
+kynema-sgf::VelPlaneAveraging::operator                                  23   0.003217   0.003217   0.003217   0.22%
+kynema-sgf::ocean_waves::OceanWaves::initialize_fields                    3   0.003147   0.003147   0.003147   0.22%
+kynema-sgf::ocean_waves::OceanWaves::update_target_vof                    3   0.003139   0.003139   0.003139   0.21%
+kynema-sgf::ActSrcOp<TestFlatPlateLine>                                  16   0.002795   0.002795   0.002795   0.19%
+MLCellLinOp::smooth()                                                    55   0.002714   0.002714   0.002714   0.19%
+VisMF::Write(FabArray)                                                    2   0.002625   0.002625   0.002625   0.18%
+kynema-sgf::ActSrcOp<FlatPlateLine>                                      16   0.002547   0.002547   0.002547   0.17%
+kynema-sgf::FieldRepo::create_state                                     190   0.002442   0.002442   0.002442   0.17%
+FabArrayBase::getFB()                                                   860   0.002395   0.002395   0.002395   0.16%
+FabArrayBase::FB::FB()                                                  110   0.002221   0.002221   0.002221   0.15%
+MLCellLinOp::applyBC()                                                  242   0.002138   0.002138   0.002138   0.15%
+amrex::Copy()                                                           566   0.001951   0.001951   0.001951   0.13%
+kynema-sgf::diagnostics::PrintMaxMACVelLocations                          2   0.001672   0.001672   0.001672   0.11%
+MLMG::mgVcycle_bottom                                                    12   0.001662   0.001662   0.001662   0.11%
+MLMG::actualBottomSolve()                                                12   0.001658   0.001658   0.001658   0.11%
+MLCGSolver::bicgstab                                                     12   0.001615   0.001615   0.001615   0.11%
+kynema-sgf::diagnostics::PrintMaxVelLocations                             2   0.001532   0.001532   0.001532   0.10%
+UtilCreateCleanDirectory()                                                4   0.001524   0.001524   0.001524   0.10%
+kynema-sgf::TKE-Godunov::linsys_solve                                     1   0.001495   0.001495   0.001495   0.10%
+kynema-sgf::OneEqKsgsM84-ConstTransport::update_turbulent_viscosity       8   0.001458   0.001458   0.001458   0.10%
+kynema-sgf::RefineCriteriaManager::tag_cells                             28   0.001397   0.001397   0.001397   0.10%
+MLCellLinOp::apply()                                                     62    0.00129    0.00129    0.00129   0.09%
+MLMG::mgVcycle_down::0                                                   11   0.001199   0.001199   0.001199   0.08%
+kynema-sgf::TerrainDrag::initialize_fields                                1    0.00115    0.00115    0.00115   0.08%
+kynema-sgf::TKE-Godunov::compute_advection_term                           1   0.001145   0.001145   0.001145   0.08%
+kynema-sgf::TKE-Godunov::initialize                                       3   0.001129   0.001129   0.001129   0.08%
+kynema-sgf::ForestDrag::initialize_fields                                 2   0.001127   0.001127   0.001127   0.08%
+TagBoxArray::mapPRD                                                      52   0.001083   0.001083   0.001083   0.07%
+kynema-sgf::VelPlaneAveraging::compute_hvelmag_averages                  23   0.001083   0.001083   0.001083   0.07%
+MLMG::mgVcycle_up::0                                                     11   0.001012   0.001012   0.001012   0.07%
+MultiFab::min()                                                         169  0.0009733  0.0009733  0.0009733   0.07%
+MultiFab::max()                                                         214  0.0009681  0.0009681  0.0009681   0.07%
+kynema-sgf::diffusion::average_velocity_eta_to_faces                     15  0.0009049  0.0009049  0.0009049   0.06%
+MultiFab::Copy()                                                        344    0.00087    0.00087    0.00087   0.06%
+kynema-sgf::FreeSurfaceSampler::post_regrid_actions                       1  0.0008636  0.0008636  0.0008636   0.06%
+MLPoisson::Fsmooth()                                                    128  0.0008544  0.0008544  0.0008544   0.06%
+kynema-sgf::incflo::init_mesh                                             7  0.0007888  0.0007888  0.0007888   0.05%
+MLNodeLinOp::applyBC()                                                   35  0.0007339  0.0007339  0.0007339   0.05%
+AmrMesh::MakeDistributionMap()                                          219  0.0007034  0.0007034  0.0007034   0.05%
+FabArray::setVal(val, thecmd, scomp, ncomp)                             793  0.0006961  0.0006961  0.0006961   0.05%
+kynema-sgf::Sampling::output_actions                                      2  0.0006795  0.0006795  0.0006795   0.05%
+kynema-sgf::Sampling::sampling_workflow                                   2  0.0006723  0.0006723  0.0006723   0.05%
+MLMG::mgVcycle_down::1                                                   11  0.0006417  0.0006417  0.0006417   0.04%
+kynema-sgf::fvm::gradient                                                16  0.0006315  0.0006315  0.0006315   0.04%
+kynema-sgf::ForestDrag::read_point_cloud_forests                          1  0.0006191  0.0006191  0.0006191   0.04%
+kynema-sgf::incflo::MakeNewLevelFromScratch()                             7  0.0006131  0.0006131  0.0006131   0.04%
+kynema-sgf::SamplingContainer::interpolate_derived_fields                 2  0.0006115  0.0006115  0.0006115   0.04%
+kynema-sgf::ThirdMomentAveraging::compute_average                         9  0.0006032  0.0006032  0.0006032   0.04%
+kynema-sgf::FieldRepo::create_scratch_field                             293  0.0005417  0.0005417  0.0005417   0.04%
+ParticleContainer::Redistribute_impl()                                   18  0.0005285  0.0005285  0.0005285   0.04%
+kynema-sgf::Field::advance_states                                        69  0.0005283  0.0005283  0.0005283   0.04%
+MLMG::mgVcycle_up::1                                                     11  0.0005221  0.0005221  0.0005221   0.04%
+DistributionMapping::SFCProcessorMapDoIt()                              223  0.0005135  0.0005135  0.0005135   0.04%
+kynema-sgf::IntField::setVal 1                                           25  0.0004838  0.0004838  0.0004838   0.03%
+kynema-sgf::FieldRepo::get_field                                       2639  0.0004808  0.0004808  0.0004808   0.03%
+kynema-sgf::actuator::Actuator::pre_init_actions                          8  0.0004714  0.0004714  0.0004714   0.03%
+MLABecLaplacian::Fsmooth()                                               48  0.0004568  0.0004568  0.0004568   0.03%
+MLABecLaplacian::Fapply()                                                26  0.0004491  0.0004491  0.0004491   0.03%
+MLPoisson::define()                                                       4   0.000446   0.000446   0.000446   0.03%
+kynema-sgf::fvm::strainrate                                              12  0.0004065  0.0004065  0.0004065   0.03%
+kynema-sgf::fvm::vorticity_mag                                            3  0.0003862  0.0003862  0.0003862   0.03%
+Other                                                                  9898    0.01438    0.01438    0.01438   0.98%
+--------------------------------------------------------------------------------------------------------------------
+
+Async Memory Usage:
+---------------------------------------------------------------------------
+Name                                              Nalloc   AvgMem    MaxMem
+---------------------------------------------------------------------------
+kynema-sgf::TKE-Godunov::compute_advection_term        8  359   B   514 KiB
+MLTensorOp::apply()                                   33   40   B    77 KiB
+kynema-sgf::ICNS-Godunov::compute_advection_term      15    1   B    21 KiB
+MLCellLinOp::compFlux()                               12    0   B    13 KiB
+kynema-sgf::multiphase::split_advection_step         558    7   B  3456   B
+kynema-sgf::Field::set_inflow_sibling_fields          10    0   B   512   B
+---------------------------------------------------------------------------
+
+Pinned Memory Usage:
+---------------------------------------------------------------------------------
+Name                                                     Nalloc  AvgMem    MaxMem
+---------------------------------------------------------------------------------
+The_Pinned_Arena::Initialize()                                1  42   B  8192 KiB
+kynema-sgf::FieldRepo::create_int_scratch_field_on_host       2   0   B  5120   B
+kynema-sgf::ThirdMomentAveraging::compute_average            36   1   B  5120   B
+kynema-sgf::SecondMomentAveraging::compute_average           27   0   B  2304   B
+kynema-sgf::PlaneAveraging::compute_averages                 75   1   B  1536   B
+kynema-sgf::VelPlaneAveraging::compute_hvelmag_averages      69   0   B  1536   B
+---------------------------------------------------------------------------------
+
+Cpu Memory Usage:
+-----------------------------------------------------------------------------------
+Name                                                     Nalloc    AvgMem    MaxMem
+-----------------------------------------------------------------------------------
+kynema-sgf::FieldRepo::make_level_from_coarse               212   923 KiB    24 MiB
+kynema-sgf::FieldRepo::declare_field                       7601  1883 KiB    10 MiB
+kynema-sgf::FieldNorms::output_actions                      302    77 KiB  4096 KiB
+kynema-sgf::FieldRepo::create_state                         879   388 KiB  2528 KiB
+kynema-sgf::FieldRepo::declare_int_field                    205    35 KiB  2304 KiB
+kynema-sgf::FreeSurfaceSampler::initialize                   76    19 KiB  2048 KiB
+kynema-sgf::Subvolume::output_actions                        66  4511   B  1536 KiB
+kynema-sgf::FieldRepo::create_scratch_field                 641    47 KiB  1102 KiB
+MLABecLaplacian::define()                                   668    47 KiB  1055 KiB
+Unprofiled                                                   47   797   B   544 KiB
+MLMG::prepareForSolve()                                     174  1455   B   530 KiB
+BndryData::define()                                        1836    21 KiB   521 KiB
+kynema-sgf::TKE-Godunov::compute_advection_term               8   360   B   515 KiB
+kynema-sgf::FieldRepo::make_new_level_from_scratch          845  9966   B   470 KiB
+MLMG::apply()                                                42  3791   B   339 KiB
+kynema-sgf::ICNS-Godunov::pre_advection_actions               4   359   B   304 KiB
+MLTensorOp::define()                                        360    12 KiB   299 KiB
+CellConservativeLinear::interp()                            691   435   B   288 KiB
+MLCellLinOp::defineAuxData()                               2494    13 KiB   283 KiB
+InterpFromCoarseLevel                                         7   761   B   266 KiB
+kynema-sgf::FreeSurfaceSampler::post_regrid_actions           2   146   B   256 KiB
+kynema-sgf::diagnostics::PrintMaxMACVelLocations             14   167   B   191 KiB
+kynema-sgf::ICNS::advection_mac_project                      25   978   B   190 KiB
+MLCellLinOp::defineBC()                                     208  2767   B   180 KiB
+kynema-sgf::diffusion::average_velocity_eta_to_faces         63   113   B   149 KiB
+kynema-sgf::diagnostics::PrintMaxVelLocations                12   117   B   144 KiB
+FillPatchTwoLevels                                         1368   104   B   104 KiB
+OwnerMask()                                                 118    37   B    99 KiB
+AmrMesh::MakeNewGrids()                                     188   907   B    78 KiB
+MLTensorOp::apply()                                          33    40   B    78 KiB
+MLCellLinOp::setLevelBC()                                     5     0   B    53 KiB
+kynema-sgf::ICNS-Godunov::compute_advection_term             36     5   B    47 KiB
+kynema-sgf::multiphase::ComputeVolumeFractionSum            237     2   B    32 KiB
+TagBoxArray::mapPRD                                          94     4   B    25 KiB
+kynema-sgf::VelPlaneAveraging::compute_hvelmag_averages      27    14   B    23 KiB
+kynema-sgf::PlaneAveraging::compute_averages                117    51   B    23 KiB
+MLCGSolver::bicgstab                                        150    21   B    22 KiB
+MLCellLinOp::compFlux()                                      12     0   B    13 KiB
+kynema-sgf::incflo::ApplyProjection                          72   210   B    12 KiB
+kynema-sgf::SecondMomentAveraging::compute_average           17     0   B    10 KiB
+kynema-sgf::ThirdMomentAveraging::compute_average            17     1   B    10 KiB
+amrex::packBuffer                                            12     0   B  5888   B
+average_down_faces                                           18     0   B  5120   B
+amrex::average_down                                          72     0   B  4096   B
+MLMG::addInterpCorrection()                                  66     0   B  4096   B
+kynema-sgf::multiphase::split_advection_step                870     7   B  3584   B
+MLNodeLinOp::buildMasks()                                    48    33   B  2048   B
+MLNodeLaplacian::define()                                    24    34   B  2048   B
+kynema-sgf::WaveEnergy::calculate_potential_energy            1     0   B   512   B
+kynema-sgf::WaveEnergy::calculate_kinetic_energy              1     0   B   512   B
+kynema-sgf::Field::set_inflow_sibling_fields                 10     0   B   512   B
+MLMG::actualBottomSolve()                                    16     0   B   512   B
+MLCellLinOp::applyBC()                                      242     0   B   256   B
+-----------------------------------------------------------------------------------
+
+[==========] 301 tests from 77 test suites ran. (1634 ms total)
+[  PASSED  ] 294 tests.
+[  SKIPPED ] 7 tests, listed below:
+[  SKIPPED ] Configuration.GPU
+[  SKIPPED ] FastIfaceTest.fast_init
+[  SKIPPED ] FastIfaceTest.fast_replay
+[  SKIPPED ] ActTurbineFastTest/0.test_ops
+[  SKIPPED ] ActTurbineFastTest/0.fast_turbine
+[  SKIPPED ] ActTurbineFastTest/1.test_ops
+[  SKIPPED ] ActTurbineFastTest/1.fast_turbine
