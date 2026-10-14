@@ -439,7 +439,7 @@ void ABLStats::write_ascii()
     if (Q > std::numeric_limits<amrex::Real>::epsilon() * 1.0e6_rt) {
         wstar = std::cbrt(m_gravity * Q * m_zi / ref_theta);
     }
-    auto L = m_abl_wall_func.mo().obukhov_len;
+    auto L = m_abl_wall_func.mo().L;
 
     std::ofstream outfile;
     outfile.precision(4);
@@ -635,7 +635,7 @@ void ABLStats::write_netcdf()
             wstar = std::cbrt(m_gravity * Q * m_zi / ref_theta);
         }
         ncf.var("wstar").put(&wstar, {nt}, {1});
-        amrex::Real L = m_abl_wall_func.mo().obukhov_len;
+        amrex::Real L = m_abl_wall_func.mo().L;
         ncf.var("L").put(&L, {nt}, {1});
         ncf.var("zi").put(&m_zi, {nt}, {1});
 

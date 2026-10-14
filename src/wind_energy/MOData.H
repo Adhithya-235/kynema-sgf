@@ -34,50 +34,52 @@ struct MOData
     amrex::Real utau;                   ///< Friction velocity (m/s)
     amrex::Real kappa{0.41_rt};         ///< von Karman constant
     amrex::Real gravity{9.81_rt};       ///< Acceleration due to gravity (m/s^2)
-    amrex::Real obukhov_len{1.0e16_rt}; ///< Non-dimensional Obukhov length
+    amrex::Real L{1.0e16_rt};           ///< Non-dimensional Obukhov length
+    amrex::Real L_neutral{1.0e6_rt};    ///< Neutral Obukhov length threshold
 
     amrex::RealArray vel_mean; ///< Mean velocity (at zref)
     amrex::Real vmag_mean;     ///< Mean wind speed (at zref)
     amrex::Real Su_mean;       ///< Mean wind speed times x-velocity (at zref)
     amrex::Real Sv_mean;       ///< Mean wind speed times y-velocity (at zref)
+    amrex::Real vmean_mag{0.0_rt};  ///< Magnitude of mean velocity (at zref)
     amrex::Real theta_mean;    ///< Mean potential temperature
+    amrex::Real Stheta_mean;    ///< Mean wind speed times potential temperature (at zref)
 
     amrex::Real surf_temp_flux{0.0_rt}; ///< Heat flux
     amrex::Real surf_temp;              ///< Instantaneous surface temperature
 
+    amrex::Real alpha_m{1.0_rt};
+    amrex::Real alpha_h{0.95_rt};
     amrex::Real gamma_m{5.0_rt};
     amrex::Real gamma_h{5.0_rt};
-    amrex::Real beta_m{16.0_rt};
-    amrex::Real beta_h{16.0_rt};
+    amrex::Real beta_m{19.0_rt};
+    amrex::Real beta_h{11.6_rt};
+    amrex::Real tol{1.0e-12_rt};    ///< Tolerance for iterative calculations
 
     ThetaCalcType alg_type{ThetaCalcType::HEAT_FLUX};
 
-    [[nodiscard]] amrex::Real phi_m() const
+    bool use_mean_vel_mag{false}; ///< utau from |<u>| (true) or <|u|> (false)
+
+    [[nodiscard]] amrex::Real ref_speed() const
     {
-        return std::log(zref / z0) - calc_psi_m(zref / obukhov_len);
+        return use_mean_vel_mag ? vmean_mag : vmag_mean;
     }
 
-    [[nodiscard]] amrex::Real phi_m(amrex::Real z) const
-    {
-        return std::log(z / z0) - calc_psi_m(z / obukhov_len);
-    }
+    [[nodiscard]] amrex::Real phi_h(amrex::Real z) const;
+    [[nodiscard]] amrex::Real phi_h() const;
+    [[nodiscard]] amrex::Real psi_m(amrex::Real z) const;
+    [[nodiscard]] amrex::Real psi_h(amrex::Real z) const;
 
-    [[nodiscard]] amrex::Real phi_h() const
-    {
-        return std::log(zref / z0t) - calc_psi_h(zref / obukhov_len);
-    }
-
-    [[nodiscard]] amrex::Real phi_h(amrex::Real z) const
-    {
-        return std::log(z / z0t) - calc_psi_h(z / obukhov_len);
-    }
-
-    [[nodiscard]] amrex::Real calc_psi_m(amrex::Real zeta) const;
-    static amrex::Real
+    // Stateless forms for callers that supply their own L, beta and gamma
+    [[nodiscard]] static amrex::Real
     calc_psi_m(amrex::Real zeta, amrex::Real beta_m, amrex::Real gamma_m);
-    [[nodiscard]] amrex::Real calc_psi_h(amrex::Real zeta) const;
-    static amrex::Real
+    [[nodiscard]] static amrex::Real
     calc_psi_h(amrex::Real zeta, amrex::Real beta_h, amrex::Real gamma_h);
+
+    void update_L();
+    void update_utau();
+    void update_surf_temp();
+    void update_surf_temp_flux();
     void update_fluxes(int max_iters = 25);
 };
 

@@ -96,7 +96,63 @@ void remove_nans(kynema_sgf::Field& field)
     }
     amrex::Gpu::streamSynchronize();
 }
+
+// Two equal-area halves in x: (u=2, theta=10) and (u=-1, theta=20)
+void init_two_state(kynema_sgf::Field& vel, kynema_sgf::Field& temp)
+{
+    for (int lev = 0; lev < vel.repo().num_active_levels(); ++lev) {
+        const auto& geom = vel.repo().mesh().Geom(lev);
+        const amrex::Real xlo = geom.ProbLo(0);
+        const amrex::Real xmid = 0.5_rt * (geom.ProbLo(0) + geom.ProbHi(0));
+        const amrex::Real dx = geom.CellSize(0);
+        const auto& varrs = vel(lev).arrays();
+        const auto& tarrs = temp(lev).arrays();
+        amrex::ParallelFor(
+            vel(lev), amrex::IntVect(0),
+            [=] AMREX_GPU_DEVICE(int nbx, int i, int j, int k) {
+                const bool first = (xlo + (i + 0.5_rt) * dx) < xmid;
+                varrs[nbx](i, j, k, 0) = first ? 2.0_rt : -1.0_rt;
+                varrs[nbx](i, j, k, 1) = 0.0_rt;
+                varrs[nbx](i, j, k, 2) = 0.0_rt;
+                tarrs[nbx](i, j, k) = first ? 10.0_rt : 20.0_rt;
+            });
+    }
+    amrex::Gpu::streamSynchronize();
+}
 } // namespace
+
+TEST_F(ABLMeshTest, wall_func_update_umean_two_state)
+{
+    constexpr amrex::Real tol = 1.0e-10_rt;
+
+    populate_parameters();
+    initialize_mesh();
+    sim().repo().declare_field("temperature", 1, 3);
+    sim().pde_manager().register_icns();
+
+    auto& velocity = sim().repo().get_field("velocity");
+    auto& temperature = sim().repo().get_field("temperature");
+    init_two_state(velocity, temperature);
+
+    kynema_sgf::VelPlaneAveraging vpa(sim(), 2, 0);
+    kynema_sgf::FieldPlaneAveraging tpa(temperature, sim().time(), 2, 0);
+    vpa();
+    tpa();
+
+    kynema_sgf::ABLWallFunction wall_func(sim());
+    wall_func.init_log_law_height(0);
+    wall_func.update_umean(vpa, tpa);
+
+    const auto& mo = wall_func.mo();
+    EXPECT_NEAR(mo.vel_mean[0], 0.5_rt, tol);
+    EXPECT_NEAR(mo.vel_mean[1], 0.0_rt, tol);
+    EXPECT_NEAR(mo.vmean_mag, 0.5_rt, tol);
+    EXPECT_NEAR(mo.vmag_mean, 1.5_rt, tol);
+    EXPECT_NEAR(mo.Su_mean, 1.5_rt, tol);
+    EXPECT_NEAR(mo.Sv_mean, 0.0_rt, tol);
+    EXPECT_NEAR(mo.Stheta_mean, 20.0_rt, tol);
+    EXPECT_NEAR(mo.theta_mean, 15.0_rt, tol);
+}
 
 TEST_F(ABLMeshTest, stats_tke_diffusion)
 {

@@ -155,6 +155,8 @@ public:
 
     void operator()() override;
 
+    const Field& temperatureField;
+    
 private:
     amrex::Vector<amrex::Real>
         m_line_hvelmag_average; /** line storage for the average horizontal
@@ -167,6 +169,10 @@ private:
     amrex::Vector<amrex::Real>
         m_line_Sv_average; /** line storage for the average horizontal
                                    velocity magnitude time y-velocity */
+
+    amrex::Vector<amrex::Real>
+        m_line_Stheta_average; /** line storage for the average horizontal
+                                   velocity magnitude times potential temperature */
 
 public: // public for GPU
     /** fill line storage with horizontal velocity magnitude averages */
@@ -189,6 +195,9 @@ public: // public for GPU
     /** evaluate line haverage at specific location for horizontal velocity
      * magnitude times y-velocity */
     [[nodiscard]] amrex::Real line_sv_average_interpolated(amrex::Real x) const;
+    /** evaluate line haverage at specific location for horizontal velocity
+     * magnitude times potential temperature */
+    [[nodiscard]] amrex::Real line_stheta_average_interpolated(amrex::Real x) const;
 };
 
 } // namespace kynema_sgf

@@ -151,6 +151,10 @@ ABLWallFunction::ABLWallFunction(const CFDSim& sim)
     m_mo.alg_type = m_tempflux ? MOData::ThetaCalcType::HEAT_FLUX
                                : MOData::ThetaCalcType::SURFACE_TEMPERATURE;
     m_mo.gravity = utils::vec_mag(m_gravity.data());
+
+    std::string shear_type = "moeng"; // same default as ABLVelWallFunc
+    pp.query("wall_shear_stress_type", shear_type);
+    m_mo.use_mean_vel_mag = (amrex::toLower(shear_type) == "nonlinear");
 }
 
 void ABLWallFunction::init_log_law_height(int max_level)
@@ -188,6 +192,7 @@ void ABLWallFunction::update_umean(
         m_mo.vmag_mean = m_wf_vmag;
         m_mo.Su_mean = 0.0_rt; // TODO: need to fill this correctly
         m_mo.Sv_mean = 0.0_rt; // TODO: need to fill this correctly
+        m_mo.Stheta_mean = 0.0_rt; // TODO: need to fill this correctly
         m_mo.theta_mean = m_wf_theta;
     } else {
         m_mo.vel_mean[0] =
@@ -198,9 +203,14 @@ void ABLWallFunction::update_umean(
             vpa.line_hvelmag_average_interpolated(m_wall_pos + m_mo.zref);
         m_mo.Su_mean = vpa.line_su_average_interpolated(m_wall_pos + m_mo.zref);
         m_mo.Sv_mean = vpa.line_sv_average_interpolated(m_wall_pos + m_mo.zref);
+        m_mo.Stheta_mean = vpa.line_stheta_average_interpolated(m_wall_pos + m_mo.zref);
         m_mo.theta_mean =
             tpa.line_average_interpolated(m_wall_pos + m_mo.zref, 0);
     }
+
+    m_mo.vmean_mag = std::sqrt(
+        m_mo.vel_mean[0] * m_mo.vel_mean[0] +
+        m_mo.vel_mean[1] * m_mo.vel_mean[1]);
 
     m_mo.update_fluxes();
 }
@@ -224,6 +234,7 @@ ABLVelWallFunc::ABLVelWallFunc(
         m_wall_shear_stress_type == "local" ||
         m_wall_shear_stress_type == "schumann" ||
         m_wall_shear_stress_type == "donelan" ||
+        m_wall_shear_stress_type == "nonlinear" ||
         m_wall_shear_stress_type == "moeng") {
         amrex::Print() << "Shear Stress model: " << m_wall_shear_stress_type
                        << '\n';
@@ -285,7 +296,8 @@ void ABLVelWallFunc::wall_model(
                 if (m_wall_het_model == "mol") {
                     const amrex::Real z = 0.5_rt * dx[2];
                     const amrex::Real zeta = z / m_monin_obukhov_length;
-                    const amrex::Real psi_m = mo.calc_psi_m(zeta);
+                    const amrex::Real psi_m = MOData::calc_psi_m(
+                        zeta, mo.beta_m, mo.gamma_m);
                     const amrex::Real z0 = mo.z0;
                     const amrex::Real kappa = mo.kappa;
                     amrex::ParallelFor(
@@ -374,6 +386,11 @@ void ABLVelWallFunc::operator()(Field& velocity, const FieldState rho_state)
 
         auto tau = ShearStressDonelan(mo);
         wall_model(velocity, rho_state, tau);
+
+    } else if (m_wall_shear_stress_type == "nonlinear") {
+
+        auto tau = ShearStressNonlinear(mo);
+        wall_model(velocity, rho_state, tau);
     }
 }
 
@@ -448,7 +465,8 @@ void ABLTempWallFunc::wall_model(
                 if (m_wall_het_model == "mol") {
                     const amrex::Real z = 0.5_rt * dx[2];
                     const amrex::Real zeta = z / m_monin_obukhov_length;
-                    const amrex::Real psi_m = mo.calc_psi_m(zeta);
+                    const amrex::Real psi_m = MOData::calc_psi_m(
+                        zeta, mo.beta_m, mo.gamma_m);
                     const amrex::Real z0 = mo.z0;
                     const amrex::Real kappa = mo.kappa;
                     const amrex::Real gravity_mod = 9.81_rt;
@@ -527,6 +545,11 @@ void ABLTempWallFunc::operator()(Field& temperature, const FieldState rho_state)
     } else if (m_wall_shear_stress_type == "donelan") {
 
         auto tau = ShearStressDonelan(mo);
+        wall_model(temperature, rho_state, tau);
+
+    } else if (m_wall_shear_stress_type == "nonlinear") {
+
+        auto tau = ShearStressNonlinear(mo);
         wall_model(temperature, rho_state, tau);
     }
 }

@@ -34,6 +34,7 @@ TEST_F(PlaneAveragingTest, test_constant)
     auto& velocityf = frepo.declare_field("velocity", 3);
     auto& muefff = frepo.declare_field("mueff");
     auto& tracerf = frepo.declare_field("tracer");
+    frepo.declare_field("temperature");
 
     auto density = densityf.vec_ptrs();
     auto velocity = velocityf.vec_ptrs();
@@ -109,6 +110,7 @@ TEST_F(PlaneAveragingTest, test_linear)
     auto& velocityf = frepo.declare_field("velocity", 3);
     auto& muefff = frepo.declare_field("mueff");
     auto& tracerf = frepo.declare_field("tracer");
+    frepo.declare_field("temperature");
 
     auto density = densityf.vec_ptrs();
     auto velocity = velocityf.vec_ptrs();
@@ -221,6 +223,7 @@ void PlaneAveragingTest::test_dir(int dir)
     auto& velocityf = frepo.declare_field("velocity", 3);
     auto& muefff = frepo.declare_field("mueff");
     auto& tracerf = frepo.declare_field("tracer");
+    frepo.declare_field("temperature");
 
     auto density = densityf.vec_ptrs();
     auto velocity = velocityf.vec_ptrs();

@@ -12,7 +12,7 @@ using namespace amrex::literals;
  *   ShearStress contains functions to compute velocity and temperature shear
  * stress wall models the default is the Moeng wall model specifying the wall
  * model is done through the input file using ABL.wall_shear_stress_type options
- * include "constant", "local", "Schumann", and "Moeng"
+ * include "constant", "local", "Schumann", "Moeng", and "nonlinear"
  *
  * \ingroup we_abl
  */
@@ -164,6 +164,46 @@ struct ShearStressMoeng
     amrex::Real theta_surface;
     amrex::Real theta_mean;
     amrex::Real term1; // NOLINT(modernize-use-default-member-init)
+};
+
+struct ShearStressNonlinear
+{
+    explicit ShearStressNonlinear(const kynema_sgf::MOData& mo)
+        : utau2(mo.utau * mo.utau)
+        , wspd_mean(mo.vmag_mean)
+        , S_mag(std::sqrt(mo.Su_mean * mo.Su_mean + mo.Sv_mean * mo.Sv_mean))
+        , theta_surface(mo.surf_temp)
+        , flux_surface(mo.surf_temp_flux)
+        , theta_mean(mo.theta_mean)
+        , Stheta_mean(mo.Stheta_mean)
+    {}
+
+    AMREX_GPU_DEVICE AMREX_FORCE_INLINE amrex::Real
+    calc_vel_x(amrex::Real u, amrex::Real wspd) const
+    {
+        return utau2 * (wspd * u) / S_mag;
+    };
+
+    AMREX_GPU_DEVICE AMREX_FORCE_INLINE amrex::Real
+    calc_vel_y(amrex::Real v, amrex::Real wspd) const
+    {
+        return utau2 * (wspd * v) / S_mag;
+    };
+
+    AMREX_GPU_DEVICE AMREX_FORCE_INLINE amrex::Real
+    calc_theta(amrex::Real wspd, amrex::Real theta) const
+    {
+        return -(flux_surface * wspd * (theta - theta_surface)) /
+               (Stheta_mean - wspd_mean * theta_surface);
+    };
+
+    amrex::Real utau2;
+    amrex::Real wspd_mean;
+    amrex::Real S_mag;
+    amrex::Real theta_surface;
+    amrex::Real flux_surface;
+    amrex::Real theta_mean;
+    amrex::Real Stheta_mean;
 };
 
 struct ShearStressDonelan
