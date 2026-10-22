@@ -26,6 +26,12 @@ void viscosity_to_uniform_space(
     const kynema_sgf::FieldRepo& repo,
     int lev);
 
+void mask_eta_on_faces(
+    const amrex::Geometry& geom,
+    amrex::Array<amrex::MultiFab, AMREX_SPACEDIM>& b,
+    const amrex::iMultiFab& blank,
+    amrex::Real masked_value);
+
 } // namespace diffusion
 
 #endif /* DIFFUSION_H */

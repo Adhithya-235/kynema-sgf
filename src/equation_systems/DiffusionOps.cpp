@@ -2,6 +2,7 @@
 #include "src/utilities/console_io.H"
 
 #include "AMReX_MLTensorOp.H"
+#include "AMReX_ParmParse.H"
 #include "AMReX_REAL.H"
 
 using namespace amrex::literals;
@@ -19,6 +20,10 @@ DiffSolverIface<LinOp>::DiffSolverIface(
     , m_options(prefix, m_pdefields.field.name() + "_" + prefix)
     , m_mesh_mapping(mesh_mapping)
 {
+    amrex::ParmParse pp(m_pdefields.field.name() + "_" + prefix);
+    pp.query("mask_terrain_faces", m_mask_terrain_faces);
+    pp.query("masked_face_viscosity", m_masked_face_eta);
+
     amrex::LPInfo isolve = m_options.lpinfo();
     amrex::LPInfo iapply;
 

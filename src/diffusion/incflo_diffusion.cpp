@@ -205,6 +205,39 @@ void fixup_eta_on_domain_faces(
     }
 }
 
+void mask_eta_on_faces(
+    const amrex::Geometry& geom,
+    amrex::Array<amrex::MultiFab, AMREX_SPACEDIM>& b,
+    const amrex::iMultiFab& blank,
+    const amrex::Real masked_value)
+{
+    BL_PROFILE("kynema-sgf::diffusion::mask_eta_on_faces");
+    const auto& domain = geom.Domain();
+    const auto& m_arrs = blank.const_arrays();
+
+    for (int idim = 0; idim < AMREX_SPACEDIM; ++idim) {
+        const auto& b_arrs = b[idim].arrays();
+        const amrex::IntVect iv = amrex::IntVect::TheDimensionVector(idim);
+        const int dlo = domain.smallEnd(idim);
+        const int dhi = domain.bigEnd(idim) + 1;
+        const bool periodic = geom.isPeriodic(idim);
+
+        amrex::ParallelFor(
+            b[idim], [=] AMREX_GPU_DEVICE(int nbx, int i, int j, int k) {
+                const amrex::IntVect fhi(i, j, k);
+                // Domain faces stay under BC / wall-model control
+                if (!periodic && (fhi[idim] == dlo || fhi[idim] == dhi)) {
+                    return;
+                }
+                const amrex::IntVect flo = fhi - iv;
+                if (m_arrs[nbx](flo) != m_arrs[nbx](fhi)) {
+                    b_arrs[nbx](i, j, k) = masked_value;
+                }
+            });
+    }
+    amrex::Gpu::streamSynchronize();
+}
+
 void viscosity_to_uniform_space(
     amrex::Array<amrex::MultiFab, AMREX_SPACEDIM>& b,
     const kynema_sgf::FieldRepo& repo,

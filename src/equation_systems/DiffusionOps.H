@@ -56,15 +56,23 @@ public:
         std::enable_if_t<std::is_same_v<L, amrex::MLTensorOp>>* /*unused*/
         = nullptr)
     {
-        const int nlevels = m_pdefields.repo.num_active_levels();
+        const auto& repo = m_pdefields.repo;
+        const int nlevels = repo.num_active_levels();
         const auto& viscosity = m_pdefields.mueff;
-        const auto& geom = m_pdefields.repo.mesh().Geom();
+        const auto& geom = repo.mesh().Geom();
+        const bool do_mask =
+            m_mask_terrain_faces && repo.int_field_exists("terrain_blank");
 
         for (int lev = 0; lev < nlevels; ++lev) {
             auto b = diffusion::average_velocity_eta_to_faces(
                 geom[lev], viscosity(lev));
             if (m_mesh_mapping) {
-                diffusion::viscosity_to_uniform_space(b, m_pdefields.repo, lev);
+                diffusion::viscosity_to_uniform_space(b, repo, lev);
+            }
+            if (do_mask) {
+                diffusion::mask_eta_on_faces(
+                    geom[lev], b, repo.get_int_field("terrain_blank")(lev),
+                    m_masked_face_eta);
             }
             linop.setShearViscosity(lev, amrex::GetArrOfConstPtrs(b));
         }
@@ -103,6 +111,9 @@ protected:
     MLMGOptions m_options;
 
     bool m_mesh_mapping{false};
+
+    bool m_mask_terrain_faces{false};
+    amrex::Real m_masked_face_eta{0.0_rt};
 
     std::unique_ptr<LinOp> m_solver;
     std::unique_ptr<LinOp> m_applier;
