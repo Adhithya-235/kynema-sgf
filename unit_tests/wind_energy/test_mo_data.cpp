@@ -218,4 +218,34 @@ TEST(ShearStressNonlinearTest, heat_flux_magnitude_and_sign_vs_moeng)
     EXPECT_GT(nl_mean * moeng_mean, 0.0_rt);
 }
 
+TEST(ShearStressNonlinearTest, zero_flux_neutral_is_zero)
+{
+    // Exactly neutral: <|u| theta> == <|u|> theta_s makes the old
+    // normalization 0/0
+    auto mo = make_mo();
+    mo.surf_temp_flux = 0.0_rt;
+    mo.Stheta_mean = mo.vmag_mean * mo.surf_temp;
+    const kynema_sgf::ShearStressNonlinear tau(mo);
+    EXPECT_FALSE(tau.flux_resolved);
+    const auto out = eval_tau(tau, 3.0_rt, 4.0_rt, 5.0_rt, 300.0_rt);
+    EXPECT_TRUE(std::isfinite(out[2]));
+    EXPECT_EQ(out[2], 0.0_rt);
+}
+
+TEST(ShearStressNonlinearTest, unresolved_temperature_difference_is_zero)
+{
+    // Nonzero flux but speed-weighted dtheta below threshold (roundoff level)
+    auto mo = make_mo();
+    mo.surf_temp_flux = 0.01_rt;
+    mo.Stheta_mean =
+        mo.vmag_mean * (mo.surf_temp + 0.1_rt *
+                                           kynema_sgf::ShearStressNonlinear::
+                                               dtheta_min);
+    const kynema_sgf::ShearStressNonlinear tau(mo);
+    EXPECT_FALSE(tau.flux_resolved);
+    const auto out = eval_tau(tau, 3.0_rt, 4.0_rt, 5.0_rt, 300.0_rt);
+    EXPECT_TRUE(std::isfinite(out[2]));
+    EXPECT_EQ(out[2], 0.0_rt);
+}
+
 } // namespace kynema_sgf_tests

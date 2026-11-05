@@ -74,6 +74,15 @@ public:
                     geom[lev], b, repo.get_int_field("terrain_blank")(lev),
                     m_masked_face_eta);
             }
+            // >>> VISC-MASK DIAGNOSTICS (begin): store the face viscosity
+            // exactly as handed to the operator (after masking)
+            if (!m_face_eta.empty()) {
+                for (int idim = 0; idim < AMREX_SPACEDIM; ++idim) {
+                    amrex::MultiFab::Copy(
+                        (*m_face_eta[idim])(lev), b[idim], 0, 0, 1, 0);
+                }
+            }
+            // <<< VISC-MASK DIAGNOSTICS (end)
             linop.setShearViscosity(lev, amrex::GetArrOfConstPtrs(b));
         }
     }
@@ -114,6 +123,13 @@ protected:
 
     bool m_mask_terrain_faces{false};
     amrex::Real m_masked_face_eta{0.0_rt};
+
+    // >>> VISC-MASK DIAGNOSTICS (begin)
+    //! Face-centred viscosity passed to MLTensorOp (<field>_eta_{x,y,z}f)
+    amrex::Vector<Field*> m_face_eta;
+    //! Face-centred viscous stress from MLTensorOp (<field>_stress_{x,y,z}f)
+    amrex::Vector<Field*> m_face_stress;
+    // <<< VISC-MASK DIAGNOSTICS (end)
 
     std::unique_ptr<LinOp> m_solver;
     std::unique_ptr<LinOp> m_applier;

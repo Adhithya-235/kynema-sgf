@@ -3,7 +3,10 @@
 
 #include "AMReX_MLTensorOp.H"
 #include "AMReX_ParmParse.H"
+#include "AMReX_Print.H"
 #include "AMReX_REAL.H"
+
+#include <type_traits>
 
 using namespace amrex::literals;
 
@@ -23,6 +26,45 @@ DiffSolverIface<LinOp>::DiffSolverIface(
     amrex::ParmParse pp(m_pdefields.field.name() + "_" + prefix);
     pp.query("mask_terrain_faces", m_mask_terrain_faces);
     pp.query("masked_face_viscosity", m_masked_face_eta);
+
+    // >>> VISC-MASK DIAGNOSTICS (begin)
+    // Opt-in face-centred outputs for checking terrain-face viscosity masking.
+    // Face fields cannot go in plotfiles; sample them with
+    // sampling.interpolation_order = 0 and points on the face centres.
+    {
+        bool output_face_eta = false;
+        bool output_face_stress = false;
+        pp.query("output_face_viscosity", output_face_eta);
+        pp.query("output_face_stress", output_face_stress);
+        if constexpr (std::is_same_v<LinOp, amrex::MLTensorOp>) {
+            auto& repo = m_pdefields.repo;
+            const auto& base = m_pdefields.field.name();
+            if (output_face_eta) {
+                m_face_eta = repo.declare_face_normal_field(
+                    {base + "_eta_xf", base + "_eta_yf", base + "_eta_zf"}, 1,
+                    0, 1);
+            }
+            if (output_face_stress) {
+                m_face_stress = repo.declare_face_normal_field(
+                    {base + "_stress_xf", base + "_stress_yf",
+                     base + "_stress_zf"},
+                    m_pdefields.field.num_comp(), 0, 1);
+            }
+            for (auto* fld : m_face_eta) {
+                fld->setVal(0.0_rt);
+            }
+            for (auto* fld : m_face_stress) {
+                fld->setVal(0.0_rt);
+            }
+        } else if (output_face_eta || output_face_stress) {
+            amrex::Print() << "WARNING: " << m_pdefields.field.name() << "_"
+                           << prefix
+                           << ".output_face_viscosity/output_face_stress are "
+                              "only supported by the tensor operator; ignored"
+                           << std::endl;
+        }
+    }
+    // <<< VISC-MASK DIAGNOSTICS (end)
 
     amrex::LPInfo isolve = m_options.lpinfo();
     amrex::LPInfo iapply;

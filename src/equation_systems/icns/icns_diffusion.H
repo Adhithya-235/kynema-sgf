@@ -45,6 +45,40 @@ public:
 
         amrex::MLMG mlmg(*this->m_applier);
         mlmg.apply(divtau.vec_ptrs(), this->m_pdefields.field.vec_ptrs());
+
+        // >>> VISC-MASK DIAGNOSTICS (begin)
+        // Face-centred viscous stress of the state just applied (explicit
+        // part of the diffusion term). Component n of <field>_stress_{d}f is
+        // the stress acting on momentum component n through d-faces, e.g.
+        // stress_zf comp 0 = tau_xz = eta_f (du/dz + dw/dx).
+        if (!this->m_face_stress.empty()) {
+            auto& vel = this->m_pdefields.field;
+            const int nlevels = this->m_pdefields.repo.num_active_levels();
+            const int ncomp = vel.num_comp();
+            // getFluxes overwrites the ghost cells of its input with operator
+            // BC values, so pass a copy (one ghost layer, as in MLMG::apply)
+            amrex::Vector<amrex::MultiFab> sol(nlevels);
+            amrex::Vector<amrex::Array<amrex::MultiFab*, AMREX_SPACEDIM>> flux(
+                nlevels);
+            for (int lev = 0; lev < nlevels; ++lev) {
+                sol[lev].define(
+                    vel(lev).boxArray(), vel(lev).DistributionMap(), ncomp, 1);
+                amrex::MultiFab::Copy(sol[lev], vel(lev), 0, 0, ncomp, 1);
+                for (int idim = 0; idim < AMREX_SPACEDIM; ++idim) {
+                    flux[lev][idim] = &(*this->m_face_stress[idim])(lev);
+                }
+            }
+            mlmg.getFluxes(
+                flux, amrex::GetVecOfPtrs(sol),
+                amrex::MLMG::Location::FaceCenter);
+            // getFluxes returns -eta grad(u) (beta divided out); flip to stress
+            for (int lev = 0; lev < nlevels; ++lev) {
+                for (int idim = 0; idim < AMREX_SPACEDIM; ++idim) {
+                    flux[lev][idim]->mult(-1.0_rt);
+                }
+            }
+        }
+        // <<< VISC-MASK DIAGNOSTICS (end)
     }
 };
 

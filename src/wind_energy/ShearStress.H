@@ -176,7 +176,16 @@ struct ShearStressNonlinear
         , flux_surface(mo.surf_temp_flux)
         , theta_mean(mo.theta_mean)
         , Stheta_mean(mo.Stheta_mean)
-    {}
+    {
+        // The flux normalization <|U|(theta - theta_s)> vanishes as Q -> 0 and
+        // is then dominated by roundoff (~4500 - 4500); treat that as no flux
+        const amrex::Real denom = Stheta_mean - (wspd_mean * theta_surface);
+        const amrex::Real dtheta_eff =
+            (wspd_mean > small_vel) ? denom / wspd_mean : 0.0_rt;
+        flux_resolved =
+            (flux_surface != 0.0_rt) && (std::abs(dtheta_eff) > dtheta_min);
+        inv_denom = flux_resolved ? 1.0_rt / denom : 0.0_rt;
+    }
 
     AMREX_GPU_DEVICE AMREX_FORCE_INLINE amrex::Real
     calc_vel_x(amrex::Real u, amrex::Real wspd) const
@@ -193,9 +202,14 @@ struct ShearStressNonlinear
     AMREX_GPU_DEVICE AMREX_FORCE_INLINE amrex::Real
     calc_theta(amrex::Real wspd, amrex::Real theta) const
     {
-        return -(flux_surface * wspd * (theta - theta_surface)) /
-               (Stheta_mean - wspd_mean * theta_surface);
+        return flux_resolved
+                   ? -flux_surface * wspd * (theta - theta_surface) * inv_denom
+                   : 0.0_rt;
     };
+
+    //! Minimum speed-weighted surface-air temperature difference [K]
+    static constexpr amrex::Real dtheta_min{1.0e-6_rt};
+    static constexpr amrex::Real small_vel{1.0e-6_rt};
 
     amrex::Real utau2;
     amrex::Real wspd_mean;
@@ -204,6 +218,8 @@ struct ShearStressNonlinear
     amrex::Real flux_surface;
     amrex::Real theta_mean;
     amrex::Real Stheta_mean;
+    bool flux_resolved{false};
+    amrex::Real inv_denom{0.0_rt};
 };
 
 struct ShearStressDonelan
