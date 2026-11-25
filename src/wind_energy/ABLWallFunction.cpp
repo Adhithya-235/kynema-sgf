@@ -154,7 +154,15 @@ ABLWallFunction::ABLWallFunction(const CFDSim& sim)
 
     std::string shear_type = "moeng"; // same default as ABLVelWallFunc
     pp.query("wall_shear_stress_type", shear_type);
-    m_mo.use_mean_vel_mag = (amrex::toLower(shear_type) == "nonlinear");
+    const std::string shear_type_lc = amrex::toLower(shear_type);
+    m_mo.use_mean_vel_mag =
+        (shear_type_lc == "nonlinear" || shear_type_lc == "weibrasseur");
+    if (m_inflow_outflow && shear_type_lc == "weibrasseur") {
+        amrex::Print() << "WARNING: ABLWallFunction: weibrasseur wall model "
+                          "with inflow_outflow_mode has <|u|u> = 0, so the "
+                          "mean stress direction M is zero."
+                       << '\n';
+    }
 }
 
 void ABLWallFunction::init_log_law_height(int max_level)
@@ -192,6 +200,7 @@ void ABLWallFunction::update_umean(
         m_mo.vmag_mean = m_wf_vmag;
         m_mo.Su_mean = 0.0_rt; // TODO: need to fill this correctly
         m_mo.Sv_mean = 0.0_rt; // TODO: need to fill this correctly
+        m_mo.FhFh_mean = 0.0_rt; // TODO: need to fill this correctly
         m_mo.Stheta_mean = 0.0_rt; // TODO: need to fill this correctly
         m_mo.theta_mean = m_wf_theta;
     } else {
@@ -203,6 +212,8 @@ void ABLWallFunction::update_umean(
             vpa.line_hvelmag_average_interpolated(m_wall_pos + m_mo.zref);
         m_mo.Su_mean = vpa.line_su_average_interpolated(m_wall_pos + m_mo.zref);
         m_mo.Sv_mean = vpa.line_sv_average_interpolated(m_wall_pos + m_mo.zref);
+        m_mo.FhFh_mean =
+            vpa.line_fhfh_average_interpolated(m_wall_pos + m_mo.zref);
         m_mo.Stheta_mean = vpa.line_stheta_average_interpolated(m_wall_pos + m_mo.zref);
         m_mo.theta_mean =
             tpa.line_average_interpolated(m_wall_pos + m_mo.zref, 0);
@@ -228,6 +239,7 @@ ABLVelWallFunc::ABLVelWallFunc(
     pp.query("wall_shear_stress_type", m_wall_shear_stress_type);
     pp.query("wall_het_model", m_wall_het_model);
     pp.query("monin_obukhov_length", m_monin_obukhov_length);
+    pp.query("wb_beta", m_wb_beta);
     m_wall_shear_stress_type = amrex::toLower(m_wall_shear_stress_type);
 
     if (m_wall_shear_stress_type == "constant" ||
@@ -235,9 +247,17 @@ ABLVelWallFunc::ABLVelWallFunc(
         m_wall_shear_stress_type == "schumann" ||
         m_wall_shear_stress_type == "donelan" ||
         m_wall_shear_stress_type == "nonlinear" ||
+        m_wall_shear_stress_type == "weibrasseur" ||
         m_wall_shear_stress_type == "moeng") {
         amrex::Print() << "Shear Stress model: " << m_wall_shear_stress_type
                        << '\n';
+        if (m_wall_shear_stress_type == "weibrasseur") {
+            amrex::Print() << "Wei-Brasseur beta: " << m_wb_beta << '\n';
+            amrex::Print()
+                << "Wei-Brasseur normalization: F = Fh'/sqrt(<Fh'.Fh'>) "
+                   "(plane RMS, <|Fh|^2> - |<Fh>|^2) [WB-RMS-v2, built "
+                << __DATE__ << " " << __TIME__ << "]" << '\n';
+        }
     } else {
         amrex::Abort("Shear Stress wall model input mistake");
     }
@@ -345,12 +365,21 @@ void ABLVelWallFunc::wall_model(
                             // Blank Terrain added to keep the boundary
                             // condition backward compatible while adding
                             // terrain sensitive BC
-                            varr(i, j, k - 1, 0) = blankTerrain *
-                                                   tau.calc_vel_x(uu, wspd) *
-                                                   den(i, j, k) / mu;
-                            varr(i, j, k - 1, 1) = blankTerrain *
-                                                   tau.calc_vel_y(vv, wspd) *
-                                                   den(i, j, k) / mu;
+                            amrex::Real tau_x = 0.0_rt;
+                            amrex::Real tau_y = 0.0_rt;
+                            if constexpr (requires {
+                                              tau.calc_vel_x(uu, vv, wspd);
+                                          }) {
+                                tau_x = tau.calc_vel_x(uu, vv, wspd);
+                                tau_y = tau.calc_vel_y(uu, vv, wspd);
+                            } else {
+                                tau_x = tau.calc_vel_x(uu, wspd);
+                                tau_y = tau.calc_vel_y(vv, wspd);
+                            }
+                            varr(i, j, k - 1, 0) =
+                                blankTerrain * tau_x * den(i, j, k) / mu;
+                            varr(i, j, k - 1, 1) =
+                                blankTerrain * tau_y * den(i, j, k) / mu;
                         });
                 }
             }
@@ -390,6 +419,11 @@ void ABLVelWallFunc::operator()(Field& velocity, const FieldState rho_state)
     } else if (m_wall_shear_stress_type == "nonlinear") {
 
         auto tau = ShearStressNonlinear(mo);
+        wall_model(velocity, rho_state, tau);
+
+    } else if (m_wall_shear_stress_type == "weibrasseur") {
+
+        auto tau = ShearStressWeiBrasseur(mo, m_wb_beta);
         wall_model(velocity, rho_state, tau);
     }
 }
@@ -547,8 +581,11 @@ void ABLTempWallFunc::operator()(Field& temperature, const FieldState rho_state)
         auto tau = ShearStressDonelan(mo);
         wall_model(temperature, rho_state, tau);
 
-    } else if (m_wall_shear_stress_type == "nonlinear") {
+    } else if (
+        m_wall_shear_stress_type == "nonlinear" ||
+        m_wall_shear_stress_type == "weibrasseur") {
 
+        // Wei-Brasseur uses the same heat flux model as nonlinear
         auto tau = ShearStressNonlinear(mo);
         wall_model(temperature, rho_state, tau);
     }

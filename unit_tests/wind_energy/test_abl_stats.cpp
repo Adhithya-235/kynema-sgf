@@ -150,6 +150,7 @@ TEST_F(ABLMeshTest, wall_func_update_umean_two_state)
     EXPECT_NEAR(mo.vmag_mean, 1.5_rt, tol);
     EXPECT_NEAR(mo.Su_mean, 1.5_rt, tol);
     EXPECT_NEAR(mo.Sv_mean, 0.0_rt, tol);
+    EXPECT_NEAR(mo.FhFh_mean, 8.5_rt, tol); // <|u|^4> = (16 + 1) / 2
     EXPECT_NEAR(mo.Stheta_mean, 20.0_rt, tol);
     EXPECT_NEAR(mo.theta_mean, 15.0_rt, tol);
 }

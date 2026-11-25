@@ -93,6 +93,8 @@ private:
     std::string m_wall_shear_stress_type{"moeng"};
     std::string m_wall_het_model{"none"};
     amrex::Real m_monin_obukhov_length{constants::LARGE_NUM};
+    //! Fluctuation weight for the Wei-Brasseur wall model
+    amrex::Real m_wb_beta{1.0_rt};
 };
 
 class ABLTempWallFunc : public FieldBCIface

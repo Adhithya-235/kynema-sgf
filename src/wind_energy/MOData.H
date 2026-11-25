@@ -41,6 +41,7 @@ struct MOData
     amrex::Real vmag_mean;     ///< Mean wind speed (at zref)
     amrex::Real Su_mean;       ///< Mean wind speed times x-velocity (at zref)
     amrex::Real Sv_mean;       ///< Mean wind speed times y-velocity (at zref)
+    amrex::Real FhFh_mean{0.0_rt}; ///< Mean of |Fh|^2 = |u_h|^4 (at zref)
     amrex::Real vmean_mag{0.0_rt};  ///< Magnitude of mean velocity (at zref)
     amrex::Real theta_mean;    ///< Mean potential temperature
     amrex::Real Stheta_mean;    ///< Mean wind speed times potential temperature (at zref)

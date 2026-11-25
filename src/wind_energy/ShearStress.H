@@ -12,7 +12,8 @@ using namespace amrex::literals;
  *   ShearStress contains functions to compute velocity and temperature shear
  * stress wall models the default is the Moeng wall model specifying the wall
  * model is done through the input file using ABL.wall_shear_stress_type options
- * include "constant", "local", "Schumann", "Moeng", and "nonlinear"
+ * include "constant", "local", "Schumann", "Moeng", "nonlinear", and
+ * "weibrasseur"
  *
  * \ingroup we_abl
  */
@@ -220,6 +221,62 @@ struct ShearStressNonlinear
     amrex::Real Stheta_mean;
     bool flux_resolved{false};
     amrex::Real inv_denom{0.0_rt};
+};
+
+/** Wei-Brasseur wall model
+ *
+ *  tau_w = utau^2 (M + beta F), with Fh = |u_h| u_h at the first cell,
+ *  M = <Fh>/|<Fh>| and F = Fh'/sqrt(<Fh'.Fh'>). The plane RMS uses
+ *  <Fh'.Fh'> = <|Fh|^2> - |<Fh>|^2. Uses the same utau and heat flux as
+ *  ShearStressNonlinear.
+ */
+struct ShearStressWeiBrasseur : public ShearStressNonlinear
+{
+    ShearStressWeiBrasseur(const kynema_sgf::MOData& mo, amrex::Real beta_in)
+        : ShearStressNonlinear(mo)
+        , Su(mo.Su_mean)
+        , Sv(mo.Sv_mean)
+        , beta(beta_in)
+        , Fp_rms(std::sqrt(
+              amrex::max<amrex::Real>(mo.FhFh_mean - (S_mag * S_mag), 0.0_rt)))
+    {
+        const amrex::Real s_min =
+            small_rel * amrex::max<amrex::Real>(S_mag, small_rel);
+        if (S_mag > s_min) {
+            Mx = Su / S_mag;
+            My = Sv / S_mag;
+        }
+        if (Fp_rms > s_min) {
+            inv_Fp_rms = 1.0_rt / Fp_rms;
+        }
+    }
+
+    // The single-component calc_vel_x/y of the base are intentionally hidden:
+    // Fh' requires both horizontal components at each point
+    AMREX_GPU_DEVICE AMREX_FORCE_INLINE amrex::Real
+    calc_vel_x(amrex::Real u, amrex::Real /* v */, amrex::Real wspd) const
+    {
+        const amrex::Real Fx = ((wspd * u) - Su) * inv_Fp_rms;
+        return utau2 * (Mx + (beta * Fx));
+    };
+
+    AMREX_GPU_DEVICE AMREX_FORCE_INLINE amrex::Real
+    calc_vel_y(amrex::Real /* u */, amrex::Real v, amrex::Real wspd) const
+    {
+        const amrex::Real Fy = ((wspd * v) - Sv) * inv_Fp_rms;
+        return utau2 * (My + (beta * Fy));
+    };
+
+    //! Relative floor on |<Fh>| and rms(Fh') below which M (or F) is set to 0
+    static constexpr amrex::Real small_rel{1.0e-12_rt};
+
+    amrex::Real Su;
+    amrex::Real Sv;
+    amrex::Real beta;
+    amrex::Real Fp_rms;
+    amrex::Real Mx{0.0_rt};
+    amrex::Real My{0.0_rt};
+    amrex::Real inv_Fp_rms{0.0_rt};
 };
 
 struct ShearStressDonelan

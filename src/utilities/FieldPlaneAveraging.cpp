@@ -514,6 +514,7 @@ VelPlaneAveraging::VelPlaneAveraging(CFDSim& sim, int axis_in, int max_level)
     m_line_Su_average.resize(m_ncell_line, 0.0_rt);
     m_line_Sv_average.resize(m_ncell_line, 0.0_rt);
     m_line_Stheta_average.resize(m_ncell_line, 0.0_rt);
+    m_line_FhFh_average.resize(m_ncell_line, 0.0_rt);
 }
 
 void VelPlaneAveraging::operator()()
@@ -528,6 +529,7 @@ void VelPlaneAveraging::operator()()
     std::ranges::fill(m_line_Su_average, 0.0_rt);
     std::ranges::fill(m_line_Sv_average, 0.0_rt);
     std::ranges::fill(m_line_Stheta_average, 0.0_rt);
+    std::ranges::fill(m_line_FhFh_average, 0.0_rt);
 
     switch (m_axis) {
     case 0:
@@ -558,11 +560,14 @@ void VelPlaneAveraging::compute_hvelmag_averages(const IndexSelector& idxOp)
         m_line_Sv_average.data(), m_line_Sv_average.size());
     amrex::AsyncArray<amrex::Real> lavg_Stheta(
         m_line_Stheta_average.data(), m_line_Stheta_average.size());
+    amrex::AsyncArray<amrex::Real> lavg_FhFh(
+        m_line_FhFh_average.data(), m_line_FhFh_average.size());
 
     amrex::Real* line_avg_vm = lavg_vm.data();
     amrex::Real* line_avg_Su = lavg_Su.data();
     amrex::Real* line_avg_Sv = lavg_Sv.data();
     amrex::Real* line_avg_Stheta = lavg_Stheta.data();
+    amrex::Real* line_avg_FhFh = lavg_FhFh.data();
 
     const int num_cells = m_ncell_line;
     const amrex::Real line_dx = m_dx;
@@ -707,6 +712,11 @@ void VelPlaneAveraging::compute_hvelmag_averages(const IndexSelector& idxOp)
                                     amrex::Gpu::deviceReduceSum(
                                         &line_avg_Stheta[ind], Stheta * vol * denom,
                                         handler);
+                                    // |Fh|^2 = |u_h|^4 with Fh = |u_h| u_h
+                                    amrex::Gpu::deviceReduceSum(
+                                        &line_avg_FhFh[ind],
+                                        ((Su * Su) + (Sv * Sv)) * vol * denom,
+                                        handler);
                                 }
                             }
                         }
@@ -720,6 +730,8 @@ void VelPlaneAveraging::compute_hvelmag_averages(const IndexSelector& idxOp)
     lavg_Su.copyToHost(m_line_Su_average.data(), m_line_Su_average.size());
     lavg_Sv.copyToHost(m_line_Sv_average.data(), m_line_Sv_average.size());
     lavg_Stheta.copyToHost(m_line_Stheta_average.data(), m_line_Stheta_average.size());
+    lavg_FhFh.copyToHost(
+        m_line_FhFh_average.data(), m_line_FhFh_average.size());
     amrex::ParallelDescriptor::ReduceRealSum(
         m_line_hvelmag_average.data(),
         static_cast<int>(m_line_hvelmag_average.size()));
@@ -729,6 +741,9 @@ void VelPlaneAveraging::compute_hvelmag_averages(const IndexSelector& idxOp)
         m_line_Sv_average.data(), static_cast<int>(m_line_Sv_average.size()));
     amrex::ParallelDescriptor::ReduceRealSum(
         m_line_Stheta_average.data(), static_cast<int>(m_line_Stheta_average.size()));
+    amrex::ParallelDescriptor::ReduceRealSum(
+        m_line_FhFh_average.data(),
+        static_cast<int>(m_line_FhFh_average.size()));
 }
 
 amrex::Real
@@ -774,6 +789,18 @@ amrex::Real VelPlaneAveraging::line_stheta_average_interpolated(amrex::Real x) c
 
     return m_line_Stheta_average[ind] * (1.0_rt - c) +
            m_line_Stheta_average[ind + 1] * c;
+}
+
+amrex::Real
+VelPlaneAveraging::line_fhfh_average_interpolated(amrex::Real x) const
+{
+    BL_PROFILE("kynema-sgf::VelPlaneAveraging::line_fhfh_average_interpolated");
+    int ind;
+    amrex::Real c;
+    convert_x_to_ind(x, ind, c);
+
+    return (m_line_FhFh_average[ind] * (1.0_rt - c)) +
+           (m_line_FhFh_average[ind + 1] * c);
 }
 
 } // namespace kynema_sgf

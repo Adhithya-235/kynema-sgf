@@ -174,6 +174,10 @@ private:
         m_line_Stheta_average; /** line storage for the average horizontal
                                    velocity magnitude times potential temperature */
 
+    amrex::Vector<amrex::Real>
+        m_line_FhFh_average; /** line storage for the average of |Fh|^2 =
+                                |u_h|^4, with Fh = |u_h| u_h */
+
 public: // public for GPU
     /** fill line storage with horizontal velocity magnitude averages */
     template <typename IndexSelector>
@@ -198,6 +202,8 @@ public: // public for GPU
     /** evaluate line haverage at specific location for horizontal velocity
      * magnitude times potential temperature */
     [[nodiscard]] amrex::Real line_stheta_average_interpolated(amrex::Real x) const;
+    /** evaluate line haverage at specific location for |Fh|^2 = |u_h|^4 */
+    [[nodiscard]] amrex::Real line_fhfh_average_interpolated(amrex::Real x) const;
 };
 
 } // namespace kynema_sgf
